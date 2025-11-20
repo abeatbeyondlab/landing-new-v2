@@ -4,17 +4,17 @@ import { ServiceItem } from '../types';
 
 const services: ServiceItem[] = [
   {
-    title: "Advisor e Strategia IT",
+    title: "Advisor e Strategia sulla Trasformazione Digitale",
     description: "Il tuo Ufficiale di Rotta. Definiamo la direzione tecnologica per raggiungere i tuoi obiettivi di business.",
     icon: Users
   },
   {
-    title: "Architetture IT",
+    title: "progettazione Architetture Informatiche",
     description: "Lo Scafo della nave. Progettiamo infrastrutture robuste e scalabili per affrontare ogni mare.",
     icon: Layout
   },
   {
-    title: "Integrazione Sistemi",
+    title: "Integrazione dei Sistemi Gestionali",
     description: "Sincronia dell'equipaggio. ERP, CRM e MES dialogano perfettamente per eliminare errori e ritardi.",
     icon: Layers
   },
@@ -34,7 +34,7 @@ const services: ServiceItem[] = [
     icon: Code2
   },
   {
-    title: "Project Management",
+    title: "Temporary Project Management",
     description: "Il Capitano in seconda. Gestiamo i progetti complessi garantendo tempi, costi e risultati.",
     icon: Cog
   },

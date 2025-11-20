@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     q: "Siete adatti a una piccola azienda?",
-    a: "Assolutamente. Il nostro metodo 'Engineered' è scalabile. Portiamo la qualità enterprise (come Lamborghini) alla portata delle PMI, tagliando il superfluo."
+    a: "Assolutamente. Il nostro metodo 'Engineered' è scalabile. Portiamo la qualità enterprise alla portata delle PMI, tagliando il superfluo."
   }
 ];
 

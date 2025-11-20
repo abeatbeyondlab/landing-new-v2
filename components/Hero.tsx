@@ -42,7 +42,7 @@ export const Hero: React.FC = () => {
         {/* Subheadline */}
         <p className="text-lg md:text-2xl text-slate-300 max-w-3xl mb-10 leading-relaxed font-light animate-slide-up" style={{animationDelay: '0.2s'}}>
           Il mercato è in tempesta e la complessità tecnologica rischia di farti affondare. <br className="hidden md:block" />
-          Siamo l'Advisor che sale a bordo per trasformare la tua azienda in una nave inaffondabile, veloce e coordinata.
+          Siamo l'Advisor che sale a bordo per trasformare la tua azienda in una nave inaffondabile, veloce e coordinata nell'oceano digitale.
         </p>
 
         {/* CTA Group */}

@@ -48,7 +48,7 @@ export const ProblemSolution: React.FC = () => {
               Cosa sta rallentando la tua <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Navigazione</span>?
             </h2>
             <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-              Anche il miglior Capitano non può vincere con una nave che imbarca acqua o con una mappa sbagliata. Identifichiamo le falle nel tuo sistema IT e le trasformiamo nei tuoi punti di forza.
+              Anche il miglior Capitano non può vincere con una nave che imbarca acqua o con una mappa sbagliata. Identifichiamo le falle nel tuo sistema informatico e le trasformiamo nei tuoi punti di forza.
             </p>
             <div className="p-6 bg-slate-900 rounded-2xl text-white shadow-xl">
               <p className="font-medium italic">"Non ti vendiamo software. Ti diamo gli strumenti per governare la tua nave in qualsiasi condizione meteo."</p>
