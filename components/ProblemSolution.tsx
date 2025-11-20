@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle, Anchor, ArrowRight, Compass, Wind } from 'lucide-react';
+import { AlertTriangle, Anchor, Compass, Wind } from 'lucide-react';
 import { PainPoint } from '../types';
 
 const points: PainPoint[] = [
