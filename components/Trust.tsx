@@ -1,6 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export const Trust: React.FC = () => {
+  const [companiesCount, setCompaniesCount] = useState(0);
+  const [solutionsCount, setSolutionsCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Animation function
+  const animateCounter = (start: number, end: number, duration: number, setter: (value: number) => void) => {
+    const startTime = Date.now();
+    const animate = () => {
+      const currentTime = Date.now();
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentValue = Math.floor(start + (end - start) * easeOutQuart);
+      
+      setter(currentValue);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    animate();
+  };
+
+  // Intersection Observer to trigger animation when section is visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
+            // Start animations
+            animateCounter(0, 30, 1500, setCompaniesCount);
+            animateCounter(0, 40, 1500, setSolutionsCount);
+          }
+        });
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of the section is visible
+        rootMargin: '0px'
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
+
   return (
     <section className="py-16 bg-white border-b border-slate-100 overflow-hidden">
       <style>{`
@@ -17,17 +73,21 @@ export const Trust: React.FC = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12 border-b border-slate-100 pb-12">
             {/* Stats Section */}
-            <div>
+            <div ref={sectionRef}>
                  <h2 className="text-3xl font-display font-bold text-slate-900 mb-8">
                     Vendiamo <span className="text-blue-600">Risultati</span>.
                  </h2>
                  <div className="grid grid-cols-2 gap-8">
                     <div>
-                        <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">30+</div>
+                        <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">
+                          {companiesCount}+
+                        </div>
                         <p className="text-slate-600 font-medium">Aziende che si fidano di noi</p>
                     </div>
                     <div>
-                        <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">40+</div>
+                        <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">
+                          {solutionsCount}+
+                        </div>
                          <p className="text-slate-600 font-medium">Soluzioni sviluppate</p>
                     </div>
                  </div>
