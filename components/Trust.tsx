@@ -45,7 +45,7 @@ export const Trust: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center gap-8 pt-4">
           
           <div className="text-center md:text-left md:w-1/4 shrink-0 z-10 bg-white md:pr-4">
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
               Partner di Eccellenza
             </p>
             <p className="text-slate-900 font-semibold">

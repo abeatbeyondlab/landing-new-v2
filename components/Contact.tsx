@@ -151,7 +151,7 @@ export const Contact: React.FC = () => {
                     </span>
                   )}
                 </Button>
-                <p className="text-center text-xs text-slate-400 mt-4">
+                <p className="text-center text-xs text-slate-600 mt-4">
                   Nessun impegno. I tuoi dati sono al sicuro.
                 </p>
               </div>

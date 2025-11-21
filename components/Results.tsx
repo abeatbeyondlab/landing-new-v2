@@ -39,13 +39,13 @@ export const Results: React.FC = () => {
 
               <div className="space-y-4">
                 <div>
-                  <span className="text-xs font-bold text-slate-400 block mb-1">LA SFIDA</span>
+                  <span className="text-xs font-bold text-slate-500 block mb-1">LA SFIDA</span>
                   <p className="text-slate-600 text-sm">
                     Sistemi di produzione non allineati con il gestionale, causando ritardi nell'approvvigionamento.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-slate-100">
-                   <span className="text-xs font-bold text-emerald-600 block mb-1">IL RISULTATO</span>
+                   <span className="text-xs font-bold text-emerald-700 block mb-1">IL RISULTATO</span>
                    <p className="text-slate-900 font-bold text-lg">
                      +25% Efficienza Operativa
                    </p>
@@ -75,13 +75,13 @@ export const Results: React.FC = () => {
 
               <div className="space-y-4">
                 <div>
-                  <span className="text-xs font-bold text-slate-400 block mb-1">LA SFIDA</span>
+                  <span className="text-xs font-bold text-slate-500 block mb-1">LA SFIDA</span>
                   <p className="text-slate-600 text-sm">
                     Decisioni basate su report mensili obsoleti, navigazione "a vista" della dirigenza.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-slate-100">
-                   <span className="text-xs font-bold text-emerald-600 block mb-1">IL RISULTATO</span>
+                   <span className="text-xs font-bold text-emerald-700 block mb-1">IL RISULTATO</span>
                    <p className="text-slate-900 font-bold text-lg">
                      Dashboard Real-Time
                    </p>
@@ -111,13 +111,13 @@ export const Results: React.FC = () => {
 
               <div className="space-y-4">
                 <div>
-                  <span className="text-xs font-bold text-slate-400 block mb-1">LA SFIDA</span>
+                  <span className="text-xs font-bold text-slate-500 block mb-1">LA SFIDA</span>
                   <p className="text-slate-600 text-sm">
                     Necessità di adeguamento ISO 27001 e protezione dati sensibili da attacchi ransomware.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-slate-100">
-                   <span className="text-xs font-bold text-emerald-600 block mb-1">IL RISULTATO</span>
+                   <span className="text-xs font-bold text-emerald-700 block mb-1">IL RISULTATO</span>
                    <p className="text-slate-900 font-bold text-lg">
                      Blindatura Totale
                    </p>

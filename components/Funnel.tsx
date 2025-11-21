@@ -54,7 +54,7 @@ export const Funnel: React.FC = () => {
               </h3>
               <div className="prose prose-lg text-slate-600 space-y-4 leading-relaxed">
                 <p>
-                  Come te, crediamo nella concretezza, nell'efficienza e nella crescita sostenibile. Per noi, partnership significa lavorare fianco a fianco con <strong className="text-emerald-600 font-bold">etica e trasparenza</strong> per raggiungere obiettivi reali. Il rispetto per il tuo lavoro e i tuoi investimenti è fondamentale. Questi valori guidano ogni nostro progetto. Ti ritrovi?
+                  Come te, crediamo nella concretezza, nell'efficienza e nella crescita sostenibile. Per noi, partnership significa lavorare fianco a fianco con <strong className="text-emerald-700 font-bold">etica e trasparenza</strong> per raggiungere obiettivi reali. Il rispetto per il tuo lavoro e i tuoi investimenti è fondamentale. Questi valori guidano ogni nostro progetto. Ti ritrovi?
                 </p>
                 <p>
                   Ignorare l'evoluzione tecnologica o affidarsi a soluzioni inadeguate, però, significa <strong className="text-slate-800 font-bold">rischiare ogni giorno</strong>: perdere tempo in processi manuali, basare decisioni su dati incompleti, o peggio, subire danni da attacchi informatici. Sentirsi "indietro" o frustrati dalla tecnologia non è un destino inevitabile, ma un rischio concreto se manca la giusta strategia. Non vuoi che questo accada alla tua azienda, vero?
