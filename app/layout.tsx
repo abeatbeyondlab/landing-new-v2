@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Outfit } from 'next/font/google'
 import "./globals.css"
 import { siteConfig } from '@/config/site'
+import { ManifestLoader } from '@/components/ManifestLoader'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -63,7 +64,6 @@ export const metadata: Metadata = {
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png',
   },
-  manifest: '/site.webmanifest',
   other: {
     'theme-color': '#0f172a',
   },
@@ -77,6 +77,7 @@ export default function RootLayout({
   return (
     <html lang="it" className={`scroll-smooth ${inter.variable} ${outfit.variable}`}>
       <body className="bg-slate-50 text-slate-900">
+        <ManifestLoader />
         <div id="root">{children}</div>
       </body>
     </html>
