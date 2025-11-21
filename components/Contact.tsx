@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from './Button';
-import { Send, CheckCircle, Mail, MapPin } from 'lucide-react';
+import { Send, CheckCircle } from 'lucide-react';
 
 export const Contact: React.FC = () => {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');

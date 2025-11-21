@@ -2,61 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './Button';
 import { usePathname, useRouter } from 'next/navigation';
-import LogoIcon from './LogoIcon'
-const SailboatLogo = ({ className = "" }: { className?: string }) => (
-  <svg 
-    viewBox="0 0 100 100" 
-    className={className}
-    fill="none" 
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    {/* Water Splash Effect */}
-    <path d="M10 85 Q 25 95 40 88 T 70 85 T 95 90" stroke="#06B6D4" strokeWidth="3" strokeLinecap="round" className="opacity-60" />
-    <path d="M15 90 Q 30 98 45 92 T 75 90" stroke="#3B82F6" strokeWidth="3" strokeLinecap="round" className="opacity-40" />
-    
-    {/* Hull */}
-    <path 
-      d="M25 75 C 25 75 35 88 60 85 C 85 82 90 70 90 70 L 25 75 Z" 
-      fill="#3B82F6" 
-      stroke="#1E3A8A" 
-      strokeWidth="1"
-    />
-    
-    {/* Mast */}
-    <path d="M55 78 L 75 15" stroke="#CBD5E1" strokeWidth="2" strokeLinecap="round" />
-    
-    {/* Main Sail */}
-    <path 
-      d="M58 75 L 76 18 L 92 65 Q 75 70 58 75 Z" 
-      fill="url(#sailGradient)" 
-      stroke="#94A3B8" 
-      strokeWidth="0.5"
-    />
-    
-    {/* Jib Sail */}
-    <path 
-      d="M52 73 L 72 20 L 35 65 Q 45 70 52 73 Z" 
-      fill="url(#sailGradient)" 
-      stroke="#94A3B8" 
-      strokeWidth="0.5"
-    />
 
-    {/* Italian Flag */}
-    <g transform="translate(74, 12) rotate(15)">
-      <rect x="0" y="0" width="3" height="6" fill="#16A34A" />
-      <rect x="3" y="0" width="3" height="6" fill="#FFFFFF" />
-      <rect x="6" y="0" width="3" height="6" fill="#DC2626" />
-    </g>
-
-    {/* Gradients */}
-    <defs>
-      <linearGradient id="sailGradient" x1="50" y1="0" x2="80" y2="100" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#F8FAFC" />
-        <stop offset="1" stopColor="#E2E8F0" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
