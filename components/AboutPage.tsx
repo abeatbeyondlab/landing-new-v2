@@ -1,6 +1,7 @@
 'use client'
 
 import  { useEffect } from 'react';
+import Image from 'next/image';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Trust } from './Trust';
@@ -19,7 +20,15 @@ export const AboutPage: React.FC = () => {
       <main>
         {/* Hero Section */}
         <section className="pt-32 pb-20 bg-brand-dark text-white relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/chi-siamo-bg.jpg')] bg-cover bg-center opacity-10"></div>
+          <div className="absolute top-0 left-0 w-full h-full opacity-10">
+            <Image
+              src="/images/chi-siamo-bg.jpg"
+              alt="Background"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 to-brand-dark"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">

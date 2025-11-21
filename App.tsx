@@ -12,6 +12,7 @@ import { Process } from './components/Process';
 import { Results } from './components/Results';
 import { Objections } from './components/Objections';
 import { Contact } from './components/Contact';
+import { JsonLd, organizationSchema, websiteSchema } from './components/JsonLd';
 
 const Footer = dynamic(() => import('./components/Footer').then(mod => mod.Footer), {
   loading: () => <div className="bg-slate-900 border-t border-slate-800 pt-16 pb-12 text-slate-400 text-sm"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">Loading...</div></div>
@@ -32,6 +33,8 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-blue-200 selection:text-blue-900">
+      <JsonLd data={organizationSchema()} />
+      <JsonLd data={websiteSchema()} />
       <Header />
       
       <main>
