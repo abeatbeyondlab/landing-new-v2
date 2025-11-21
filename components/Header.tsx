@@ -83,11 +83,9 @@ export const Header: React.FC = () => {
   const scrollToSection = (id: string) => {
     setIsMobileMenuOpen(false);
     
-    if (pathname === '/') {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     } else {
       router.push(`/#${id}`);
     }
@@ -125,13 +123,23 @@ export const Header: React.FC = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center bg-white/5 rounded-full px-2 py-1 border border-white/10 backdrop-blur-sm">
-          {['Metodo', 'Servizi', 'Chi Siamo'].map((item) => (
+          {[
+            { label: 'Metodo', type: 'scroll', id: 'metodo' },
+            { label: 'Servizi', type: 'scroll', id: 'servizi' },
+            { label: 'Chi Siamo', type: 'link', href: '/chi-siamo' }
+          ].map((item) => (
             <button 
-              key={item}
-              onClick={() => scrollToSection(item.toLowerCase())}
+              key={item.label}
+              onClick={() => {
+                if (item.type === 'scroll' && item.id) {
+                  scrollToSection(item.id);
+                } else if (item.type === 'link' && item.href) {
+                  router.push(item.href);
+                }
+              }}
               className="px-5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300"
             >
-              {item}
+              {item.label}
             </button>
           ))}
         </nav>
@@ -158,13 +166,24 @@ export const Header: React.FC = () => {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="absolute top-full left-0 right-0 bg-brand-dark border-b border-slate-800 p-6 flex flex-col gap-4 lg:hidden animate-in slide-in-from-top-5 shadow-2xl">
-          {['Metodo', 'Servizi', 'Chi Siamo'].map((item) => (
+          {[
+            { label: 'Metodo', type: 'scroll', id: 'metodo' },
+            { label: 'Servizi', type: 'scroll', id: 'servizi' },
+            { label: 'Chi Siamo', type: 'link', href: '/chi-siamo' }
+          ].map((item) => (
             <button 
-              key={item}
-              onClick={() => scrollToSection(item.toLowerCase())}
+              key={item.label}
+              onClick={() => {
+                if (item.type === 'scroll' && item.id) {
+                  scrollToSection(item.id);
+                } else if (item.type === 'link' && item.href) {
+                  router.push(item.href);
+                  setIsMobileMenuOpen(false);
+                }
+              }}
               className="text-left text-lg text-slate-300 font-medium py-3 border-b border-slate-800 hover:text-cyan-400 transition-colors"
             >
-              {item}
+              {item.label}
             </button>
           ))}
           <Button onClick={() => scrollToSection('contact')} variant="glow" fullWidth className="mt-4">
