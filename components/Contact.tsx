@@ -47,26 +47,43 @@ export const Contact: React.FC = () => {
             
             <div>
               <h3 className="text-3xl font-display font-bold text-white mb-6">
-                Il vento è <br/><span className="text-cyan-400">cambiato</span>.
+                Fai il Primo Passo <span className="text-cyan-400">Ora</span>.
               </h3>
-              <p className="text-blue-100 text-lg mb-8 leading-relaxed">
-                Mentre leggi, i tuoi competitor stanno già ottimizzando. Non restare in porto. Prenota 30 minuti di analisi strategica per capire come riprendere il largo.
-              </p>
               
-              <div className="space-y-6">
-                <div className="flex items-center text-white group">
-                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mr-4 group-hover:bg-blue-500 transition-colors">
-                    <Mail size={20} />
-                  </div>
-                  <span className="opacity-80">info@abeatbeyond.com</span>
-                </div>
-                <div className="flex items-center text-white group">
-                   <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mr-4 group-hover:bg-blue-500 transition-colors">
-                    <MapPin size={20} />
-                  </div>
-                  <span className="opacity-80">Strada S.Anna 580, Modena</span>
-                </div>
+              <div className="text-blue-100 text-lg mb-8 leading-relaxed space-y-4">
+                <p className="font-semibold text-white">Non Rimandare la Crescita.</p>
+                <p>
+                  Hai visto come un approccio ingegneristico all'IT può fare la differenza per la tua PMI. 
+                  Ora è il momento di agire. 
+                  Trasforma le sfide tecnologiche in opportunità concrete.
+                </p>
               </div>
+
+              <div className="mb-6">
+                <p className="text-white font-bold text-lg mb-2 leading-tight">
+                  Richiedi Ora la Tua Consulenza Strategica Gratuita di 30 Minuti!
+                </p>
+                <p className="text-blue-100">
+                  Scopri senza impegno come possiamo aiutarti a:
+                </p>
+              </div>
+              
+              <ul className="space-y-3">
+                {[
+                  "Aumentare l'efficienza operativa",
+                  "Prendere decisioni migliori con la Business Intelligence",
+                  "Integrare i tuoi sistemi software",
+                  "Rafforzare la tua Cybersecurity",
+                  "Sfruttare le nuove tecnologie (Cloud, AI, Web3...)"
+                ].map((item, index) => (
+                  <li key={index} className="flex items-start text-white group">
+                    <div className="mt-1 mr-3 min-w-[20px]">
+                      <CheckCircle size={18} className="text-emerald-400" />
+                    </div>
+                    <span className="opacity-90 text-sm md:text-base">{item}.</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <div className="mt-12 pt-8 border-t border-white/10">

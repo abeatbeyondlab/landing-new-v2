@@ -91,7 +91,8 @@ export const Footer: React.FC = () => {
         {/* Legal & Info */}
         <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-4xl text-center md:text-left gap-6">
           <div className="space-y-1">
-            <p className="text-slate-300 font-medium">A BEAT BEYOND di MORANDI COMMERCIALE Srl</p>
+            <p className="text-slate-300 font-medium">A BEAT BEYOND di MORANDI engineering</p>
+            <p className="text-slate-400 text-xs mb-1">divisione di Morandi COMMERCIALE Srl</p>
             <p>Strada S.Anna 580, 41122 MODENA (MO)</p>
           </div>
           
