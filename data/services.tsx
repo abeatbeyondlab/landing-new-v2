@@ -1,4 +1,3 @@
-import React from 'react';
 import { ShieldCheck, BarChart3, Cog, Layers, Code2, BookOpen, Users, Layout } from 'lucide-react';
 import { ServiceItem } from '../types';
 

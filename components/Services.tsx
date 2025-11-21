@@ -1,6 +1,6 @@
 import React from 'react';
-import { ShieldCheck, BarChart3, Cog, Layers, Code2, BookOpen, Users, Layout, ArrowUpRight } from 'lucide-react';
-import { ServiceItem } from '../types';
+// @ts-ignore
+import { BarChart3, Cog, Layers, Code2, BookOpen, Users, Layout, ArrowUpRight } from 'lucide-react';
 import { servicesData } from '../data/services';
 
 export const Services: React.FC = () => {

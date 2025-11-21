@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, Clock, ShieldCheck, BarChart3 } from 'lucide-react';
+import { TrendingUp, ShieldCheck, BarChart3 } from 'lucide-react';
 
 export const Results: React.FC = () => {
   return (

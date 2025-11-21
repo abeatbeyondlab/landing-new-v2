@@ -1,5 +1,4 @@
 import React from 'react';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const Funnel: React.FC = () => {
   return (
