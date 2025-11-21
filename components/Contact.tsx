@@ -30,8 +30,15 @@ export const Contact: React.FC = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to submit form');
+        const errorText = await response.text();
+        let errorMessage = 'Failed to submit form';
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          errorMessage = errorText || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
 
       setFormStatus('success');
@@ -133,6 +140,7 @@ export const Contact: React.FC = () => {
                   <label htmlFor="name" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">Nome e Cognome</label>
                   <input 
                     id="name"
+                    name="name"
                     type="text" 
                     required 
                     className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 placeholder-slate-500"
@@ -143,6 +151,7 @@ export const Contact: React.FC = () => {
                   <label htmlFor="phone" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">Telefono</label>
                   <input 
                     id="phone"
+                    name="phone"
                     type="tel" 
                     required 
                     className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 placeholder-slate-500"
@@ -155,6 +164,7 @@ export const Contact: React.FC = () => {
                 <label htmlFor="email" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">Email Aziendale</label>
                 <input 
                   id="email"
+                  name="email"
                   type="email" 
                   required 
                   className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 placeholder-slate-500"

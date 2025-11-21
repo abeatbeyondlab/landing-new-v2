@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
       'Richiesta': message,
       'sfida': challenge,
       'submittedAt': new Date().toISOString(),
+      'formMode': 'test',
     };
 
     const response = await fetch(webhookUrl, {
