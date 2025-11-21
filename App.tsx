@@ -1,4 +1,7 @@
+'use client'
+
 import React, { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Trust } from './components/Trust';
@@ -9,7 +12,10 @@ import { Process } from './components/Process';
 import { Results } from './components/Results';
 import { Objections } from './components/Objections';
 import { Contact } from './components/Contact';
-import { Footer } from './components/Footer';
+
+const Footer = dynamic(() => import('./components/Footer').then(mod => mod.Footer), {
+  loading: () => <div className="bg-slate-900 border-t border-slate-800 pt-16 pb-12 text-slate-400 text-sm"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">Loading...</div></div>
+});
 
 const App: React.FC = () => {
   useEffect(() => {

@@ -1,3 +1,5 @@
+'use client'
+
 import  { useEffect } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -17,7 +19,7 @@ export const AboutPage: React.FC = () => {
       <main>
         {/* Hero Section */}
         <section className="pt-32 pb-20 bg-brand-dark text-white relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2850&q=80')] bg-cover bg-center opacity-10"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/chi-siamo-bg.jpg')] bg-cover bg-center opacity-10"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 to-brand-dark"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
@@ -49,7 +51,7 @@ export const AboutPage: React.FC = () => {
                         <div className="aspect-video bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl overflow-hidden shadow-xl border border-slate-100 flex items-center justify-center relative group">
                             
                             {/* Subtle Overlay Texture */}
-                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
+                            <div className="absolute inset-0 bg-[url('/images/cubes.png')] opacity-[0.03]"></div>
 
                             <svg viewBox="0 0 400 300" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
