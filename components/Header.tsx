@@ -75,6 +75,7 @@ export const Header: React.FC = () => {
           {[
             { label: 'Metodo', type: 'scroll', id: 'metodo' },
             { label: 'Servizi', type: 'scroll', id: 'servizi' },
+            { label: 'Blog', type: 'link', href: '/blog' },
             { label: 'Chi Siamo', type: 'link', href: '/chi-siamo' }
           ].map((item) => (
             <button 
@@ -119,6 +120,7 @@ export const Header: React.FC = () => {
           {[
             { label: 'Metodo', type: 'scroll', id: 'metodo' },
             { label: 'Servizi', type: 'scroll', id: 'servizi' },
+            { label: 'Blog', type: 'link', href: '/blog' },
             { label: 'Chi Siamo', type: 'link', href: '/chi-siamo' }
           ].map((item) => (
             <button 

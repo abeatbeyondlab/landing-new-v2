@@ -92,3 +92,4 @@ temp/
 
 # DynamoDB Local files
 .dynamodb/
+generated

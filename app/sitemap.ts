@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
 import { servicesData } from '@/data/services'
 import { siteConfig } from '@/config/site'
+import { getSortedPosts } from '@/data/db'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url
 
   // Static pages
@@ -19,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
   ]
 
   // Dynamic service pages
@@ -29,5 +36,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }))
 
-  return [...staticPages, ...servicePages]
+  // Blog posts
+  const posts = await getSortedPosts();
+  const blogPosts = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: 'monthly' as const, // Articoli di blog tendono a essere statici
+    priority: 0.7,
+  }))
+
+  return [...staticPages, ...servicePages, ...blogPosts]
 }

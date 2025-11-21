@@ -31,15 +31,15 @@ export const Hero: React.FC = () => {
         </div>
 
 
-     <LogoIcon/>
+     <LogoIcon className="w-80 h-80 md:w-[450px] md:h-[450px]" />
 
 
         {/* Main Headline */}
         {/* FIX: Adjusted mobile font size to text-4xl to prevent overflow on small screens */}
         <h1 className="text-4xl md:text-7xl lg:text-8xl font-display font-black text-white tracking-tight mb-8 leading-[1.1] animate-slide-up" style={{animationDelay: '0.1s'}}>
-          Smetti di navigare a vista.<br/>
+          Smetti di navigare a vista<br/>
           <span className="text-gradient relative">
-            Riprendi il Timone.
+            Riprendi il Timone
             <svg className="absolute w-full h-3 -bottom-1 left-0 text-blue-500 opacity-50" viewBox="0 0 100 10" preserveAspectRatio="none">
               <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
             </svg>

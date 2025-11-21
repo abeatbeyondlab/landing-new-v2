@@ -27,3 +27,5 @@ dist-ssr
 dist
 .env.local
 .env
+/app/generated/prisma
+generated
