@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react';
-import Image from 'next/image';
 import { ArrowRight, CheckCircle2, Compass, Anchor } from 'lucide-react';
 import { Button } from './Button';
 import LogoIcon from './LogoIcon'
