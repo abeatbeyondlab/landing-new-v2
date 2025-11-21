@@ -1,49 +1,7 @@
 import React from 'react';
 import { ShieldCheck, BarChart3, Cog, Layers, Code2, BookOpen, Users, Layout, ArrowUpRight } from 'lucide-react';
 import { ServiceItem } from '../types';
-
-const services: ServiceItem[] = [
-  {
-    title: "Advisor e Strategia sulla Trasformazione Digitale",
-    description: "Il tuo Ufficiale di Rotta. Definiamo la direzione tecnologica per raggiungere i tuoi obiettivi di business.",
-    icon: Users
-  },
-  {
-    title: "progettazione Architetture Informatiche",
-    description: "Lo Scafo della nave. Progettiamo infrastrutture robuste e scalabili per affrontare ogni mare.",
-    icon: Layout
-  },
-  {
-    title: "Integrazione dei Sistemi Gestionali",
-    description: "Sincronia dell'equipaggio. ERP, CRM e MES dialogano perfettamente per eliminare errori e ritardi.",
-    icon: Layers
-  },
-  {
-    title: "Cybersecurity",
-    description: "Scudo contro le tempeste. Protezione dati e conformità ISO 27001 per navigare sicuri.",
-    icon: ShieldCheck
-  },
-  {
-    title: "Business Intelligence",
-    description: "Il Radar di bordo. Trasformiamo i dati in una visione chiara per evitare scogli e cogliere opportunità.",
-    icon: BarChart3
-  },
-  {
-    title: "Open Source",
-    description: "Libertà di manovra. Riduciamo la dipendenza da fornitori esterni (Vendor Lock-in) e tagliamo i costi.",
-    icon: Code2
-  },
-  {
-    title: "Temporary Project Management",
-    description: "Il Capitano in seconda. Gestiamo i progetti complessi garantendo tempi, costi e risultati.",
-    icon: Cog
-  },
-  {
-    title: "Formazione",
-    description: "Addestramento equipaggio. Trasferiamo competenze al tuo team per rendervi autonomi.",
-    icon: BookOpen
-  }
-];
+import { servicesData } from '../data/services';
 
 export const Services: React.FC = () => {
   return (
@@ -64,10 +22,11 @@ export const Services: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {services.map((service, index) => (
-            <div 
-              key={index} 
-              className="group relative p-1 rounded-2xl bg-gradient-to-b from-white/10 to-white/5 hover:from-blue-500/50 hover:to-cyan-400/50 transition-all duration-500"
+          {servicesData.map((service, index) => (
+            <a
+              key={index}
+              href={`/service/${service.slug}`}
+              className="group relative p-1 rounded-2xl bg-gradient-to-b from-white/10 to-white/5 hover:from-blue-500/50 hover:to-cyan-400/50 transition-all duration-500 block"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-blue-500/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>
               
@@ -85,7 +44,7 @@ export const Services: React.FC = () => {
                   {service.description}
                 </p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>

@@ -2,6 +2,8 @@ export interface ServiceItem {
   title: string;
   description: string;
   icon: React.ElementType;
+  slug: string;
+  fullContent?: React.ReactNode;
 }
 
 export interface Testimonial {
