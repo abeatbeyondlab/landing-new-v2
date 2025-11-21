@@ -7,7 +7,7 @@ export const Funnel: React.FC = () => {
         
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-6">
-            Il Nostro <span className="text-blue-600">Metodo</span> Ingegneristico
+            Il Nostro <span className="text-blue-600">Metodo</span> ingegnerizzato
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
             Un approccio strutturato per trasformare la tecnologia in un vantaggio competitivo per la tua PMI
@@ -85,7 +85,7 @@ export const Funnel: React.FC = () => {
                   Pensa a come sarebbe lavorare con processi fluidi, dove le informazioni fluiscono senza intoppi tra reparti. Immagina di avere <strong className="text-slate-800 font-bold">dashboard chiare</strong> che ti mostrano in tempo reale cosa funziona e cosa no. Pensa alla tranquillità di sapere che i tuoi dati sono al sicuro (Cybersecurity con ISO 27001). Pensa a quanto più velocemente potresti crescere e innovare.
                 </p>
                 <p>
-                  Per trasformare queste possibilità in realtà quotidiana, ti serve una risorsa chiave: la competenza ingegneristica applicata all'IT. ABeatBeyond ti mette a disposizione questa risorsa: un team di <strong className="text-slate-800 font-bold">ingegneri con esperienza comprovata</strong> nell'ottimizzare processi e integrare tecnologie (ERP, Logistica, Produzione, IoT, Cloud, AI, Web3) per ottenere il massimo risultato possibile.
+                  Per trasformare queste possibilità in realtà quotidiana, ti serve una risorsa chiave: l'ingegneria applicata all'IT. ABeatBeyond ti mette a disposizione questa risorsa: un team di <strong className="text-slate-800 font-bold">ingegneri con esperienza comprovata</strong> nell'ottimizzare processi e integrare tecnologie (ERP, Logistica, Produzione, IoT, Cloud, AI, Web3) per ottenere il massimo risultato possibile.
                 </p>
               </div>
             </div>

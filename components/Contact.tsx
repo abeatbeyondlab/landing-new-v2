@@ -89,7 +89,7 @@ export const Contact: React.FC = () => {
               <div className="text-blue-100 text-lg mb-8 leading-relaxed space-y-4">
                 <p className="font-semibold text-white">Non Rimandare la Crescita.</p>
                 <p>
-                  Hai visto come un approccio ingegneristico all'IT può fare la differenza per la tua PMI. 
+                  Hai visto come un approccio ingegnerizzato all'IT può fare la differenza per la tua PMI. 
                   Ora è il momento di agire. 
                   Trasforma le sfide tecnologiche in opportunità concrete.
                 </p>

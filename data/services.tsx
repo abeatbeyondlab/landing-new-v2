@@ -15,7 +15,7 @@ export const servicesData: ServiceItem[] = [
             In A Beat Beyond, la consulenza strategica software è il primo passo per trasformare la tecnologia in un vero motore di crescita per la tua PMI. Non ci limitiamo a suggerire software: analizziamo a fondo il tuo business, i tuoi processi e i tuoi obiettivi per definire una strategia IT che sia realmente efficace e sostenibile nel tempo.
           </p>
           <p className="mt-4 leading-relaxed text-slate-400">
-            Il nostro approccio ingegneristico ci permette di andare oltre le soluzioni standard, identificando le tecnologie e le architetture più adatte a risolvere le tue sfide specifiche e a cogliere nuove opportunità.
+            Il nostro approccio ingegnerizzato assicura di andare oltre le soluzioni standard, identificando le tecnologie e le architetture più adatte a risolvere le tue sfide specifiche e a cogliere nuove opportunità.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ export const servicesData: ServiceItem[] = [
         </div>
 
         <div>
-          <h4 className="text-xl font-bold text-cyan-400 mb-4">Il nostro approccio ingegneristico si concentra su:</h4>
+          <h4 className="text-xl font-bold text-cyan-400 mb-4">Il nostro approccio ingegnerizzato si concentra su:</h4>
           <ul className="grid gap-4 md:grid-cols-2">
             {[
               "Analisi approfondita dei requisiti di business, performance e sicurezza.",
@@ -216,7 +216,7 @@ export const servicesData: ServiceItem[] = [
         <div className="bg-white/5 p-8 rounded-2xl border border-white/10">
           <h3 className="text-2xl font-bold text-white mb-4">Valutazione Opportunità Software Open Source</h3>
           <p className="leading-relaxed text-slate-400">
-            L'adozione di software open source può rappresentare una significativa opportunità per le PMI di ridurre i costi di licenza, evitare il vendor lock-in e accedere a soluzioni flessibili e personalizzabili. A Beat Beyond ti aiuta a navigare il mondo dell'open source, valutando con un approccio ingegneristico dove e come queste soluzioni possono portare valore al tuo business.
+            L'adozione di software open source può rappresentare una significativa opportunità per le PMI di ridurre i costi di licenza, evitare il vendor lock-in e accedere a soluzioni flessibili e personalizzabili. A Beat Beyond ti aiuta a navigare il mondo dell'open source, valutando con un approccio ingegnerizzato dove e come queste soluzioni possono portare valore al tuo business.
           </p>
           <p className="mt-4 leading-relaxed text-slate-400">
             Non tutte le soluzioni open source sono uguali, e una transizione richiede un'attenta pianificazione.

@@ -48,7 +48,7 @@ export const Process: React.FC = () => {
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Armiamo la Nave</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Implementazione tecnica e ingegneristica. Integriamo i sistemi, potenziamo la sicurezza e ottimizziamo i processi.
+                  Implementazione tecnica e ingegnerizzazione. Integriamo i sistemi, potenziamo la sicurezza e ottimizziamo i processi.
                 </p>
               </div>
             </div>

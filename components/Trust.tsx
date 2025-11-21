@@ -96,7 +96,7 @@ export const Trust: React.FC = () => {
             {/* Context Text */}
             <div className="text-lg text-slate-600 leading-relaxed">
                 <p>
-                    Non offriamo solo tecnologia, ma un percorso di crescita misurabile. I numeri parlano chiaro: la nostra metodologia ingegneristica trasforma le sfide in traguardi raggiunti.
+                    Non offriamo solo tecnologia, ma un percorso di crescita misurabile. I numeri parlano chiaro: l'ingegno trasforma le sfide in traguardi raggiunti.
                 </p>
             </div>
         </div>
