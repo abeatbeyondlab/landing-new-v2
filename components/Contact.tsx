@@ -1,16 +1,45 @@
 import React, { useState } from 'react';
 import { Button } from './Button';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 
 export const Contact: React.FC = () => {
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus('submitting');
-    setTimeout(() => {
+    setErrorMessage('');
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name') as string,
+      phone: formData.get('phone') as string,
+      email: formData.get('email') as string,
+      challenge: formData.get('challenge') as string,
+      message: formData.get('message') as string,
+    };
+
+    try {
+      const response = await fetch('/api/v1/contact-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit form');
+      }
+
       setFormStatus('success');
-    }, 1500);
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setErrorMessage(error instanceof Error ? error.message : 'An unexpected error occurred');
+      setFormStatus('error');
+    }
   };
 
   if (formStatus === 'success') {
@@ -135,13 +164,32 @@ export const Contact: React.FC = () => {
 
               <div className="group">
                 <label htmlFor="challenge" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">La tua sfida principale</label>
-                <select id="challenge" className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 cursor-pointer">
+                <select id="challenge" name="challenge" className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 cursor-pointer">
                   <option>Voglio aumentare l'efficienza (Velocità)</option>
                   <option>Ho problemi di sicurezza (Falle)</option>
                   <option>I sistemi non comunicano (Equipaggio)</option>
                   <option>Altro</option>
                 </select>
               </div>
+
+              <div className="group">
+                <label htmlFor="message" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">Richiesta</label>
+                <textarea 
+                  id="message"
+                  name="message"
+                  required 
+                  rows={4}
+                  className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 placeholder-slate-500 resize-none"
+                  placeholder="Descrivi brevemente la tua richiesta o il tuo progetto..."
+                />
+              </div>
+
+              {formStatus === 'error' && (
+                <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0" />
+                  <p className="text-sm text-red-800">{errorMessage}</p>
+                </div>
+              )}
 
               <div className="pt-4">
                 <Button fullWidth variant="primary" disabled={formStatus === 'submitting'} className="!py-4 text-lg shadow-xl">
