@@ -38,12 +38,14 @@ export const Objections: React.FC = () => {
               <button
                 className="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none"
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-answer-${index}`}
               >
                 <span className="font-bold text-slate-800">{faq.q}</span>
                 {openIndex === index ? <ChevronUp className="text-blue-500" /> : <ChevronDown className="text-slate-400" />}
               </button>
               {openIndex === index && (
-                <div className="px-6 pb-4 animate-in fade-in slide-in-from-top-2">
+                <div id={`faq-answer-${index}`} className="px-6 pb-4 animate-in fade-in slide-in-from-top-2">
                   <p className="text-slate-600 border-l-2 border-blue-500 pl-4">{faq.a}</p>
                 </div>
               )}

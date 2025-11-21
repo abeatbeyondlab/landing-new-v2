@@ -49,9 +49,10 @@ export const Header: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Logo Area */}
-        <div 
-          className="flex items-center gap-3 cursor-pointer group" 
+        <button 
+          className="flex items-center gap-3 group bg-transparent border-none cursor-pointer p-0" 
           onClick={handleLogoClick}
+          aria-label="A Beat Beyond - Torna alla home page"
         >
           {/* Logo Container */}
           <div className="relative w-12 h-12 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3">
@@ -67,7 +68,7 @@ export const Header: React.FC = () => {
               A Beat Beyond
             </span>
           </div>
-        </div>
+        </button>
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center bg-white/5 rounded-full px-2 py-1 border border-white/10 backdrop-blur-sm">
@@ -106,6 +107,7 @@ export const Header: React.FC = () => {
         <button 
           className="lg:hidden text-white"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label={isMobileMenuOpen ? "Chiudi menu" : "Apri menu"}
         >
           {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>

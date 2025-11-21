@@ -23,7 +23,7 @@ export const Footer: React.FC = () => {
           
           <div className="text-center mt-6">
             <h3 className="text-2xl font-display font-bold text-white tracking-tight mb-2">A Beat Beyond</h3>
-            <p className="text-slate-500 font-medium tracking-wider uppercase text-xs">Digital Transformation Engineered</p>
+            <p className="text-slate-400 font-medium tracking-wider uppercase text-xs">Digital Transformation Engineered</p>
           </div>
         </div>
 
@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
           
           <div className="space-y-1 text-center md:text-right">
              <p>C.F. e P.I. 03699910364</p>
-            <p className="text-slate-500">© 2025 All rights reserved</p>
+            <p className="text-slate-400">© 2025 All rights reserved</p>
           </div>
         </div>
 

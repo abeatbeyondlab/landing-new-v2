@@ -2,15 +2,24 @@ import React from 'react';
 
 export const Funnel: React.FC = () => {
   return (
-    <section className="py-20 bg-white text-slate-900">
+    <section id="metodo" className="py-20 bg-white text-slate-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-6">
+            Il Nostro <span className="text-blue-600">Metodo</span> Ingegneristico
+          </h2>
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            Un approccio strutturato per trasformare la tecnologia in un vantaggio competitivo per la tua PMI
+          </p>
+        </div>
+
         <div className="space-y-20">
           
           {/* Point 1 */}
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <div className="flex-shrink-0">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-600 font-bold text-xl shadow-sm">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-800 font-bold text-xl shadow-sm">
                 1
               </div>
             </div>
@@ -35,7 +44,7 @@ export const Funnel: React.FC = () => {
           {/* Point 2 */}
           <div className="flex flex-col md:flex-row gap-8 items-start">
              <div className="flex-shrink-0">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 font-bold text-xl shadow-sm">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xl shadow-sm">
                 2
               </div>
             </div>
@@ -60,7 +69,7 @@ export const Funnel: React.FC = () => {
           {/* Point 3 */}
           <div className="flex flex-col md:flex-row gap-8 items-start">
              <div className="flex-shrink-0">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-purple-100 text-purple-600 font-bold text-xl shadow-sm">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-purple-100 text-purple-800 font-bold text-xl shadow-sm">
                 3
               </div>
             </div>
@@ -85,7 +94,7 @@ export const Funnel: React.FC = () => {
           {/* Point 4 */}
           <div className="flex flex-col md:flex-row gap-8 items-start">
              <div className="flex-shrink-0">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-orange-100 text-orange-600 font-bold text-xl shadow-sm">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-orange-100 text-orange-800 font-bold text-xl shadow-sm">
                 4
               </div>
             </div>
