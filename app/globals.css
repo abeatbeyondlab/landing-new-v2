@@ -2,6 +2,10 @@
 
 @config "../tailwind.config.ts";
 
+@theme {
+  --color-brand-deepBlue: #041a5d;
+}
+
 @layer base {
   body {
     font-family: var(--font-inter), sans-serif;

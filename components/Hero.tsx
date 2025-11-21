@@ -15,15 +15,7 @@ export const Hero: React.FC = () => {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full mix-blend-screen filter blur-[100px] animate-pulse-glow" style={{animationDelay: '1s'}}></div>
         
         {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-20">
-          <Image
-            src="/images/noise.svg"
-            alt="Background pattern"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
+<div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-20"></div>
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
       </div>
 
