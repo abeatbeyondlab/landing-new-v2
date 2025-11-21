@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './Button';
+import { usePathname, useRouter } from 'next/navigation';
 import LogoIcon from './LogoIcon'
 const SailboatLogo = ({ className = "" }: { className?: string }) => (
   <svg 
@@ -60,6 +61,8 @@ const SailboatLogo = ({ className = "" }: { className?: string }) => (
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,11 +72,24 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleLogoClick = () => {
+    if (pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      router.push('/');
+    }
+  };
+
   const scrollToSection = (id: string) => {
     setIsMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    
+    if (pathname === '/') {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      router.push(`/#${id}`);
     }
   };
 
@@ -89,7 +105,7 @@ export const Header: React.FC = () => {
         {/* Logo Area */}
         <div 
           className="flex items-center gap-3 cursor-pointer group" 
-          onClick={() => scrollToSection('hero')}
+          onClick={handleLogoClick}
         >
           {/* Logo Container */}
           <div className="relative w-12 h-12 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3">
