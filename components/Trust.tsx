@@ -23,11 +23,11 @@ export const Trust: React.FC = () => {
                  </h2>
                  <div className="grid grid-cols-2 gap-8">
                     <div>
-                        <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">60+</div>
+                        <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">30+</div>
                         <p className="text-slate-600 font-medium">Aziende che si fidano di noi</p>
                     </div>
                     <div>
-                        <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">70+</div>
+                        <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">40+</div>
                          <p className="text-slate-600 font-medium">Soluzioni sviluppate</p>
                     </div>
                  </div>
@@ -58,21 +58,31 @@ export const Trust: React.FC = () => {
             <div className="flex gap-12 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500 animate-scroll-logos">
                 {/* Logos Set 1 */}
                 <div className="flex gap-12 items-center shrink-0">
-                    <div className="text-2xl font-serif italic font-bold text-slate-800 hover:text-black cursor-default whitespace-nowrap">Lamborghini</div>
-                    <div className="text-2xl font-bold tracking-tighter text-slate-800 hover:text-blue-600 cursor-default whitespace-nowrap">bi-rex</div>
-                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">PMOStudio</div>
-                    <div className="text-2xl font-black text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">ZE<span className="font-light">FORM</span></div>
-                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">TechMinds</div>
-                    <div className="text-2xl font-bold tracking-wide text-slate-800 hover:text-blue-600 cursor-default whitespace-nowrap">INNOVA</div>
+                    <div className="text-2xl font-bold tracking-tighter text-slate-800 hover:text-blue-600 cursor-default whitespace-nowrap">BI-REX</div>
+                    <div className="text-2xl font-black text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">CAE</div>
+                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">ZENITFARMA</div>
+                    <div className="text-2xl font-serif italic font-bold text-slate-800 hover:text-black cursor-default whitespace-nowrap">ZATACOM</div>
+                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">TRAVELWARE</div>
+                    <div className="text-2xl font-bold tracking-tighter text-slate-500 hover:text-blue-600 cursor-default whitespace-nowrap">NAZARENO COOPSOCIALE</div>
+                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">AUSER</div>
+                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">FARMACIA SAN PIETRO</div>
+                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">MONEYVIZ</div>
+                    <div className="text-2xl font-bold tracking-tighter text-slate-800 hover:text-blue-600 cursor-default whitespace-nowrap">FACTORYBOOK</div>
+                    <div className="text-2xl font-serif italic font-bold text-slate-800 hover:text-black cursor-default whitespace-nowrap">FANTACALCIO ONLINE</div>
                 </div>
                 {/* Logos Set 2 (Duplicate) */}
                 <div className="flex gap-12 items-center shrink-0">
-                    <div className="text-2xl font-serif italic font-bold text-slate-800 hover:text-black cursor-default whitespace-nowrap">Lamborghini</div>
-                    <div className="text-2xl font-bold tracking-tighter text-slate-800 hover:text-blue-600 cursor-default whitespace-nowrap">bi-rex</div>
-                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">PMOStudio</div>
-                    <div className="text-2xl font-black text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">ZE<span className="font-light">FORM</span></div>
-                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">TechMinds</div>
-                    <div className="text-2xl font-bold tracking-wide text-slate-800 hover:text-blue-600 cursor-default whitespace-nowrap">INNOVA</div>
+                    <div className="text-2xl font-bold tracking-tighter text-slate-800 hover:text-blue-600 cursor-default whitespace-nowrap">BI-REX</div>
+                    <div className="text-2xl font-black text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">CAE</div>
+                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">ZENITFARMA</div>
+                    <div className="text-2xl font-serif italic font-bold text-slate-800 hover:text-black cursor-default whitespace-nowrap">ZATACOM</div>
+                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">TRAVELWARE</div>
+                    <div className="text-2xl font-bold tracking-tighter text-slate-600 hover:text-blue-600 cursor-default whitespace-nowrap">NAZARENO COOPSOCIALE</div>
+                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">AUSER</div>
+                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">FARMACIA SAN PIETRO</div>
+                    <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">MONEYVIZ</div>
+                    <div className="text-2xl font-bold tracking-tighter text-slate-800 hover:text-blue-600 cursor-default whitespace-nowrap">FACTORYBOOK</div>
+                    <div className="text-2xl font-serif italic font-bold text-slate-800 hover:text-black cursor-default whitespace-nowrap">FANTACALCIO ONLINE</div>
                 </div>
              </div>
           </div>
