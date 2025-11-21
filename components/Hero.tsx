@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, CheckCircle2, Compass, Anchor } from 'lucide-react';
 import { Button } from './Button';
-
+import LogoIcon from './LogoIcon'
 export const Hero: React.FC = () => {
   return (
     <section id="hero" className="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-brand-dark">
@@ -18,6 +18,7 @@ export const Hero: React.FC = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
         
+    
         {/* Badge */}
         <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 border border-blue-400/30 text-cyan-300 mb-8 animate-slide-up backdrop-blur-md hover:bg-blue-500/20 transition-colors cursor-default">
           <span className="relative flex h-2 w-2 mr-3">
@@ -26,6 +27,10 @@ export const Hero: React.FC = () => {
           </span>
           <span className="text-xs md:text-sm font-bold tracking-widest uppercase">Digital Transformation Engineered</span>
         </div>
+
+
+     <LogoIcon/>
+
 
         {/* Main Headline */}
         {/* FIX: Adjusted mobile font size to text-4xl to prevent overflow on small screens */}
@@ -41,8 +46,8 @@ export const Hero: React.FC = () => {
 
         {/* Subheadline */}
         <p className="text-lg md:text-2xl text-slate-300 max-w-3xl mb-10 leading-relaxed font-light animate-slide-up" style={{animationDelay: '0.2s'}}>
-          Il mercato è in tempesta e la complessità tecnologica rischia di farti affondare. <br className="hidden md:block" />
-          Siamo l'Advisor che sale a bordo per trasformare la tua azienda in una nave inaffondabile, veloce e coordinata nell'oceano digitale.
+          La complessità tecnologica rischia di farti affondare a Capo Horn? <br className="hidden md:block" />
+          A Beat Beyond è l'Advisor che sale a bordo per trasformare la tua azienda in una nave stabile, agile e profittevole dell'oceano digitale.
         </p>
 
         {/* CTA Group */}

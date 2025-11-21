@@ -1,5 +1,5 @@
 import React from 'react';
-
+import LogoIcon from './LogoIcon'
 
 
 const SailboatLogoV2 = ({ className = "" }: { className?: string }) => (
@@ -75,7 +75,8 @@ export const Footer: React.FC = () => {
         <div className="flex flex-col items-center mb-10">
           <div className="relative group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="absolute inset-0 bg-cyan-500/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-            <SailboatLogoV2 className="w-40 h-40 drop-shadow-2xl transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-1" />
+            {/*<Sailb<SailboatLogoV2 className="w-40 h-40 drop-shadow-2xl transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-1" />oatLogoV2 className="w-40 h-40 drop-shadow-2xl transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-1" />*/}
+          <LogoIcon></LogoIcon>
           </div>
           
           <div className="text-center mt-6">

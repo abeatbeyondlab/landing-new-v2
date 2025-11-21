@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './Button';
-
+import LogoIcon from './LogoIcon'
 const SailboatLogo = ({ className = "" }: { className?: string }) => (
   <svg 
     viewBox="0 0 100 100" 
@@ -94,7 +94,10 @@ export const Header: React.FC = () => {
           {/* Logo Container */}
           <div className="relative w-12 h-12 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3">
              <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-             <SailboatLogo className="w-full h-full drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+            
+           
+          {/*   <SailboatLogo className="w-full h-full drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" />*/}
+          
           </div>
           
           <div className="flex flex-col">
