@@ -206,3 +206,73 @@ export async function getTagBySlug(slug: string): Promise<Tag | null> {
     return null;
   }
 }
+
+export async function getPosts({
+  page = 1,
+  limit = 6,
+  search,
+  tagSlug
+}: {
+  page?: number;
+  limit?: number;
+  search?: string;
+  tagSlug?: string;
+}): Promise<{ posts: Post[]; total: number }> {
+  try {
+    const skip = (page - 1) * limit;
+    
+    const where: any = {
+      state: 1,
+    };
+
+    if (tagSlug) {
+      where.post_tag = {
+        some: {
+          tag: {
+            slug: tagSlug
+          }
+        }
+      };
+    }
+
+    if (search) {
+      where.OR = [
+        { title: { contains: search } }, // Case insensitive usually default in SQLite?
+        { description: { contains: search } }
+      ];
+    }
+
+    const [postsFromDb, total] = await Promise.all([
+      prisma.post.findMany({
+        where,
+        orderBy: { date: 'desc' },
+        skip,
+        take: limit,
+        include: {
+          post_tag: {
+            include: { tag: true }
+          }
+        }
+      }),
+      prisma.post.count({ where })
+    ]);
+
+    const posts = postsFromDb.map((postFromDb) => ({
+      id: postFromDb.id,
+      slug: postFromDb.slug,
+      title: postFromDb.title,
+      description: postFromDb.description || '',
+      date: postFromDb.date || '',
+      author: postFromDb.author || '',
+      content: postFromDb.content,
+      tags: postFromDb.post_tag.map((pt) => ({ name: pt.tag.name, slug: pt.tag.slug })),
+      image_slug: postFromDb.image_slug || '',
+    }));
+
+    return { posts, total };
+
+  } catch (error) {
+    console.error("Failed to fetch paginated posts:", error);
+    return { posts: [], total: 0 };
+  }
+}

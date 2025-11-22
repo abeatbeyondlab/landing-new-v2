@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { servicesData } from '@/data/services'
 import { siteConfig } from '@/config/site'
-import { getSortedPosts } from '@/data/db'
+import { getSortedPosts, getAllTags } from '@/data/db'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url
@@ -45,5 +45,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticPages, ...servicePages, ...blogPosts]
+  // Tags pages
+  const tags = await getAllTags();
+  const tagPages = tags.map((tag) => ({
+    url: `${baseUrl}/blog/tag/${tag.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.6,
+  }))
+
+  return [...staticPages, ...servicePages, ...blogPosts, ...tagPages]
 }

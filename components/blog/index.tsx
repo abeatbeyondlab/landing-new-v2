@@ -1,7 +1,8 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NextLink from 'next/link';
-import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { MdOutlineNavigateBefore, MdOutlineNavigateNext, MdSearch } from "react-icons/md";
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
@@ -26,40 +27,63 @@ interface BlogProps {
   title?: string;
   subtitle?: string;
   tags?: Tag[];
+  showBackLink?: boolean;
+  totalPages: number;
+  currentPage: number;
 }
 
-export const Blog = ({ posts, title = "Blog", subtitle = "Leggi gli ultimi post!!", tags }: BlogProps) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
-  const postsPerPage = 3;
+export const Blog = ({ 
+  posts, 
+  title = "Blog", 
+  subtitle = "Leggi gli ultimi post!!", 
+  tags, 
+  showBackLink = false,
+  totalPages,
+  currentPage 
+}: BlogProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  
+  // Local state for input field only
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
 
-  const filteredPosts = posts.filter(
-    (post) =>
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    setSearchTerm(searchParams.get('q') || '');
+  }, [searchParams]);
 
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const handleSearch = () => {
+    if (searchTerm.length > 0 && searchTerm.length < 3) {
+      // Optional: Show error or just don't search
+      return;
+    }
+    
+    const params = new URLSearchParams(searchParams);
+    if (searchTerm.length >= 3) {
+        params.set('q', searchTerm);
+    } else {
+        params.delete('q');
+    }
+    params.set('page', '1'); // Reset to page 1 on new search
+    router.push(`${pathname}?${params.toString()}`);
+  };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
     }
   };
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', page.toString());
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   const default_blog_image_slug = "1.webp"; 
 
   return (
-    <div className="min-h-screen bg-brand-dark text-white flex flex-col items-center w-full">
+    <div className="min-h-screen bg-brand-dark text-white flex flex-col w-full">
       <Header />
       {/* Background Elements matched from Hero */}
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -68,24 +92,43 @@ export const Blog = ({ posts, title = "Blog", subtitle = "Leggi gli ultimi post!
         <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-10"></div>
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl flex flex-col items-center">
-        <h1 className="text-4xl font-display font-bold text-center mb-2 text-white mt-32">
+      <div className="relative z-10 w-full max-w-7xl flex flex-col items-center mx-auto pb-20">
+        
+        {showBackLink && (
+          <div className="w-full max-w-3xl mx-auto mt-32 mb-4 px-4 md:px-0">
+            <NextLink 
+              href="/blog" 
+              className="inline-flex items-center text-slate-400 hover:text-white transition-colors gap-2"
+            >
+              <MdOutlineNavigateBefore className="text-xl" /> Torna al Blog
+            </NextLink>
+          </div>
+        )}
+
+        <h1 className={`text-4xl font-display font-bold text-center mb-2 text-white ${!showBackLink ? 'mt-32' : ''}`}>
           {title}
         </h1>
         <p className="text-lg text-center mb-8 text-slate-300">
           {subtitle}
         </p>
       
-        <input
-          type="text"
-          className="w-full md:max-w-md my-3 px-4 py-2 rounded-lg border border-white/10 bg-white/5 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 backdrop-blur-sm transition-all"
-          placeholder="Cerca per titolo o descrizione..."
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            setCurrentPage(1);
-          }}
-        />
+        <div className="w-full md:max-w-md my-3 relative">
+            <input
+            type="text"
+            className="w-full px-4 py-2 pr-10 rounded-lg border border-white/10 bg-white/5 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 backdrop-blur-sm transition-all"
+            placeholder="Cerca (min. 3 caratteri)..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+            />
+            <button 
+                onClick={handleSearch}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-white transition-colors"
+                aria-label="Cerca"
+            >
+                <MdSearch className="w-6 h-6" />
+            </button>
+        </div>
 
         {/* Tag Filter List */}
         {tags && tags.length > 0 && (
@@ -102,11 +145,11 @@ export const Blog = ({ posts, title = "Blog", subtitle = "Leggi gli ultimi post!
           </div>
         )}
       
-        {filteredPosts.length === 0 ? (
+        {posts.length === 0 ? (
           <p className="text-slate-400">Nessun articolo trovato.</p>
         ) : (
           <div className="w-full max-w-3xl mx-auto flex flex-col gap-6">
-            {currentPosts.map((post) => (
+            {posts.map((post) => (
               <article
                 key={post.slug}
                 className="flex flex-col md:flex-row bg-white/5 border border-white/10 shadow-lg rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-200 ease-in-out backdrop-blur-sm"
@@ -163,7 +206,7 @@ export const Blog = ({ posts, title = "Blog", subtitle = "Leggi gli ultimi post!
                     href={`/blog/${post.slug}`}
                     className="text-sm font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors"
                   >
-                    Leggi &gt;
+                    Leggi <MdOutlineNavigateNext className="text-lg" />
                   </NextLink>
                 </div>
               </article>
@@ -174,7 +217,7 @@ export const Blog = ({ posts, title = "Blog", subtitle = "Leggi gli ultimi post!
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-4 mt-8 p-4">
             <button
-              onClick={handlePrevPage} 
+              onClick={() => handlePageChange(currentPage - 1)} 
               disabled={currentPage === 1} 
               aria-label="Precedente"
               className="p-2 rounded-full hover:bg-white/10 text-slate-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -187,7 +230,7 @@ export const Blog = ({ posts, title = "Blog", subtitle = "Leggi gli ultimi post!
             </span>
 
             <button
-              onClick={handleNextPage} 
+              onClick={() => handlePageChange(currentPage + 1)} 
               disabled={currentPage === totalPages} 
               aria-label="Successivo"
               className="p-2 rounded-full hover:bg-white/10 text-slate-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"

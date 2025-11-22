@@ -65,7 +65,7 @@ interface PostDetailProps {
 
 const PostDetail = ({ post }: PostDetailProps) => {
   return (
-    <div className="min-h-screen bg-brand-dark text-white flex flex-col items-center w-full">
+    <div className="min-h-screen bg-brand-dark text-white flex flex-col w-full">
       <Header />
       {/* Background Elements (Simplified from Hero) */}
       <div className="fixed inset-0 z-0 pointer-events-none">
