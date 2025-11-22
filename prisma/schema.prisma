@@ -16,7 +16,9 @@ model post {
   author      String?
   content     String
   image_slug  String?
-  state       Int?
+  state       Int?       @default(0) // 0: Draft, 1: Published
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
   post_tag    post_tag[]
 }
 
@@ -30,7 +32,10 @@ model post_tag {
 }
 
 model tag {
-  id       Int        @id @default(autoincrement())
-  name     String     @unique(map: "sqlite_autoindex_tag_1")
-  post_tag post_tag[]
+  id         Int        @id @default(autoincrement())
+  name       String     @unique(map: "sqlite_autoindex_tag_1")
+  slug       String     @unique
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  post_tag   post_tag[]
 }

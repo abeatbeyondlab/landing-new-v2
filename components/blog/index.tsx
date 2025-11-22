@@ -5,6 +5,11 @@ import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
+interface Tag {
+  name: string;
+  slug: string;
+}
+
 interface Post {
   slug: string;
   title: string;
@@ -12,15 +17,18 @@ interface Post {
   date: string;
   author: string;
   content: string;
-  tags: string[];
+  tags: Tag[];
   image_slug?: string;
 }
 
 interface BlogProps {
   posts: Post[];
+  title?: string;
+  subtitle?: string;
+  tags?: Tag[];
 }
 
-export const Blog = ({ posts }: BlogProps) => {
+export const Blog = ({ posts, title = "Blog", subtitle = "Leggi gli ultimi post!!", tags }: BlogProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const postsPerPage = 3;
@@ -62,10 +70,10 @@ export const Blog = ({ posts }: BlogProps) => {
 
       <div className="relative z-10 w-full max-w-7xl flex flex-col items-center">
         <h1 className="text-4xl font-display font-bold text-center mb-2 text-white mt-32">
-          Blog
+          {title}
         </h1>
         <p className="text-lg text-center mb-8 text-slate-300">
-          Leggi gli ultimi post!!
+          {subtitle}
         </p>
       
         <input
@@ -78,6 +86,21 @@ export const Blog = ({ posts }: BlogProps) => {
             setCurrentPage(1);
           }}
         />
+
+        {/* Tag Filter List */}
+        {tags && tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 justify-center max-w-2xl mb-8">
+            {tags.map((tag) => (
+              <NextLink
+                key={tag.slug}
+                href={`/blog/tag/${tag.slug}`}
+                className="px-3 py-1 text-sm text-slate-300 bg-white/5 border border-white/10 rounded-full hover:bg-blue-500/20 hover:text-blue-200 hover:border-blue-500/30 transition-all"
+              >
+                #{tag.name}
+              </NextLink>
+            ))}
+          </div>
+        )}
       
         {filteredPosts.length === 0 ? (
           <p className="text-slate-400">Nessun articolo trovato.</p>
@@ -103,12 +126,13 @@ export const Blog = ({ posts }: BlogProps) => {
                   {post.tags && post.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-2">
                       {post.tags.map((tag) => (
-                        <span 
-                          key={tag}
-                          className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-500/20 text-blue-200 border border-blue-500/20"
+                        <NextLink 
+                          key={tag.slug}
+                          href={`/blog/tag/${tag.slug}`}
+                          className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-500/20 text-blue-200 border border-blue-500/20 hover:bg-blue-500/30 transition-colors"
                         >
-                          {tag}
-                        </span>
+                          {tag.name}
+                        </NextLink>
                       ))}
                     </div>
                   )}

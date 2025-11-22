@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: service.title,
       description: service.description,
       type: 'article',
-      url: `${siteConfig.url}/service/${service.slug}`,
+      url: `${siteConfig.url}/solutions/${service.slug}`,
       images: [
         {
           url: siteConfig.ogImage,
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       images: [siteConfig.ogImage],
     },
     alternates: {
-      canonical: `${siteConfig.url}/service/${service.slug}`,
+      canonical: `${siteConfig.url}/solutions/${service.slug}`,
     },
   };
 }

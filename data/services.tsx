@@ -4,7 +4,7 @@ import { ServiceItem } from '../types';
 export const servicesData: ServiceItem[] = [
   {
     title: "Advisor e Strategia sulla Trasformazione Digitale",
-    slug: "advisor-strategia",
+    slug: "software-strategy-consulting-and-advisory",
     description: "Il tuo Ufficiale di Rotta. Definiamo la direzione tecnologica per raggiungere i tuoi obiettivi di business.",
     icon: Users,
     fullContent: (
@@ -47,7 +47,7 @@ export const servicesData: ServiceItem[] = [
   },
   {
     title: "Progettazione Architetture Informatiche",
-    slug: "progettazione-architetture",
+    slug: "it-architecture-design",
     description: "Lo Scafo della nave. Progettiamo infrastrutture robuste e scalabili per affrontare ogni mare.",
     icon: Layout,
     fullContent: (
@@ -86,7 +86,7 @@ export const servicesData: ServiceItem[] = [
   },
   {
     title: "Integrazione dei Sistemi Gestionali",
-    slug: "integrazione-sistemi",
+    slug: "systems-integration",
     description: "Sincronia dell'equipaggio. ERP, CRM e MES dialogano perfettamente per eliminare errori e ritardi.",
     icon: Layers,
     fullContent: (
@@ -208,7 +208,7 @@ export const servicesData: ServiceItem[] = [
   },
   {
     title: "Open Source",
-    slug: "open-source",
+    slug: "open-source-software",
     description: "Libertà di manovra. Riduciamo la dipendenza da fornitori esterni (Vendor Lock-in) e tagliamo i costi.",
     icon: Code2,
     fullContent: (
@@ -302,7 +302,7 @@ export const servicesData: ServiceItem[] = [
   },
   {
     title: "Formazione",
-    slug: "formazione",
+    slug: "training",
     description: "Addestramento equipaggio. Trasferiamo competenze al tuo team per rendervi autonomi.",
     icon: BookOpen,
     fullContent: (

@@ -21,6 +21,11 @@ export const prisma = prismaInstance;
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
+export interface Tag {
+  name: string;
+  slug: string;
+}
+
 // Define your interfaces in a shared location
 export interface Post {
   id?: number;
@@ -30,7 +35,7 @@ export interface Post {
   date: string;
   author: string;
   content: string;
-  tags: string[];
+  tags: Tag[];
   image_slug: string;
 }
 
@@ -48,11 +53,25 @@ export async function getPostsForStaticParams(): Promise<Pick<Post, 'slug'>[]> {
   }
 }
 
+export async function getTagsForStaticParams(): Promise<{ slug: string }[]> {
+  try {
+    const tags = await prisma.tag.findMany({
+      select: {
+        slug: true
+      }
+    });
+    return tags;
+  } catch (error) {
+     console.error("Failed to fetch tags for static params", error);
+     return [];
+  }
+}
+
 export async function getPostBySlug(slug: string): Promise<Post | undefined> {
   try {
     const postFromDb = await prisma.post.findFirst({
       where: {
-        slug: slug, // Removed state restriction to match original query logic which had it but better to be explicit
+        slug: slug,
         state: 1
       },
       include: {
@@ -76,12 +95,11 @@ export async function getPostBySlug(slug: string): Promise<Post | undefined> {
       date: postFromDb.date || '',
       author: postFromDb.author || '',
       content: postFromDb.content,
-      tags: postFromDb.post_tag.map((pt) => pt.tag.name),
+      tags: postFromDb.post_tag.map((pt) => ({ name: pt.tag.name, slug: pt.tag.slug })),
       image_slug: postFromDb.image_slug || '',
     };
   } catch (error) {
     console.error(`Failed to fetch post with slug ${slug} from database:`, error);
-    // In a real application, you might want to handle this more gracefully
     throw new Error('Database query failed');
   }
 }
@@ -112,11 +130,79 @@ export async function getSortedPosts(): Promise<Post[]> {
       date: postFromDb.date || '',
       author: postFromDb.author || '',
       content: postFromDb.content,
-      tags: postFromDb.post_tag.map((pt) => pt.tag.name),
+      tags: postFromDb.post_tag.map((pt) => ({ name: pt.tag.name, slug: pt.tag.slug })),
       image_slug: postFromDb.image_slug || '',
     }));
   } catch (error) {
     console.error('Failed to fetch sorted posts from database:', error);
     throw new Error('Database query failed for sorted posts');
+  }
+}
+
+export async function getPostsByTag(tagSlug: string): Promise<Post[]> {
+  try {
+    const postsFromDb = await prisma.post.findMany({
+      where: {
+        state: 1,
+        post_tag: {
+          some: {
+            tag: {
+              slug: tagSlug
+            }
+          }
+        }
+      },
+      orderBy: {
+        date: 'desc',
+      },
+      include: {
+        post_tag: {
+          include: {
+            tag: true,
+          },
+        },
+      },
+    });
+
+    return postsFromDb.map((postFromDb) => ({
+      id: postFromDb.id,
+      slug: postFromDb.slug,
+      title: postFromDb.title,
+      description: postFromDb.description || '',
+      date: postFromDb.date || '',
+      author: postFromDb.author || '',
+      content: postFromDb.content,
+      tags: postFromDb.post_tag.map((pt) => ({ name: pt.tag.name, slug: pt.tag.slug })),
+      image_slug: postFromDb.image_slug || '',
+    }));
+  } catch (error) {
+    console.error(`Failed to fetch posts for tag ${tagSlug}:`, error);
+    throw new Error('Database query failed for posts by tag');
+  }
+}
+
+export async function getAllTags(): Promise<Tag[]> {
+  try {
+    const tags = await prisma.tag.findMany({
+      orderBy: {
+        name: 'asc'
+      }
+    });
+    return tags.map(t => ({ name: t.name, slug: t.slug }));
+  } catch (error) {
+    console.error("Failed to fetch all tags:", error);
+    return [];
+  }
+}
+
+export async function getTagBySlug(slug: string): Promise<Tag | null> {
+  try {
+    const tag = await prisma.tag.findUnique({
+      where: { slug }
+    });
+    return tag ? { name: tag.name, slug: tag.slug } : null;
+  } catch (error) {
+    console.error(`Failed to fetch tag by slug ${slug}:`, error);
+    return null;
   }
 }

@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic service pages
   const servicePages = servicesData.map((service) => ({
-    url: `${baseUrl}/service/${service.slug}`,
+    url: `${baseUrl}/solutions/${service.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.9,

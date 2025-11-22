@@ -25,7 +25,7 @@ export const Services: React.FC = () => {
           {servicesData.map((service, index) => (
             <a
               key={index}
-              href={`/service/${service.slug}`}
+              href={`/solutions/${service.slug}`}
               className="group relative p-1 rounded-2xl bg-gradient-to-b from-white/10 to-white/5 hover:from-blue-500/50 hover:to-cyan-400/50 transition-all duration-500 block"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-blue-500/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>

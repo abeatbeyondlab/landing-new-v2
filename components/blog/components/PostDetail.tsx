@@ -42,6 +42,11 @@ const customRenderers = {
   },
 };
 
+interface Tag {
+  name: string;
+  slug: string;
+}
+
 interface Post {
   slug: string;
   title: string;
@@ -49,7 +54,7 @@ interface Post {
   date: string;
   author: string;
   content: string;
-  tags: string[]; 
+  tags: Tag[];
   image_slug: string;
 }
 
@@ -100,12 +105,13 @@ const PostDetail = ({ post }: PostDetailProps) => {
           {post.tags && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-8">
               {post.tags.map((tag) => (
-                <span 
-                  key={tag}
-                  className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-500/20 text-blue-200 border border-blue-500/20"
+                <NextLink 
+                  key={tag.slug}
+                  href={`/blog/tag/${tag.slug}`}
+                  className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-500/20 text-blue-200 border border-blue-500/20 hover:bg-blue-500/30 transition-colors"
                 >
-                  {tag}
-                </span>
+                  {tag.name}
+                </NextLink>
               ))}
             </div>
           )}
