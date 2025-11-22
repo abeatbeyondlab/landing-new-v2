@@ -15,6 +15,15 @@ The workflow relies on two types of files in the `blogpost/` directory:
 
 ### **1. Content Management**
 
+#### **Create New Post**
+Creates a new post placeholder in the database.
+```bash
+make post-create
+```
+*   **Interactive**: Prompts for Title and Slug.
+*   **Output**: Returns the new Post ID.
+*   **Next Steps**: After creation, run `make post-download` to get the file, or manually create `{id}.json` and `{id}.Title.md`.
+
 #### **Download Content**
 Downloads all posts from the database to markdown files in `blogpost/`.
 ```bash
@@ -91,19 +100,27 @@ make post-delete ID=<post_id>
 
 ## **Workflow Examples**
 
-### **Scenario A: Editing a Post's Content**
+### **Scenario A: Creating a New Post**
+1.  Run `make post-create`.
+2.  Enter the Title and optional Slug. Note the New ID returned (e.g., 42).
+3.  Create `blogpost/42.json` (copy-paste from another file and edit).
+4.  Create `blogpost/42.MyTitle.md`.
+5.  Edit content and metadata.
+6.  Run `make post-update-metadata ID=42` and `make post-update ID=42`.
+
+### **Scenario B: Editing a Post's Content**
 1.  Run `make post-download` to get the latest markdown.
 2.  Edit `blogpost/5.MyPost.md` in your editor.
 3.  Run `make post-update ID=5` to save changes to DB.
 
-### **Scenario B: Renaming a Title or Changing Tags**
+### **Scenario C: Renaming a Title or Changing Tags**
 1.  Run `make post-metadata` to get the latest JSON.
 2.  Edit `blogpost/5.json`:
     *   Change `"title": "New Title"`.
     *   Add a tag object to `"post_tag"` array (use ID from `tags.json`).
 3.  Run `make post-update-metadata ID=5` to apply changes.
 
-### **Scenario C: Creating a New Tag**
+### **Scenario D: Creating a New Tag**
 1.  Run `make tags-download`.
 2.  Add a new object to `blogpost/tags.json`:
     ```json
@@ -139,6 +156,7 @@ STRUCTURE & GUIDELINES:
     *   Break down the topic into 2-3 logical sections.
     *   Use a Table if comparing two concepts (e.g., Old way vs New way).
     *   Focus on benefits: Efficiency, Cost Reduction, Security, Scalability.
+    *   **Formatting**: Use **bold** for key concepts to improve scannability.
 4.  **Strategic Internal Linking (CRITICAL)**:
     *   You MUST inject internal links to A Beat Beyond solutions naturally within the text. Do not just list them at the end. Use the context of the sentence to link relevant keywords.
     *   Reference the services below:
@@ -162,5 +180,5 @@ EXAMPLE SNIPPET FOR LINKING:
 "Per ottenere questi risultati, è fondamentale una corretta [integrazione tra i sistemi aziendali](/solutions/systems-integration), che permetta ai dati di fluire verso dashboard di [Business Intelligence](/solutions/business-intelligence) per decisioni più rapide."
 
 LANGUAGE:
-Italian. Use terms like "Ingegnerizzazione", "PMI", "Efficienza Operativa".
+Italian. 
 ```

@@ -34,6 +34,10 @@ prisma-ui:
 	@bunx prisma studio
 
 # Post Lifecycle Commands
+post-create:
+	@echo "Creating new post..."
+	@bunx tsx scripts/create-post.ts
+
 post-download:
 	@echo "Downloading all posts to blogpost/..."
 	@bunx tsx scripts/download-posts.ts
