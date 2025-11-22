@@ -32,3 +32,36 @@ prisma-migrate-up:
 prisma-ui:
 	@echo "Starting Prisma Studio..."
 	@bunx prisma studio
+
+# Post Lifecycle Commands
+post-download:
+	@echo "Downloading all posts to blogpost/..."
+	@bunx tsx scripts/download-posts.ts
+
+post-metadata:
+	@echo "Downloading all post metadata to blogpost/..."
+	@bunx tsx scripts/download-metadata.ts
+
+tags-download:
+	@echo "Downloading all tags to blogpost/tags.json..."
+	@bunx tsx scripts/download-tags.ts
+
+post-update-metadata:
+	@echo "Updating post metadata for ID $(ID)..."
+	@bunx tsx scripts/upload-metadata.ts $(ID)
+
+post-update:
+	@echo "Updating post $(ID)..."
+	@bunx tsx scripts/upload-post.ts $(ID)
+
+post-status:
+	@echo "Changing status of post $(ID) to $(STATE)..."
+	@bunx tsx scripts/change-post-status.ts $(ID) $(STATE)
+
+post-delete:
+	@echo "Deleting post $(ID)..."
+	@bunx tsx scripts/delete-post.ts $(ID)
+
+tags-upload:
+	@echo "Uploading tags from blogpost/tags.json..."
+	@bunx tsx scripts/upload-tags.ts

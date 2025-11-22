@@ -1,0 +1,34 @@
+{
+  "id": 38,
+  "slug": "agenti-ai-perche-pmi-devono-adottarli-ora",
+  "title": "Agenti AI: La Rivoluzione Silenziosa che la Tua PMI Non Può Ignorare",
+  "description": "Scopri come gli agenti AI stanno trasformando i processi aziendali e perché la tua PMI deve adottarli ora per aumentare l'efficienza e battere la concorrenza.",
+  "date": "2025-06-28",
+  "author": "Alessandro Morandi",
+  "image_slug": "/images/blog/agenti-ai-perche-pmi-devono-adottarli-ora-cover.webp",
+  "state": 1,
+  "created_at": "2025-11-22T10:04:59.000Z",
+  "post_tag": [
+    {
+      "tag": {
+        "id": 9,
+        "name": "Strategy",
+        "slug": "strategy"
+      }
+    },
+    {
+      "tag": {
+        "id": 10,
+        "name": "Business",
+        "slug": "business"
+      }
+    },
+    {
+      "tag": {
+        "id": 11,
+        "name": "AI",
+        "slug": "ai"
+      }
+    }
+  ]
+}

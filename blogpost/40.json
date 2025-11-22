@@ -1,0 +1,34 @@
+{
+  "id": 40,
+  "slug": "progettare-agente-ai-workflow-requirements-document",
+  "title": "Progettare un Agente AI: La Guida Pratica con il Workflow Requirements Document",
+  "description": "Scopri come progettare un agente AI in modo strutturato con un Workflow Requirements Document. Una guida pratica per definire obiettivi, dati e logiche, evitando i fallimenti comuni nei progetti di intelligenza artificiale.",
+  "date": "30-07-2025",
+  "author": "Alessandro Morandi",
+  "image_slug": "",
+  "state": 0,
+  "created_at": "2025-11-22T10:04:59.000Z",
+  "post_tag": [
+    {
+      "tag": {
+        "id": 4,
+        "name": "Tutorial",
+        "slug": "tutorial"
+      }
+    },
+    {
+      "tag": {
+        "id": 11,
+        "name": "AI",
+        "slug": "ai"
+      }
+    },
+    {
+      "tag": {
+        "id": 14,
+        "name": "Engineering",
+        "slug": "engineering"
+      }
+    }
+  ]
+}

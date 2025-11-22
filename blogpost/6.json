@@ -1,0 +1,27 @@
+{
+  "id": 6,
+  "slug": "cryptgeon-condivisione-password-sicura",
+  "title": "Perché Inviare Password Via Email È un Rischio (e Come Farlo in Sicurezza con Cryptgeon)",
+  "description": "Scopri perché inviare password e segreti in chiaro è pericoloso e come Cryptgeon, uno strumento open source, offre una soluzione sicura con link a scadenza e crittografia end-to-end.",
+  "date": "2025-06-11",
+  "author": "Alessandro Morandi",
+  "image_slug": "/images/blog/cryptgeon-condivisione-password-sicura-cover.webp",
+  "state": 1,
+  "created_at": "2025-11-22T10:04:59.000Z",
+  "post_tag": [
+    {
+      "tag": {
+        "id": 6,
+        "name": "Cybersecurity",
+        "slug": "cybersecurity"
+      }
+    },
+    {
+      "tag": {
+        "id": 17,
+        "name": "Tools",
+        "slug": "tools"
+      }
+    }
+  ]
+}

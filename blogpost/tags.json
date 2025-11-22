@@ -1,0 +1,82 @@
+[
+  {
+    "id": 2,
+    "name": "SQL",
+    "slug": "sql"
+  },
+  {
+    "id": 3,
+    "name": "Database",
+    "slug": "database"
+  },
+  {
+    "id": 4,
+    "name": "Tutorial",
+    "slug": "tutorial"
+  },
+  {
+    "id": 5,
+    "name": "Beginners Guide",
+    "slug": "beginners-guide"
+  },
+  {
+    "id": 6,
+    "name": "Cybersecurity",
+    "slug": "cybersecurity"
+  },
+  {
+    "id": 7,
+    "name": "Cloud",
+    "slug": "cloud"
+  },
+  {
+    "id": 8,
+    "name": "Infrastructure",
+    "slug": "infrastructure"
+  },
+  {
+    "id": 9,
+    "name": "Strategy",
+    "slug": "strategy"
+  },
+  {
+    "id": 10,
+    "name": "Business",
+    "slug": "business"
+  },
+  {
+    "id": 11,
+    "name": "AI",
+    "slug": "ai"
+  },
+  {
+    "id": 12,
+    "name": "SEO",
+    "slug": "seo"
+  },
+  {
+    "id": 13,
+    "name": "Project Management",
+    "slug": "project-management"
+  },
+  {
+    "id": 14,
+    "name": "Engineering",
+    "slug": "engineering"
+  },
+  {
+    "id": 15,
+    "name": "Open Source",
+    "slug": "open-source"
+  },
+  {
+    "id": 16,
+    "name": "Performance",
+    "slug": "performance"
+  },
+  {
+    "id": 17,
+    "name": "Tools",
+    "slug": "tools"
+  }
+]
