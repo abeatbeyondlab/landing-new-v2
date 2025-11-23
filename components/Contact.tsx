@@ -56,9 +56,9 @@ export const Contact: React.FC = () => {
           <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="h-12 w-12 text-emerald-400" />
           </div>
-          <h2 className="text-4xl font-display font-bold mb-4">Messaggio in Bottiglia Ricevuto!</h2>
+          <h2 className="text-4xl font-display font-bold mb-4">Messaggio in Bottiglia Inviato!</h2>
           <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-            Hai fatto la mossa giusta. Il nostro team analizzerà la tua rotta attuale e ti contatterà entro 24 ore.
+            Hai fatto la mossa giusta. Il nostro team ti contatterà entro 24 ore.
           </p>
           <Button variant="outline" onClick={() => setFormStatus('idle')}>Torna alla Home</Button>
         </div>
