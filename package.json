@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "bdev": "bun --bun next dev",
+    "bbuild": "bun --bun next build",
+    "bstart": "bun --bun next start"
   },
   "browserslist": [
     "chrome >= 100",
@@ -16,9 +19,8 @@
     "not ie 11"
   ],
   "dependencies": {
-    "@prisma/adapter-better-sqlite3": "^7.0.0",
+    "prisma-adapter-bun-sqlite": "^0.4.3",
     "@prisma/client": "^7.0.0",
-    "better-sqlite3": "11.10.0",
     "lucide-react": "^0.554.0",
     "next": "^16.0.3",
     "react": "^19.2.0",
@@ -33,7 +35,6 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.19",
-    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^22.14.0",
     "@types/react": "^19.2.6",
     "@types/react-dom": "^19.2.3",

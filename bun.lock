@@ -5,11 +5,10 @@
     "": {
       "name": "a-beat-beyond---digital-transformation",
       "dependencies": {
-        "@prisma/adapter-better-sqlite3": "^7.0.0",
         "@prisma/client": "^7.0.0",
-        "better-sqlite3": "11.10.0",
         "lucide-react": "^0.554.0",
         "next": "^16.0.3",
+        "prisma-adapter-bun-sqlite": "^0.4.3",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
         "react-icons": "^5.5.0",
@@ -17,11 +16,11 @@
         "react-syntax-highlighter": "^16.1.0",
         "rehype-raw": "^7.0.0",
         "remark-gfm": "^4.0.1",
+        "sharp": "^0.34.5",
       },
       "devDependencies": {
         "@tailwindcss/postcss": "^4.1.17",
         "@tailwindcss/typography": "^0.5.19",
-        "@types/better-sqlite3": "^7.6.13",
         "@types/node": "^22.14.0",
         "@types/react": "^19.2.6",
         "@types/react-dom": "^19.2.3",
@@ -138,8 +137,6 @@
 
     "@next/swc-win32-x64-msvc": ["@next/swc-win32-x64-msvc@16.0.3", "", { "os": "win32", "cpu": "x64" }, "sha512-N7EJ6zbxgIYpI/sWNzpVKRMbfEGgsWuOIvzkML7wxAAZhPk1Msxuo/JDu1PKjWGrAoOLaZcIX5s+/pF5LIbBBg=="],
 
-    "@prisma/adapter-better-sqlite3": ["@prisma/adapter-better-sqlite3@7.0.0", "", { "dependencies": { "@prisma/driver-adapter-utils": "7.0.0", "better-sqlite3": "^11.10.0" } }, "sha512-a0ltJcisHuudnzgD822TwTrvxpQ84ZXUk/3WJLOIGrAM/tysLMb7Q4n0uZeCofvh+UMRoGcT2B6TS3T9/TLMUA=="],
-
     "@prisma/client": ["@prisma/client@7.0.0", "", { "dependencies": { "@prisma/client-runtime-utils": "7.0.0" }, "peerDependencies": { "prisma": "*", "typescript": ">=5.4.0" }, "optionalPeers": ["prisma", "typescript"] }, "sha512-FM1NtJezl0zH3CybLxcbJwShJt7xFGSRg+1tGhy3sCB8goUDnxnBR+RC/P35EAW8gjkzx7kgz7bvb0MerY2VSw=="],
 
     "@prisma/client-runtime-utils": ["@prisma/client-runtime-utils@7.0.0", "", {}, "sha512-PAiFgMBPrLSaakBwUpML5NevipuKSL3rtNr8pZ8CZ3OBXo0BFcdeGcBIKw/CxJP6H4GNa4+l5bzJPrk8Iq6tDw=="],
@@ -199,8 +196,6 @@
     "@tailwindcss/postcss": ["@tailwindcss/postcss@4.1.17", "", { "dependencies": { "@alloc/quick-lru": "^5.2.0", "@tailwindcss/node": "4.1.17", "@tailwindcss/oxide": "4.1.17", "postcss": "^8.4.41", "tailwindcss": "4.1.17" } }, "sha512-+nKl9N9mN5uJ+M7dBOOCzINw94MPstNR/GtIhz1fpZysxL/4a+No64jCBD6CPN+bIHWFx3KWuu8XJRrj/572Dw=="],
 
     "@tailwindcss/typography": ["@tailwindcss/typography@0.5.19", "", { "dependencies": { "postcss-selector-parser": "6.0.10" }, "peerDependencies": { "tailwindcss": ">=3.0.0 || insiders || >=4.0.0-alpha.20 || >=4.0.0-beta.1" } }, "sha512-w31dd8HOx3k9vPtcQh5QHP9GwKcgbMp87j58qi6xgiBnFFtKEAgCWnDw4qUT8aHwkCp8bKvb/KGKWWHedP0AAg=="],
-
-    "@types/better-sqlite3": ["@types/better-sqlite3@7.6.13", "", { "dependencies": { "@types/node": "*" } }, "sha512-NMv9ASNARoKksWtsq/SHakpYAYnhBrQgGD8zkLYk/jaK8jUGn08CfEdTRgYhMypUQAfzSP8W6gNLe0q19/t4VA=="],
 
     "@types/debug": ["@types/debug@4.1.12", "", { "dependencies": { "@types/ms": "*" } }, "sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ=="],
 
@@ -629,6 +624,8 @@
     "prebuild-install": ["prebuild-install@7.1.3", "", { "dependencies": { "detect-libc": "^2.0.0", "expand-template": "^2.0.3", "github-from-package": "0.0.0", "minimist": "^1.2.3", "mkdirp-classic": "^0.5.3", "napi-build-utils": "^2.0.0", "node-abi": "^3.3.0", "pump": "^3.0.0", "rc": "^1.2.7", "simple-get": "^4.0.0", "tar-fs": "^2.0.0", "tunnel-agent": "^0.6.0" }, "bin": { "prebuild-install": "bin.js" } }, "sha512-8Mf2cbV7x1cXPUILADGI3wuhfqWvtiLA1iclTDbFRZkgRQS0NqsPZphna9V+HyTEadheuPmjaJMsbzKQFOzLug=="],
 
     "prisma": ["prisma@7.0.0", "", { "dependencies": { "@prisma/config": "7.0.0", "@prisma/dev": "0.13.0", "@prisma/engines": "7.0.0", "@prisma/studio-core-licensed": "0.8.0", "mysql2": "3.15.3", "postgres": "3.4.7" }, "peerDependencies": { "better-sqlite3": ">=9.0.0", "typescript": ">=5.4.0" }, "optionalPeers": ["better-sqlite3", "typescript"], "bin": { "prisma": "build/index.js" } }, "sha512-VZObZ1pQV/OScarYg68RYUx61GpFLH2mJGf9fUX4XxQxTst/6ZK7nkY86CSZ3zBW6U9lKRTsBrZWVz20X5G/KQ=="],
+
+    "prisma-adapter-bun-sqlite": ["prisma-adapter-bun-sqlite@0.4.3", "", { "dependencies": { "@prisma/driver-adapter-utils": "^7.0.0" }, "peerDependencies": { "@prisma/client": ">=7.0.0", "bun-types": ">=1.3.0" }, "optionalPeers": ["bun-types"] }, "sha512-G8j8L2LywR2rgbusJMTdB7fEr0pRuLDEBmmq918E7RIT5fh5C/zC8hQdQ/a4qMTuojw2nssQ9hsnOJfMiIuJww=="],
 
     "prismjs": ["prismjs@1.30.0", "", {}, "sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw=="],
 

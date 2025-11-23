@@ -1,5 +1,5 @@
 import { PrismaClient } from '../app/generated/client/client';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { PrismaBunSqlite } from 'prisma-adapter-bun-sqlite';
 import path from 'path';
 
 // Use a global variable to prevent multiple instances of Prisma Client in development
@@ -11,7 +11,7 @@ if (globalForPrisma.prisma) {
   prismaInstance = globalForPrisma.prisma;
 } else {
   const dbPath = path.join(process.cwd(), 'data/db.sqlite3');
-  const adapter = new PrismaBetterSqlite3({
+  const adapter = new PrismaBunSqlite({
     url: `file:${dbPath}`,
   });
   prismaInstance = new PrismaClient({ adapter });

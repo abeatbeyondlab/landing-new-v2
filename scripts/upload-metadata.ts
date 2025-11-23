@@ -1,11 +1,11 @@
 import { PrismaClient } from '../app/generated/client/client';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { PrismaBunSqlite } from 'prisma-adapter-bun-sqlite';
 import path from 'path';
 import fs from 'fs';
 import readline from 'readline';
 
 const dbPath = path.join(process.cwd(), 'data/db.sqlite3');
-const adapter = new PrismaBetterSqlite3({
+const adapter = new PrismaBunSqlite({
   url: `file:${dbPath}`,
 });
 const prisma = new PrismaClient({ adapter });
@@ -82,7 +82,6 @@ async function main() {
   
   // Handle Tags if present in JSON
   // Strategy: Replace all associations
-  let tagUpdate = {};
   if (jsonData.post_tag && Array.isArray(jsonData.post_tag)) {
     // Extract tag IDs from structure: [{ tag: { id: 1 } }, { tag: { id: 2 } }]
     const targetTagIds = jsonData.post_tag

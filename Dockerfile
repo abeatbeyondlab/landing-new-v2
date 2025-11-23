@@ -34,9 +34,15 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
+# Copy prisma schema and data directories
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/data ./data
+
 # Set the correct permission for prerender cache
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
+# Set permissions for data directory to allow SQLite writes
+RUN chown -R nextjs:nodejs ./data
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
