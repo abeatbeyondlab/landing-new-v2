@@ -43,7 +43,7 @@ async function main() {
   }
 
   const files = fs.readdirSync(BLOGPOST_DIR);
-  const file = files.find(f => f.startsWith(`${postId}.`));
+  const file = files.find(f => f.startsWith(`${postId}.`) && f.toLowerCase().endsWith('.md'));
 
   if (!file) {
     console.error(`Error: No file found for Post ID ${postId} in ${BLOGPOST_DIR}`);
