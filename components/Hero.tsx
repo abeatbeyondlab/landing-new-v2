@@ -48,8 +48,8 @@ export const Hero: React.FC = () => {
 
         {/* Subheadline */}
         <p className="text-lg md:text-2xl text-slate-300 max-w-3xl mb-10 leading-relaxed font-light animate-slide-up" style={{animationDelay: '0.2s'}}>
-          La complessità tecnologica rischia di farti affondare a Capo Horn? <br className="hidden md:block" />
-          A Beat Beyond è l'Advisor che sale a bordo per trasformare la tua azienda in una nave stabile, agile e profittevole dell'oceano digitale.
+          La complessità tecnologica rischia <br className="hidden lg:block" /> di farti affondare .. a Capo Horn? <br className="hidden md:block" />
+          A Beat Beyond è il tuo partner che sale a bordo per trasformare la tua azienda in una nave agile e profittevole nell'oceano digitale.
         </p>
 
         {/* CTA Group */}

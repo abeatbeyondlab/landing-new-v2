@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Outfit } from 'next/font/google'
+import { Inter, Libre_Baskerville } from 'next/font/google'
 import "./globals.css"
 import { siteConfig } from '@/config/site'
 import { ManifestLoader } from '@/components/ManifestLoader'
@@ -10,9 +10,10 @@ const inter = Inter({
   display: 'swap',
 })
 
-const outfit = Outfit({ 
+const libreBaskerville = Libre_Baskerville({
   subsets: ['latin'],
-  variable: '--font-outfit',
+  variable: '--font-libre',
+  weight: ['400', '700'],
   display: 'swap',
 })
 
@@ -75,7 +76,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="it" className={`scroll-smooth ${inter.variable} ${outfit.variable}`}>
+    <html lang="it" className={`scroll-smooth ${libreBaskerville.variable}`}>
       <body className="bg-slate-50 text-slate-900">
         <ManifestLoader />
         <div id="root">{children}</div>
