@@ -1,14 +1,8 @@
 import type { Metadata } from 'next'
-import { Inter, Libre_Baskerville } from 'next/font/google'
+import { Libre_Baskerville } from 'next/font/google'
 import "./globals.css"
 import { siteConfig } from '@/config/site'
 import { ManifestLoader } from '@/components/ManifestLoader'
-
-const inter = Inter({ 
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
 
 const libreBaskerville = Libre_Baskerville({
   subsets: ['latin'],
