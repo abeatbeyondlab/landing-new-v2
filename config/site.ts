@@ -39,7 +39,11 @@ export const siteConfig = {
     // email: "info@abeatbeyond.com",
     // phone: "+39-123-456789",
     // address: "Via Roma 1, 00100 Roma, Italia"
-  }
+  },
+
+  // Analytics
+  googleAnalyticsId: "G-1BFH8582JM",
+  googleAdsConversionId: "AW-17763341638/Ch8YCLu44McbEMaqnJZC"
 }
 
 export type SiteConfig = typeof siteConfig

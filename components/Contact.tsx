@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from './Button';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { siteConfig } from '@/config/site';
 
 export const Contact: React.FC = () => {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -44,7 +45,7 @@ export const Contact: React.FC = () => {
       // Google Ads Conversion Tracking
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'conversion', {
-          'send_to': 'AW-17763341638/Ch8YCLu44McbEMaqnJZC',
+          'send_to': siteConfig.googleAdsConversionId,
           'value': 1.0,
           'currency': 'EUR'
         });

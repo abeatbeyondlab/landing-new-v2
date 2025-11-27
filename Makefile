@@ -10,7 +10,7 @@ restart:
 
 deploy:
 	@echo "Rebuilding Docker image on remote server..."
-	@bun bbuild
+#@bun bbuild
 	@ssh ale@achih1 'cd /home/ale/landing-new-v2 && git pull && docker compose build && docker compose down && docker compose up -d'
 
 # Prisma Commands

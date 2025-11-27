@@ -76,7 +76,7 @@ export default function RootLayout({
         <ManifestLoader />
         <div id="root">{children}</div>
       </body>
-      <GoogleAnalytics gaId="G-1BFH8582JM" />
+      <GoogleAnalytics gaId={siteConfig.googleAnalyticsId} />
     </html>
   )
 }
