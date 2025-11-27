@@ -3,6 +3,7 @@ import { Libre_Baskerville } from 'next/font/google'
 import "./globals.css"
 import { siteConfig } from '@/config/site'
 import { ManifestLoader } from '@/components/ManifestLoader'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const libreBaskerville = Libre_Baskerville({
   subsets: ['latin'],
@@ -75,6 +76,7 @@ export default function RootLayout({
         <ManifestLoader />
         <div id="root">{children}</div>
       </body>
+      <GoogleAnalytics gaId="G-1BFH8582JM" />
     </html>
   )
 }

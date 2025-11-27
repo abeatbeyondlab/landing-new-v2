@@ -41,6 +41,15 @@ export const Contact: React.FC = () => {
         throw new Error(errorMessage);
       }
 
+      // Google Ads Conversion Tracking
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'conversion', {
+          'send_to': 'AW-17763341638/Ch8YCLu44McbEMaqnJZC',
+          'value': 1.0,
+          'currency': 'EUR'
+        });
+      }
+
       setFormStatus('success');
     } catch (error) {
       console.error('Form submission error:', error);
