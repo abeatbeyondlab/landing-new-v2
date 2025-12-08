@@ -109,7 +109,7 @@ export const Trust: React.FC = () => {
               Partner di Eccellenza
             </p>
             <p className="text-slate-900 font-semibold">
-              Hanno scelto la nostra qualità
+              Ci hanno scelto
             </p>
           </div>
           
