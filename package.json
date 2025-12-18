@@ -19,10 +19,10 @@
     "not ie 11"
   ],
   "dependencies": {
-    "@next/third-parties": "^16.0.5",
+    "@next/third-parties": "^16.0.10",
     "@prisma/client": "^7.0.0",
     "lucide-react": "^0.554.0",
-    "next": "^16.0.3",
+    "next": "^16.0.10",
     "next-intl": "^4.6.1",
     "prisma-adapter-bun-sqlite": "^0.4.3",
     "react": "^19.2.0",
@@ -47,6 +47,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/react-syntax-highlighter": "^15.5.13",
     "autoprefixer": "^10.4.22",
+    "baseline-browser-mapping": "^2.9.10",
     "critters": "^0.0.23",
     "postcss": "^8.5.6",
     "prisma": "^7.0.0",

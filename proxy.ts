@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 const ITALIAN_COUNTRIES = ['it', 'IT', 'SM', 'VA'];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
 
 /*
   better if you check for 
