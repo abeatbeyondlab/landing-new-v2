@@ -1,14 +1,14 @@
 {
-  "id": 4,
-  "slug": "tuning-sql-server-guida",
-  "title": "Tuning SQL Server: La Guida Definitiva per un Database Veloce e Affidabile",
-  "description": "Impara le tecniche di tuning di SQL Server per migliorare drasticamente le prestazioni del tuo database. Dalla gestione degli indici all'ottimizzazione delle query, questa guida completa ti fornirà le competenze necessarie per rendere il tuo DB SQL Server più efficiente e reattivo.",
+  "id": 43,
+  "slug": "sql-server-tuning-guide",
+  "title": "SQL Server Tuning: The Ultimate Guide for a Fast and Reliable Database",
+  "description": "Learn SQL Server tuning techniques to drastically improve your database performance. From index management to query optimization, this complete guide will provide you with the necessary skills to make your SQL Server DB more efficient and responsive.",
   "date": "2025-06-08",
   "author": "Alessandro Morandi",
   "image_slug": "/images/blog/tuning-sql-server-guida-cover.webp",
   "state": 1,
-  "locale": "it",
-  "created_at": "2025-11-22T10:04:59.000Z",
+  "locale": "en",
+  "created_at": "2025-12-18T13:26:56.262Z",
   "post_tag": [
     {
       "tag": {

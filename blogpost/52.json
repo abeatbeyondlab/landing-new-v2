@@ -1,0 +1,35 @@
+{
+  "id": 52,
+  "slug": "designing-ai-agent-guide-workflow-requirements-document",
+  "title": "How to Design an AI Agent That Really Works: The Engineering Method",
+  "description": "Discover how to design an effective AI agent using the Workflow Requirements Document (WRD). A strategic guide to avoid failed projects and guarantee measurable results.",
+  "date": "2025-07-06",
+  "author": "Alessandro Morandi",
+  "image_slug": "/images/blog/how-agents-work.webp",
+  "state": 1,
+  "locale": "en",
+  "created_at": "2025-12-18T13:26:56.426Z",
+  "post_tag": [
+    {
+      "tag": {
+        "id": 9,
+        "name": "Strategy",
+        "slug": "strategy"
+      }
+    },
+    {
+      "tag": {
+        "id": 11,
+        "name": "AI",
+        "slug": "ai"
+      }
+    },
+    {
+      "tag": {
+        "id": 13,
+        "name": "Project Management",
+        "slug": "project-management"
+      }
+    }
+  ]
+}

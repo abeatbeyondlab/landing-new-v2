@@ -1,14 +1,14 @@
 {
-  "id": 8,
-  "slug": "sql-base-per-principianti",
-  "title": "Sql di base: una veloce introduzione.",
-  "description": "Scopri i concetti fondamentali di SQL: cos'è, perché viene utilizzato e i comandi di base come SELECT, INSERT, UPDATE e DELETE",
+  "id": 47,
+  "slug": "sql-basics-for-beginners",
+  "title": "Basic SQL: A Quick Introduction",
+  "description": "Discover the fundamental concepts of SQL: what it is, why it is used and basic commands like SELECT, INSERT, UPDATE, and DELETE",
   "date": "2025-05-30",
   "author": "Alessandro Morandi",
   "image_slug": "/images/blog/sql-base-per-principianti-cover.webp",
   "state": 1,
-  "locale": "it",
-  "created_at": "2025-11-22T10:04:59.000Z",
+  "locale": "en",
+  "created_at": "2025-12-18T13:26:56.339Z",
   "post_tag": [
     {
       "tag": {

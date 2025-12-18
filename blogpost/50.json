@@ -1,0 +1,28 @@
+{
+  "id": 50,
+  "slug": "it-project-cost-estimation-guide",
+  "title": "Estimating IT Project Costs: The Guide for Managers (That Developers Will Appreciate)",
+  "description": "Learn how to estimate software project costs realistically. A practical guide for managers and developers to avoid budget overruns and misunderstandings.",
+  "date": "2025-06-27",
+  "author": "Alessandro Morandi",
+  "image_slug": "/images/blog/stimare-costi-progetto-it-guida-manager-programmatori-cover.webp",
+  "state": 1,
+  "locale": "en",
+  "created_at": "2025-12-18T13:26:56.398Z",
+  "post_tag": [
+    {
+      "tag": {
+        "id": 10,
+        "name": "Business",
+        "slug": "business"
+      }
+    },
+    {
+      "tag": {
+        "id": 13,
+        "name": "Project Management",
+        "slug": "project-management"
+      }
+    }
+  ]
+}

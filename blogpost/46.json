@@ -1,14 +1,14 @@
 {
-  "id": 7,
-  "slug": "vmware-vs-openstack-guida-migrazione-riduzione-costi-tco",
-  "title": "VMware vs OpenStack: La Guida Definitiva per Ridurre i Costi del 40%",
-  "description": "Stai valutando un'alternativa a VMware dopo l'acquisizione di Broadcom? Scopri il confronto tra VMware vs OpenStack e come una migrazione strategica al cloud open source può tagliare il TCO fino al 40% e liberarti dal vendor lock-in.",
+  "id": 46,
+  "slug": "vmware-vs-openstack-migration-guide",
+  "title": "VMware vs OpenStack: The Ultimate Guide to Reducing Costs by 40%",
+  "description": "Are you evaluating an alternative to VMware after the Broadcom acquisition? Discover the comparison between VMware vs OpenStack and how a strategic migration to open source cloud can cut TCO by up to 40% and free you from vendor lock-in.",
   "date": "2025-06-19",
   "author": "Alessandro Morandi",
   "image_slug": "/images/blog/vmware-vs-openstack-guida-migrazione-riduzione-costi-tco-cover.webp",
   "state": 1,
-  "locale": "it",
-  "created_at": "2025-11-22T10:04:59.000Z",
+  "locale": "en",
+  "created_at": "2025-12-18T13:26:56.322Z",
   "post_tag": [
     {
       "tag": {

@@ -1,14 +1,14 @@
 {
-  "id": 42,
-  "slug": "n8n-automazione-innovazione-pmi",
-  "title": "n8n: L'Automazione Intelligente che Accelera l'Innovazione in Azienda",
-  "description": "Scopri come n8n sta rivoluzionando l'integrazione di sistemi e l'AI nelle aziende. Una guida per PMI che vogliono automatizzare processi complessi senza rinunciare al controllo, alla sicurezza e alla flessibilità dell'Open Source.",
+  "id": 55,
+  "slug": "n8n-intelligent-automation-accelerates-innovation",
+  "title": "n8n: The Intelligent Automation That Accelerates Business Innovation",
+  "description": "Discover how n8n is revolutionizing system integration and AI in companies. A guide for SMEs that want to automate complex processes without sacrificing control, security, and the flexibility of Open Source.",
   "date": "2025-11-23",
   "author": "Alessandro Morandi",
   "image_slug": "/images/blog/n8n-automazione-innovazione-pmi-cover.png",
   "state": 1,
-  "locale": "it",
-  "created_at": "2025-11-23T00:14:05.227Z",
+  "locale": "en",
+  "created_at": "2025-12-18T13:26:56.465Z",
   "post_tag": [
     {
       "tag": {

@@ -1,0 +1,35 @@
+{
+  "id": 53,
+  "slug": "designing-ai-agent-practical-guide-workflow-requirements-document",
+  "title": "Designing AI Agents: The Practical Guide with the Workflow Requirements Document",
+  "description": "Discover how to design an AI agent in a structured way with a Workflow Requirements Document. A practical guide to defining objectives, data, and logic, avoiding common failures in artificial intelligence projects.",
+  "date": "2025-07-30",
+  "author": "Alessandro Morandi",
+  "image_slug": "",
+  "state": 0,
+  "locale": "en",
+  "created_at": "2025-12-18T13:26:56.433Z",
+  "post_tag": [
+    {
+      "tag": {
+        "id": 4,
+        "name": "Tutorial",
+        "slug": "tutorial"
+      }
+    },
+    {
+      "tag": {
+        "id": 11,
+        "name": "AI",
+        "slug": "ai"
+      }
+    },
+    {
+      "tag": {
+        "id": 14,
+        "name": "Engineering",
+        "slug": "engineering"
+      }
+    }
+  ]
+}

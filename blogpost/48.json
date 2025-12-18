@@ -1,14 +1,14 @@
 {
-  "id": 22,
-  "slug": "software-open-source-guida-strategica-pmi-italiane",
-  "title": "Software Open Source: La Guida Strategica per la Crescita delle PMI.",
-  "description": "Scopri perché sempre più PMI scelgono software open source per ridurre costi, aumentare la sicurezza e accelerare l'innovazione. Una guida completa ai vantaggi strategici.",
+  "id": 48,
+  "slug": "open-source-software-strategic-guide-for-smes",
+  "title": "Open Source Software: The Strategic Guide for SME Growth",
+  "description": "Discover why more and more SMEs are choosing open source software to cut costs, increase security, and accelerate innovation. A complete guide to strategic benefits.",
   "date": "2025-06-23",
   "author": "Alessandro Morandi",
   "image_slug": "/images/blog/software-open-source-guida-strategica-pmi-italiane-cover.webp",
   "state": 1,
-  "locale": "it",
-  "created_at": "2025-11-22T10:04:59.000Z",
+  "locale": "en",
+  "created_at": "2025-12-18T13:26:56.356Z",
   "post_tag": [
     {
       "tag": {

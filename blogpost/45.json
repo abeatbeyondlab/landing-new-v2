@@ -1,0 +1,28 @@
+{
+  "id": 45,
+  "slug": "cryptgeon-secure-password-sharing",
+  "title": "Why Sending Passwords via Email is a Risk (and How to Do It Safely with Cryptgeon)",
+  "description": "Discover why sending passwords and secrets in plain text is dangerous and how Cryptgeon, an open source tool, offers a secure solution with expiring links and end-to-end encryption.",
+  "date": "2025-06-11",
+  "author": "Alessandro Morandi",
+  "image_slug": "/images/blog/cryptgeon-condivisione-password-sicura-cover.webp",
+  "state": 1,
+  "locale": "en",
+  "created_at": "2025-12-18T13:26:56.304Z",
+  "post_tag": [
+    {
+      "tag": {
+        "id": 6,
+        "name": "Cybersecurity",
+        "slug": "cybersecurity"
+      }
+    },
+    {
+      "tag": {
+        "id": 17,
+        "name": "Tools",
+        "slug": "tools"
+      }
+    }
+  ]
+}
