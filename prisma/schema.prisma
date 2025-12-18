@@ -17,6 +17,7 @@ model post {
   content     String
   image_slug  String?
   state       Int?       @default(0) // 0: Draft, 1: Published
+  locale      String     @default("it")
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt
   post_tag    post_tag[]

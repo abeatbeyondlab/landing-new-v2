@@ -1,0 +1,85 @@
+{
+  "nav": {
+    "metodo": "Method",
+    "servizi": "Services", 
+    "blog": "Blog",
+    "chiSiamo": "About Us",
+    "prenotaConsulenza": "Book Consultation",
+    "prenotaConsulenzaGratuita": "Book Free Consultation"
+  },
+  "hero": {
+    "badge": "Digital Transformation Engineered",
+    "title": "Stop Navigating Blindly",
+    "subtitle": "Take the Helm",
+    "description": "Is digital transformation risking your ship sinking at Cape Horn? A Beat Beyond is your Advisor that comes aboard to transform your company into an agile and profitable ship in the digital ocean.",
+    "cta1": "Call the Advisor (30 min Free)",
+    "cta2": "Discover the Route",
+    "strategy": "Navigation Strategy",
+    "security": "Certified Security", 
+    "stability": "Operational Stability"
+  },
+  "contact": {
+    "formTitle": "Book Your Strategic Consultation",
+    "firstStepTitle": "Take the First Step Now",
+    "firstStepSubtitle": "Don't Postpone Growth.",
+    "description": "You've seen how an engineered approach to IT can make a difference for your SME. Now is the time to act. Transform technological challenges into concrete opportunities.",
+    "freeConsultation": "Request Your Free 30-Minute Strategic Consultation Now!",
+    "discover": "Discover without obligation how we can help you to:",
+    "benefits": [
+      "Increase operational efficiency",
+      "Make better decisions with Business Intelligence", 
+      "Integrate your software systems",
+      "Strengthen your Cybersecurity",
+      "Leverage new technologies (Cloud, AI, Web3...)"
+    ],
+    "quote": "\"There is no favorable wind for the sailor who doesn't know where to go. We give you the map.\"",
+    "fields": {
+      "name": "Name and Surname",
+      "phone": "Phone",
+      "email": "Business Email", 
+      "challenge": "Your main challenge",
+      "message": "Request"
+    },
+    "placeholders": {
+      "name": "John Smith",
+      "phone": "+1 555 ...",
+      "email": "john@company.com",
+      "message": "Briefly describe your request or project..."
+    },
+    "challengeOptions": [
+      "I want to increase efficiency (Speed)",
+      "I have security problems (Vulnerabilities)",
+      "Systems don't communicate (Crew)",
+      "Other"
+    ],
+    "submit": "Request Free Analysis",
+    "submitting": "Sending...",
+    "privacyNote": "No commitment. Your data is safe.",
+    "successTitle": "Message in Bottle Sent!",
+    "successMessage": "You made the right move. Our team will contact you within 24 hours.",
+    "backToHome": "Back to Home"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "We are not just consultants. We are your partners in digital navigation. We build safe routes for your business in the sea of innovation.",
+    "missionTitle": "Our Mission",
+    "missionText1": "In a constantly stormy digital world, we help companies stay on course. We believe technology should be a tailwind, not an obstacle.",
+    "missionText2": "Our crew is made up of experts who combine technical competence and strategic vision, ready to come aboard your ship to take it towards new horizons."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Read the latest posts!!",
+    "backToBlog": "Back to Blog",
+    "searchPlaceholder": "Search (min. 3 chars)...",
+    "noPosts": "No articles found.",
+    "by": "By",
+    "readRead": "Read",
+    "pageOf": "Page {current} of {total}"
+  },
+  "blogDetail": {
+    "home": "Home",
+    "publishedOn": "Published on",
+    "by": "by",
+    "imageAlt": "Image for"
+  }
+}

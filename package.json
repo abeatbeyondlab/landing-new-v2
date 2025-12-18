@@ -23,6 +23,7 @@
     "@prisma/client": "^7.0.0",
     "lucide-react": "^0.554.0",
     "next": "^16.0.3",
+    "next-intl": "^4.6.1",
     "prisma-adapter-bun-sqlite": "^0.4.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -33,6 +34,11 @@
     "remark-gfm": "^4.0.1",
     "sharp": "^0.34.5"
   },
+  "trustedDependencies": [
+    "sharp",
+    "prisma",
+    "@prisma/client"
+  ],
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.19",

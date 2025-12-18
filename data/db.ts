@@ -39,9 +39,12 @@ export interface Post {
   image_slug: string;
 }
 
-export async function getPostsForStaticParams(): Promise<Pick<Post, 'slug'>[]> {
+export async function getPostsForStaticParams(locale: string = 'it'): Promise<Pick<Post, 'slug'>[]> {
   try {
     const posts = await prisma.post.findMany({
+      where: {
+        locale: locale
+      },
       select: {
         slug: true,
       },
@@ -67,12 +70,13 @@ export async function getTagsForStaticParams(): Promise<{ slug: string }[]> {
   }
 }
 
-export async function getPostBySlug(slug: string): Promise<Post | undefined> {
+export async function getPostBySlug(slug: string, locale: string = 'it'): Promise<Post | undefined> {
   try {
     const postFromDb = await prisma.post.findFirst({
       where: {
         slug: slug,
-        state: 1
+        state: 1,
+        locale: locale
       },
       include: {
         post_tag: {
@@ -104,11 +108,12 @@ export async function getPostBySlug(slug: string): Promise<Post | undefined> {
   }
 }
 
-export async function getSortedPosts(): Promise<Post[]> {
+export async function getSortedPosts(locale: string = 'it'): Promise<Post[]> {
   try {
     const postsFromDb = await prisma.post.findMany({
       where: {
         state: 1,
+        locale: locale
       },
       orderBy: {
         date: 'desc',
@@ -139,11 +144,12 @@ export async function getSortedPosts(): Promise<Post[]> {
   }
 }
 
-export async function getPostsByTag(tagSlug: string): Promise<Post[]> {
+export async function getPostsByTag(tagSlug: string, locale: string = 'it'): Promise<Post[]> {
   try {
     const postsFromDb = await prisma.post.findMany({
       where: {
         state: 1,
+        locale: locale,
         post_tag: {
           some: {
             tag: {
@@ -211,18 +217,21 @@ export async function getPosts({
   page = 1,
   limit = 6,
   search,
-  tagSlug
+  tagSlug,
+  locale = 'it'
 }: {
   page?: number;
   limit?: number;
   search?: string;
   tagSlug?: string;
+  locale?: string;
 }): Promise<{ posts: Post[]; total: number }> {
   try {
     const skip = (page - 1) * limit;
     
     const where: any = {
       state: 1,
+      locale: locale
     };
 
     if (tagSlug) {

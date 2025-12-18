@@ -1,0 +1,85 @@
+{
+  "nav": {
+    "metodo": "Metodo",
+    "servizi": "Servizi", 
+    "blog": "Blog",
+    "chiSiamo": "Chi Siamo",
+    "prenotaConsulenza": "Prenota Consulenza",
+    "prenotaConsulenzaGratuita": "Prenota Consulenza Gratuita"
+  },
+  "hero": {
+    "badge": "Digital Transformation Engineered",
+    "title": "Smetti di navigare a vista",
+    "subtitle": "Riprendi il Timone",
+    "description": "La digitalizzazione rischia di farti affondare .. a Capo Horn? A Beat Beyond è il tuo Advisor che sale a bordo per trasformare la tua azienda in una nave agile e profittevole nell'oceano digitale.",
+    "cta1": "Chiama l'Advisor (30 min Gratis)",
+    "cta2": "Scopri la Rotta",
+    "strategy": "Strategia di Navigazione",
+    "security": "Sicurezza Certificata", 
+    "stability": "Stabilità Operativa"
+  },
+  "contact": {
+    "formTitle": "Prenota la tua Consulenza Strategica",
+    "firstStepTitle": "Fai il Primo Passo Ora",
+    "firstStepSubtitle": "Non Rimandare la Crescita.",
+    "description": "Hai visto come un approccio ingegnerizzato all'IT può fare la differenza per la tua PMI. Ora è il momento di agire. Trasforma le sfide tecnologiche in opportunità concrete.",
+    "freeConsultation": "Richiedi Ora la Tua Consulenza Strategica Gratuita di 30 Minuti!",
+    "discover": "Scopri senza impegno come possiamo aiutarti a:",
+    "benefits": [
+      "Aumentare l'efficienza operativa",
+      "Prendere decisioni migliori con la Business Intelligence", 
+      "Integrare i tuoi sistemi software",
+      "Rafforzare la tua Cybersecurity",
+      "Sfruttare le nuove tecnologie (Cloud, AI, Web3...)"
+    ],
+    "quote": "\"Non esiste vento favorevole per il marinaio che non sa dove andare. Noi ti diamo la mappa.\"",
+    "fields": {
+      "name": "Nome e Cognome",
+      "phone": "Telefono",
+      "email": "Email Aziendale", 
+      "challenge": "La tua sfida principale",
+      "message": "Richiesta"
+    },
+    "placeholders": {
+      "name": "Comandante Rossi",
+      "phone": "+39 333 ...",
+      "email": "mario@azienda.it",
+      "message": "Descrivi brevemente la tua richiesta o il tuo progetto..."
+    },
+    "challengeOptions": [
+      "Voglio aumentare l'efficienza (Velocità)",
+      "Ho problemi di sicurezza (Falle)",
+      "I sistemi non comunicano (Equipaggio)",
+      "Altro"
+    ],
+    "submit": "Richiedi Analisi Gratuita",
+    "submitting": "Invio in corso...",
+    "privacyNote": "Nessun impegno. I tuoi dati sono al sicuro.",
+    "successTitle": "Messaggio in Bottiglia Inviato!",
+    "successMessage": "Hai fatto la mossa giusta. Il nostro team ti contatterà entro 24 ore.",
+    "backToHome": "Torna alla Home"
+  },
+  "about": {
+    "title": "Chi Siamo",
+    "subtitle": "Non siamo solo consulenti. Siamo i tuoi partner nella navigazione digitale. Costruiamo rotte sicure per il tuo business nel mare dell'innovazione.",
+    "missionTitle": "La Nostra Missione",
+    "missionText1": "In un mondo digitale in continua tempesta, aiutiamo le aziende a mantenere la rotta. Crediamo che la tecnologia debba essere un vento a favore, non un ostacolo.",
+    "missionText2": "Il nostro equipaggio è composto da esperti che uniscono competenza tecnica e visione strategica, pronti a salire a bordo della tua nave per portarla verso nuovi orizzonti."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Leggi gli ultimi post!!",
+    "backToBlog": "Torna al Blog",
+    "searchPlaceholder": "Cerca (min. 3 caratteri)...",
+    "noPosts": "Nessun articolo trovato.",
+    "by": "Di",
+    "readRead": "Leggi",
+    "pageOf": "Pagina {current} di {total}"
+  },
+  "blogDetail": {
+    "home": "Home",
+    "publishedOn": "Pubblicato il",
+    "by": "da",
+    "imageAlt": "Immagine per"
+  }
+}
