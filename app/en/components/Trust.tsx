@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 export const Trust: React.FC = () => {
+  const t = useTranslations('trust');
   const [companiesCount, setCompaniesCount] = useState(0);
   const [solutionsCount, setSolutionsCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -74,21 +76,21 @@ export const Trust: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12 border-b border-slate-100 pb-12">
             {/* Stats Section */}
             <div ref={sectionRef}>
-                 <h2 className="text-3xl font-display font-bold text-slate-900 mb-8">
-                    We Deliver <span className="text-blue-600">Results</span>.
-                 </h2>
+                 <h2 className="text-3xl font-display font-bold text-slate-900 mb-8"
+                     dangerouslySetInnerHTML={{ __html: t.raw('title') }}
+                 />
                  <div className="grid grid-cols-2 gap-8">
                     <div>
                         <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">
                           {companiesCount}+
                         </div>
-                        <p className="text-slate-600 font-medium">Companies that trust us</p>
+                        <p className="text-slate-600 font-medium">{t('companies')}</p>
                     </div>
                     <div>
                         <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">
                           {solutionsCount}+
                         </div>
-                         <p className="text-slate-600 font-medium">Solutions developed</p>
+                         <p className="text-slate-600 font-medium">{t('solutions')}</p>
                     </div>
                  </div>
             </div>
@@ -96,7 +98,7 @@ export const Trust: React.FC = () => {
             {/* Context Text */}
             <div className="text-lg text-slate-600 leading-relaxed">
                 <p>
-                    We don't just offer technology, but a measurable growth path. The numbers speak clearly: ingenuity transforms challenges into achieved goals.
+                    {t('description')}
                 </p>
             </div>
         </div>
@@ -106,10 +108,10 @@ export const Trust: React.FC = () => {
           
           <div className="text-center md:text-left md:w-1/4 shrink-0 z-10 bg-white md:pr-4">
             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
-              Excellence Partners
+              {t('partners')}
             </p>
             <p className="text-slate-900 font-semibold">
-              They chose us
+              {t('chosenBy')}
             </p>
           </div>
           
@@ -123,7 +125,7 @@ export const Trust: React.FC = () => {
                     <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">ZENITFARMA</div>
                     <div className="text-2xl font-serif italic font-bold text-slate-800 hover:text-black cursor-default whitespace-nowrap">ZATACOM</div>
                     <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">TRAVELWARE</div>
-                    <div className="text-2xl font-bold tracking-tighter text-slate-500 hover:text-blue-600 cursor-default whitespace-nowrap">NAZARENO COOPSOCIALE</div>
+                    <div className="text-2xl font-bold tracking-tighter text-slate-800 hover:text-blue-600 cursor-default whitespace-nowrap">NAZARENO COOPSOCIALE</div>
                     <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">AUSER</div>
                     <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">FARMACIA SAN PIETRO</div>
                     <div className="text-xl font-bold text-slate-800 hover:text-slate-900 cursor-default whitespace-nowrap">MONEYVIZ</div>

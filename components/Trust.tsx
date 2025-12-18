@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 export const Trust: React.FC = () => {
+  const t = useTranslations('trust');
   const [companiesCount, setCompaniesCount] = useState(0);
   const [solutionsCount, setSolutionsCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -74,21 +76,21 @@ export const Trust: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12 border-b border-slate-100 pb-12">
             {/* Stats Section */}
             <div ref={sectionRef}>
-                 <h2 className="text-3xl font-display font-bold text-slate-900 mb-8">
-                    Vendiamo <span className="text-blue-600">Risultati</span>.
-                 </h2>
+                 <h2 className="text-3xl font-display font-bold text-slate-900 mb-8"
+                     dangerouslySetInnerHTML={{ __html: t.raw('title') }}
+                 />
                  <div className="grid grid-cols-2 gap-8">
                     <div>
                         <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">
                           {companiesCount}+
                         </div>
-                        <p className="text-slate-600 font-medium">Aziende che si fidano di noi</p>
+                        <p className="text-slate-600 font-medium">{t('companies')}</p>
                     </div>
                     <div>
                         <div className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">
                           {solutionsCount}+
                         </div>
-                         <p className="text-slate-600 font-medium">Soluzioni sviluppate</p>
+                         <p className="text-slate-600 font-medium">{t('solutions')}</p>
                     </div>
                  </div>
             </div>
@@ -96,7 +98,7 @@ export const Trust: React.FC = () => {
             {/* Context Text */}
             <div className="text-lg text-slate-600 leading-relaxed">
                 <p>
-                    Non offriamo solo tecnologia, ma un percorso di crescita misurabile. I numeri parlano chiaro: l'ingegno trasforma le sfide in traguardi raggiunti.
+                    {t('description')}
                 </p>
             </div>
         </div>
@@ -106,10 +108,10 @@ export const Trust: React.FC = () => {
           
           <div className="text-center md:text-left md:w-1/4 shrink-0 z-10 bg-white md:pr-4">
             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
-              Partner di Eccellenza
+              {t('partners')}
             </p>
             <p className="text-slate-900 font-semibold">
-              Ci hanno scelto
+              {t('chosenBy')}
             </p>
           </div>
           

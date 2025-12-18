@@ -1,21 +1,23 @@
 import React from 'react';
 import { TrendingUp, ShieldCheck, BarChart3 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export const Results: React.FC = () => {
+  const t = useTranslations('results');
+
   return (
     <section className="py-20 bg-slate-50 border-t border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
-            Expertise Comprovata
+            {t('badge')}
           </div>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-6">
-            Non Solo Parole: <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">Risultati Misurabili</span>
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-6"
+              dangerouslySetInnerHTML={{ __html: t.raw('title') }}
+          />
           <p className="text-lg text-slate-600">
-            I nostri metodi sono stati applicati con successo in contesti ad alta complessità. Ecco come trasformiamo le sfide in vantaggio competitivo.
+            {t('description')}
           </p>
         </div>
 
@@ -31,26 +33,26 @@ export const Results: React.FC = () => {
               </div>
               
               <h3 className="text-xl font-bold text-slate-900 mb-2">
-                Settore Automotive
+                {t('cases.case1.sector')}
               </h3>
               <p className="text-sm text-slate-500 font-medium mb-6 uppercase tracking-wide">
-                Ottimizzazione Produzione
+                {t('cases.case1.area')}
               </p>
 
               <div className="space-y-4">
                 <div>
-                  <span className="text-xs font-bold text-slate-500 block mb-1">LA SFIDA</span>
+                  <span className="text-xs font-bold text-slate-500 block mb-1">{t('labels.challenge')}</span>
                   <p className="text-slate-600 text-sm">
-                    Sistemi di produzione non allineati con il gestionale, causando ritardi nell'approvvigionamento.
+                    {t('cases.case1.challenge')}
                   </p>
                 </div>
                 <div className="pt-4 border-t border-slate-100">
-                   <span className="text-xs font-bold text-emerald-700 block mb-1">IL RISULTATO</span>
+                   <span className="text-xs font-bold text-emerald-700 block mb-1">{t('labels.result')}</span>
                    <p className="text-slate-900 font-bold text-lg">
-                     +25% Efficienza Operativa
+                     {t('cases.case1.resultValue')}
                    </p>
                    <p className="text-slate-500 text-sm mt-1">
-                     Riduzione tempi morti e tracciabilità totale.
+                     {t('cases.case1.resultDesc')}
                    </p>
                 </div>
               </div>
@@ -67,26 +69,26 @@ export const Results: React.FC = () => {
               </div>
               
               <h3 className="text-xl font-bold text-slate-900 mb-2">
-                Manifattura & Logistica
+                {t('cases.case2.sector')}
               </h3>
               <p className="text-sm text-slate-500 font-medium mb-6 uppercase tracking-wide">
-                Business Intelligence
+                {t('cases.case2.area')}
               </p>
 
               <div className="space-y-4">
                 <div>
-                  <span className="text-xs font-bold text-slate-500 block mb-1">LA SFIDA</span>
+                  <span className="text-xs font-bold text-slate-500 block mb-1">{t('labels.challenge')}</span>
                   <p className="text-slate-600 text-sm">
-                    Decisioni basate su report mensili obsoleti, navigazione "a vista" della dirigenza.
+                    {t('cases.case2.challenge')}
                   </p>
                 </div>
                 <div className="pt-4 border-t border-slate-100">
-                   <span className="text-xs font-bold text-emerald-700 block mb-1">IL RISULTATO</span>
+                   <span className="text-xs font-bold text-emerald-700 block mb-1">{t('labels.result')}</span>
                    <p className="text-slate-900 font-bold text-lg">
-                     Dashboard Real-Time
+                     {t('cases.case2.resultValue')}
                    </p>
                    <p className="text-slate-500 text-sm mt-1">
-                     Decisioni strategiche immediate basate su dati certi.
+                     {t('cases.case2.resultDesc')}
                    </p>
                 </div>
               </div>
@@ -103,26 +105,26 @@ export const Results: React.FC = () => {
               </div>
               
               <h3 className="text-xl font-bold text-slate-900 mb-2">
-                Servizi Finanziari
+                {t('cases.case3.sector')}
               </h3>
               <p className="text-sm text-slate-500 font-medium mb-6 uppercase tracking-wide">
-                Cybersecurity & Compliance
+                {t('cases.case3.area')}
               </p>
 
               <div className="space-y-4">
                 <div>
-                  <span className="text-xs font-bold text-slate-500 block mb-1">LA SFIDA</span>
+                  <span className="text-xs font-bold text-slate-500 block mb-1">{t('labels.challenge')}</span>
                   <p className="text-slate-600 text-sm">
-                    Necessità di adeguamento ISO 27001 e protezione dati sensibili da attacchi ransomware.
+                    {t('cases.case3.challenge')}
                   </p>
                 </div>
                 <div className="pt-4 border-t border-slate-100">
-                   <span className="text-xs font-bold text-emerald-700 block mb-1">IL RISULTATO</span>
+                   <span className="text-xs font-bold text-emerald-700 block mb-1">{t('labels.result')}</span>
                    <p className="text-slate-900 font-bold text-lg">
-                     Blindatura Totale
+                     {t('cases.case3.resultValue')}
                    </p>
                    <p className="text-slate-500 text-sm mt-1">
-                     Zero incidenti di sicurezza e ottenimento certificazione.
+                     {t('cases.case3.resultDesc')}
                    </p>
                 </div>
               </div>

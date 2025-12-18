@@ -4,9 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './Button';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 
 export const Header: React.FC = () => {
+  const t = useTranslations('nav');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -73,10 +75,10 @@ export const Header: React.FC = () => {
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center bg-white/5 rounded-full px-2 py-1 border border-white/10 backdrop-blur-sm">
           {[
-            { label: 'Metodo', type: 'scroll', id: 'metodo' },
-            { label: 'Servizi', type: 'scroll', id: 'servizi' },
-            { label: 'Blog', type: 'link', href: '/blog' },
-            { label: 'Chi Siamo', type: 'link', href: '/chi-siamo' }
+            { label: t('metodo'), type: 'scroll', id: 'metodo' },
+            { label: t('servizi'), type: 'scroll', id: 'servizi' },
+            { label: t('blog'), type: 'link', href: '/blog' },
+            { label: t('chiSiamo'), type: 'link', href: '/chi-siamo' }
           ].map((item) => (
             <button 
               key={item.label}
@@ -100,7 +102,7 @@ export const Header: React.FC = () => {
             onClick={() => scrollToSection('contact')}
             className="px-6 py-2 text-sm !rounded-lg"
           >
-            Prenota Consulenza
+            {t('prenotaConsulenza')}
           </Button>
         </div>
 
@@ -118,10 +120,10 @@ export const Header: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="absolute top-full left-0 right-0 bg-brand-dark border-b border-slate-800 p-6 flex flex-col gap-4 lg:hidden animate-in slide-in-from-top-5 shadow-2xl">
           {[
-            { label: 'Metodo', type: 'scroll', id: 'metodo' },
-            { label: 'Servizi', type: 'scroll', id: 'servizi' },
-            { label: 'Blog', type: 'link', href: '/blog' },
-            { label: 'Chi Siamo', type: 'link', href: '/chi-siamo' }
+            { label: t('metodo'), type: 'scroll', id: 'metodo' },
+            { label: t('servizi'), type: 'scroll', id: 'servizi' },
+            { label: t('blog'), type: 'link', href: '/blog' },
+            { label: t('chiSiamo'), type: 'link', href: '/chi-siamo' }
           ].map((item) => (
             <button 
               key={item.label}
@@ -139,7 +141,7 @@ export const Header: React.FC = () => {
             </button>
           ))}
           <Button onClick={() => scrollToSection('contact')} variant="glow" fullWidth className="mt-4">
-            Prenota Consulenza Gratuita
+            {t('prenotaConsulenzaGratuita')}
           </Button>
         </div>
       )}

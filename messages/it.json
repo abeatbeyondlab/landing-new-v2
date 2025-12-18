@@ -20,7 +20,7 @@
   },
   "contact": {
     "formTitle": "Prenota la tua Consulenza Strategica",
-    "firstStepTitle": "Fai il Primo Passo Ora",
+    "firstStepTitle": "Fai il Primo Passo <span class='text-cyan-400'>Ora</span>.",
     "firstStepSubtitle": "Non Rimandare la Crescita.",
     "description": "Hai visto come un approccio ingegnerizzato all'IT può fare la differenza per la tua PMI. Ora è il momento di agire. Trasforma le sfide tecnologiche in opportunità concrete.",
     "freeConsultation": "Richiedi Ora la Tua Consulenza Strategica Gratuita di 30 Minuti!",
@@ -81,5 +81,170 @@
     "publishedOn": "Pubblicato il",
     "by": "da",
     "imageAlt": "Immagine per"
+  },
+  "process": {
+    "title": "La nostra <span class='text-blue-600'>Rotta</span> verso il successo",
+    "description": "Non ti lasciamo in balia delle onde. Abbiamo un metodo collaudato per portarti dal porto sicuro al mare aperto del mercato globale.",
+    "steps": {
+      "step1": {
+        "title": "Tracciamo la Rotta",
+        "description": "Analisi dello stato attuale (AS-IS) e definizione degli obiettivi (TO-BE). Capiamo dove sei e dove vuoi arrivare."
+      },
+      "step2": {
+        "title": "Armiamo la Nave",
+        "description": "Implementazione tecnica e ingegnerizzazione. Integriamo i sistemi, potenziamo la sicurezza e ottimizziamo i processi."
+      },
+      "step3": {
+        "title": "Spieghiamo le Vele",
+        "description": "Go-live e monitoraggio. La tua azienda naviga autonoma, veloce e pronta ad affrontare il mercato globale."
+      }
+    },
+    "scrollDown": "Scorri giù"
+  },
+  "results": {
+    "badge": "Expertise Comprovata",
+    "title": "Non Solo Parole: <br/> <span class='text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500'>Risultati Misurabili</span>",
+    "description": "I nostri metodi sono stati applicati con successo in contesti ad alta complessità. Ecco come trasformiamo le sfide in vantaggio competitivo.",
+    "labels": {
+      "challenge": "LA SFIDA",
+      "result": "IL RISULTATO"
+    },
+    "cases": {
+      "case1": {
+        "sector": "Settore Automotive",
+        "area": "Ottimizzazione Produzione",
+        "challenge": "Sistemi di produzione non allineati con il gestionale, causando ritardi nell'approvvigionamento.",
+        "resultValue": "+25% Efficienza Operativa",
+        "resultDesc": "Riduzione tempi morti e tracciabilità totale."
+      },
+      "case2": {
+        "sector": "Manifattura & Logistica",
+        "area": "Business Intelligence",
+        "challenge": "Decisioni basate su report mensili obsoleti, navigazione \"a vista\" della dirigenza.",
+        "resultValue": "Dashboard Real-Time",
+        "resultDesc": "Decisioni strategiche immediate basate su dati certi."
+      },
+      "case3": {
+        "sector": "Servizi Finanziari",
+        "area": "Cybersecurity & Compliance",
+        "challenge": "Necessità di adeguamento ISO 27001 e protezione dati sensibili da attacchi ransomware.",
+        "resultValue": "Blindatura Totale",
+        "resultDesc": "Zero incidenti di sicurezza e ottenimento certificazione."
+      }
+    }
+  },
+  "trust": {
+    "title": "Vendiamo <span class='text-blue-600'>Risultati</span>.",
+    "companies": "Aziende che si fidano di noi",
+    "solutions": "Soluzioni sviluppate",
+    "description": "Non offriamo solo tecnologia, ma un percorso di crescita misurabile. I numeri parlano chiaro: l'ingegno trasforma le sfide in traguardi raggiunti.",
+    "partners": "Partner di Eccellenza",
+    "chosenBy": "Ci hanno scelto"
+  },
+  "objections": {
+    "title": "Dubbi? Parliamone.",
+    "items": {
+      "item1": {
+        "q": "Ho paura che un progetto personalizzato sia troppo costoso.",
+        "a": "Il vero costo è l'inefficienza. Le nostre soluzioni sono investimenti mirati al ROI. Spesso, automatizzando un singolo processo manuale, il progetto si ripaga da solo in pochi mesi."
+      },
+      "item2": {
+        "q": "Temo che l'implementazione sia complessa e blocchi il lavoro.",
+        "a": "Siamo ingegneri, non improvvisatori. Pianifichiamo migrazioni graduali e testate per garantire la continuità operativa (Business Continuity). Non te ne accorgerai nemmeno."
+      },
+      "item3": {
+        "q": "Siete adatti a una piccola azienda?",
+        "a": "Assolutamente. Il nostro metodo 'Engineered' è scalabile. Portiamo la qualità enterprise alla portata delle PMI, tagliando il superfluo."
+      }
+    }
+  },
+  "funnel": {
+    "title": "Il Nostro <span class='text-blue-600'>Metodo</span> ingegnerizzato",
+    "subtitle": "Un approccio strutturato per trasformare la tecnologia in un vantaggio competitivo per la tua PMI",
+    "steps": {
+      "step1": {
+        "title": "La tua PMI sta Sprecando Potenziale Tecnologico?",
+        "content": "<p>Esiste un modo per far comunicare meglio i tuoi sistemi, ottenere dati che <strong class='text-slate-800 font-bold'>davvero ti aiutano a decidere</strong> e aumentare l'efficienza, spesso usando meglio ciò che hai già. Vuoi scoprire come trasformare l'IT da un 'costo necessario' a un <strong class='text-blue-600 font-bold'>motore di crescita</strong> prima dei tuoi concorrenti?</p><p>Non parliamo delle solite soluzioni standardizzate. Parliamo di un approccio <span class='italic font-medium text-slate-800'>'ingegnerizzato'</span> alla trasformazione digitale, un'innovazione nel metodo pensata specificamente per le esigenze uniche delle PMI come la tua. Un'anteprima su come la tecnologia può davvero lavorare per te.</p><p>Del resto, tu conosci il tuo business meglio di chiunque altro. Hai già costruito la tua azienda con competenza e passione. Immagina cosa potresti ottenere integrando la tua esperienza con una <strong class='text-slate-800 font-bold'>strategia tecnologica disegnata su misura</strong>, che amplifica le tue capacità invece di complicarti la vita.</p>"
+      },
+      "step2": {
+        "title": "Condividiamo i Tuoi Valori",
+        "content": "<p>Come te, crediamo nella concretezza, nell'efficienza e nella crescita sostenibile. Per noi, partnership significa lavorare fianco a fianco con <strong class='text-emerald-700 font-bold'>etica e trasparenza</strong> per raggiungere obiettivi reali. Il rispetto per il tuo lavoro e i tuoi investimenti è fondamentale. Questi valori guidano ogni nostro progetto. Ti ritrovi?</p><p>Ignorare l'evoluzione tecnologica o affidarsi a soluzioni inadeguate, però, significa <strong class='text-slate-800 font-bold'>rischiare ogni giorno</strong>: perdere tempo in processi manuali, basare decisioni su dati incompleti, o peggio, subire danni da attacchi informatici. Sentirsi 'indietro' o frustrati dalla tecnologia non è un destino inevitabile, ma un rischio concreto se manca la giusta strategia. Non vuoi che questo accada alla tua azienda, vero?</p><p>Siamo qui per aiutarti a colmare questo divario. Traduciamo la complessità tecnologica in <strong class='text-slate-800 font-bold'>soluzioni pratiche e su misura</strong> che ti liberano tempo, proteggono la tua attività e ti danno gli strumenti per competere e vincere nel mercato di oggi. Il nostro scopo è rendere la tecnologia un tuo potente alleato, non un puzzle da risolvere.</p>"
+      },
+      "step3": {
+        "title": "Immagina la Tua Azienda al Massimo dell'Efficienza",
+        "content": "<p>Perché quando i sistemi sono integrati e i dati diventano informazioni strategiche (BI), l'efficienza operativa decolla e le decisioni diventano <strong class='text-purple-600 font-bold'>più rapide e sicure</strong>. Ti interessa sbloccare questo potenziale? Allora devi avere gli strumenti giusti e un partner che sappia come implementarli efficacemente.</p><p>Pensa a come sarebbe lavorare con processi fluidi, dove le informazioni fluiscono senza intoppi tra reparti. Immagina di avere <strong class='text-slate-800 font-bold'>dashboard chiare</strong> che ti mostrano in tempo reale cosa funziona e cosa no. Pensa alla tranquillità di sapere che i tuoi dati sono al sicuro (Cybersecurity con ISO 27001). Pensa a quanto più velocemente potresti crescere e innovare.</p><p>Per trasformare queste possibilità in realtà quotidiana, ti serve una risorsa chiave: l'ingegneria applicata all'IT. ABeatBeyond ti mette a disposizione questa risorsa: un team di <strong class='text-slate-800 font-bold'>ingegneri con esperienza comprovata</strong> nell'ottimizzare processi e integrare tecnologie (ERP, Logistica, Produzione, IoT, Cloud, AI, Web3) per ottenere il massimo risultato possibile.</p>"
+      },
+      "step4": {
+        "title": "Parliamo la Tua Lingua",
+        "content": "<p>Combatti con l'integrazione tra il gestionale e il software di produzione o logistica? Senti di navigare a vista per mancanza di dati di Business Intelligence chiari? La cybersecurity ti preoccupa ma ti sembra un mostro troppo grande da affrontare? Queste sono le sfide concrete che <strong class='text-slate-800 font-bold'>affrontiamo e risolviamo ogni giorno</strong> al fianco di imprenditori come te.</p><p>Ogni giorno devi gestire clienti, fornitori, produzione, amministrazione... e la tecnologia dovrebbe <strong class='text-slate-800 font-bold'>semplificarti la vita</strong>, non aggiungere complessità. Magari usi software diversi che non 'parlano' tra loro, perdi tempo a recuperare informazioni sparse o temi che i tuoi sistemi non siano al passo con i tempi. Abbiamo descritto bene la tua realtà?</p><p class='font-medium text-slate-900 border-l-4 border-orange-400 pl-4 mt-6'>In questo scenario, la tua priorità numero uno diventa chiara: trasformare la tecnologia da un insieme di strumenti isolati a un sistema integrato e performante. <strong class='text-orange-600 font-bold text-xl block mt-2'>Ottimizzare, Integrare, Proteggere e Analizzare.</strong> È questo che serve ora per fare il salto di qualità. Concordi?</p>"
+      }
+    }
+  },
+  "problem_solution": {
+    "badge": "Le Insidie del Mare",
+    "title": "Cosa sta rallentando la tua <span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500'>Navigazione</span>?",
+    "description": "Anche il miglior Capitano non può vincere con una nave che imbarca acqua o con una mappa sbagliata. Identifichiamo le falle nel tuo sistema informatico e le trasformiamo nei tuoi punti di forza.",
+    "quote": "\"Non ti vendiamo software. Ti diamo gli strumenti per governare la tua nave in qualsiasi condizione meteo.\"",
+    "points": {
+      "point1": {
+        "title": "Sistemi Disconnessi",
+        "problem": "Un equipaggio che rema in direzioni diverse. Software che non si parlano creano caos a bordo.",
+        "solution": "Integrazione Totale. Tutti i sistemi lavorano all'unisono per la massima velocità."
+      },
+      "point2": {
+        "title": "Nebbia Strategica",
+        "problem": "Navigare senza strumenti. Decisioni basate sull'istinto perché mancano dati chiari.",
+        "solution": "Business Intelligence. Un radar sempre attivo per vedere ostacoli e opportunità."
+      },
+      "point3": {
+        "title": "Zavorra Tecnologica",
+        "problem": "Processi manuali e lenti che appesantiscono lo scafo e ti fanno perdere gara contro i competitor.",
+        "solution": "Automazione e Cloud. Alleggeriamo la nave per renderla agile e scattante."
+      },
+      "point4": {
+        "title": "Falle di Sicurezza",
+        "problem": "Il rischio di attacchi Cyber è come una falla nello scafo: silenziosa ma letale.",
+        "solution": "Cybersecurity ISO 27001. Blindiamo la nave contro ogni tempesta esterna."
+      }
+    }
+  },
+  "services_section": {
+    "badge": "L'Arsenale Tecnologico",
+    "title": "Strumenti d'avanguardia per la tua <span class='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300'>Impresa</span>",
+    "description": "Ogni componente del nostro intervento è pensato per un solo scopo: far viaggiare la tua azienda più veloce e più sicura delle altre."
+  },
+  "services_list": {
+    "software-strategy-consulting-and-advisory": {
+      "title": "Advisor e Strategia sulla Trasformazione Digitale",
+      "description": "Il tuo Ufficiale di Rotta. Definiamo la direzione tecnologica per raggiungere i tuoi obiettivi di business."
+    },
+    "it-architecture-design": {
+      "title": "Progettazione Architetture Informatiche",
+      "description": "Lo Scafo della nave. Progettiamo infrastrutture robuste e scalabili per affrontare ogni mare."
+    },
+    "systems-integration": {
+      "title": "Integrazione dei Sistemi Gestionali",
+      "description": "Sincronia dell'equipaggio. ERP, CRM e MES dialogano perfettamente per eliminare errori e ritardi."
+    },
+    "cybersecurity": {
+      "title": "Cybersecurity",
+      "description": "Scudo contro le tempeste. Protezione dati e conformità ISO 27001 per navigare sicuri."
+    },
+    "business-intelligence": {
+      "title": "Business Intelligence",
+      "description": "Il Radar di bordo. Trasformiamo i dati in una visione chiara per evitare scogli e cogliere opportunità."
+    },
+    "open-source-software": {
+      "title": "Open Source",
+      "description": "Libertà di manovra. Riduciamo la dipendenza da fornitori esterni (Vendor Lock-in) e tagliamo i costi."
+    },
+    "project-management": {
+      "title": "Temporary Project Management",
+      "description": "Il Capitano in seconda. Gestiamo i progetti complessi garantendo tempi, costi e risultati."
+    },
+    "training": {
+      "title": "Formazione",
+      "description": "Addestramento equipaggio. Trasferiamo competenze al tuo team per rendervi autonomi."
+    }
   }
 }

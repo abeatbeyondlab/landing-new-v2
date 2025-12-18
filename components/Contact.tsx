@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Button } from './Button';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { siteConfig } from '@/config/site';
+import { useTranslations } from 'next-intl';
 
 export const Contact: React.FC = () => {
+  const t = useTranslations('contact');
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -66,11 +68,11 @@ export const Contact: React.FC = () => {
           <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="h-12 w-12 text-emerald-400" />
           </div>
-          <h2 className="text-4xl font-display font-bold mb-4">Messaggio in Bottiglia Inviato!</h2>
+          <h2 className="text-4xl font-display font-bold mb-4">{t('successTitle')}</h2>
           <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-            Hai fatto la mossa giusta. Il nostro team ti contatterà entro 24 ore.
+            {t('successMessage')}
           </p>
-          <Button variant="outline" onClick={() => setFormStatus('idle')}>Torna alla Home</Button>
+          <Button variant="outline" onClick={() => setFormStatus('idle')}>{t('backToHome')}</Button>
         </div>
       </section>
     );
@@ -92,36 +94,28 @@ export const Contact: React.FC = () => {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-cyan-400"></div>
             
             <div>
-              <h3 className="text-3xl font-display font-bold text-white mb-6">
-                Fai il Primo Passo <span className="text-cyan-400">Ora</span>.
-              </h3>
+              <h3 className="text-3xl font-display font-bold text-white mb-6"
+                  dangerouslySetInnerHTML={{ __html: t.raw('firstStepTitle') }} 
+              />
               
               <div className="text-blue-100 text-lg mb-8 leading-relaxed space-y-4">
-                <p className="font-semibold text-white">Non Rimandare la Crescita.</p>
+                <p className="font-semibold text-white">{t('firstStepSubtitle')}</p>
                 <p>
-                  Hai visto come un approccio ingegnerizzato all'IT può fare la differenza per la tua PMI. 
-                  Ora è il momento di agire. 
-                  Trasforma le sfide tecnologiche in opportunità concrete.
+                  {t('description')}
                 </p>
               </div>
 
               <div className="mb-6">
                 <p className="text-white font-bold text-lg mb-2 leading-tight">
-                  Richiedi Ora la Tua Consulenza Strategica Gratuita di 30 Minuti!
+                  {t('freeConsultation')}
                 </p>
                 <p className="text-blue-100">
-                  Scopri senza impegno come possiamo aiutarti a:
+                  {t('discover')}
                 </p>
               </div>
               
               <ul className="space-y-3">
-                {[
-                  "Aumentare l'efficienza operativa",
-                  "Prendere decisioni migliori con la Business Intelligence",
-                  "Integrare i tuoi sistemi software",
-                  "Rafforzare la tua Cybersecurity",
-                  "Sfruttare le nuove tecnologie (Cloud, AI, Web3...)"
-                ].map((item, index) => (
+                {(t.raw('benefits') as string[]).map((item, index) => (
                   <li key={index} className="flex items-start text-white group">
                     <div className="mt-1 mr-3 min-w-[20px]">
                       <CheckCircle size={18} className="text-emerald-400" />
@@ -134,7 +128,7 @@ export const Contact: React.FC = () => {
 
             <div className="mt-12 pt-8 border-t border-white/10">
                <p className="text-sm text-slate-400 italic">
-                 "Non esiste vento favorevole per il marinaio che non sa dove andare. Noi ti diamo la mappa."
+                 {t('quote')}
                </p>
             </div>
           </div>
@@ -142,65 +136,64 @@ export const Contact: React.FC = () => {
           {/* Right Side: Form */}
           {/* FIX: Reduced padding on mobile from p-10 to p-6 */}
           <div className="lg:w-7/12 p-6 md:p-10 lg:p-16 bg-white">
-            <h2 className="text-2xl font-bold text-slate-900 mb-8">Prenota la tua Consulenza Strategica</h2>
+            <h2 className="text-2xl font-bold text-slate-900 mb-8">{t('formTitle')}</h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="group">
-                  <label htmlFor="name" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">Nome e Cognome</label>
+                  <label htmlFor="name" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">{t('fields.name')}</label>
                   <input 
                     id="name"
                     name="name"
                     type="text" 
                     required 
                     className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 placeholder-slate-500"
-                    placeholder="Comandante Rossi"
+                    placeholder={t('placeholders.name')}
                   />
                 </div>
                 <div className="group">
-                  <label htmlFor="phone" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">Telefono</label>
+                  <label htmlFor="phone" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">{t('fields.phone')}</label>
                   <input 
                     id="phone"
                     name="phone"
                     type="tel" 
                     required 
                     className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 placeholder-slate-500"
-                    placeholder="+39 333 ..."
+                    placeholder={t('placeholders.phone')}
                   />
                 </div>
               </div>
               
               <div className="group">
-                <label htmlFor="email" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">Email Aziendale</label>
+                <label htmlFor="email" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">{t('fields.email')}</label>
                 <input 
                   id="email"
                   name="email"
                   type="email" 
                   required 
                   className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 placeholder-slate-500"
-                  placeholder="mario@azienda.it"
+                  placeholder={t('placeholders.email')}
                 />
               </div>
 
               <div className="group">
-                <label htmlFor="challenge" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">La tua sfida principale</label>
+                <label htmlFor="challenge" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">{t('fields.challenge')}</label>
                 <select id="challenge" name="challenge" className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 cursor-pointer">
-                  <option>Voglio aumentare l'efficienza (Velocità)</option>
-                  <option>Ho problemi di sicurezza (Falle)</option>
-                  <option>I sistemi non comunicano (Equipaggio)</option>
-                  <option>Altro</option>
+                  {(t.raw('challengeOptions') as string[]).map((option, index) => (
+                    <option key={index}>{option}</option>
+                  ))}
                 </select>
               </div>
 
               <div className="group">
-                <label htmlFor="message" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">Richiesta</label>
+                <label htmlFor="message" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">{t('fields.message')}</label>
                 <textarea 
                   id="message"
                   name="message"
                   required 
                   rows={4}
                   className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 placeholder-slate-500 resize-none"
-                  placeholder="Descrivi brevemente la tua richiesta o il tuo progetto..."
+                  placeholder={t('placeholders.message')}
                 />
               </div>
 
@@ -213,14 +206,14 @@ export const Contact: React.FC = () => {
 
               <div className="pt-4">
                 <Button fullWidth variant="primary" disabled={formStatus === 'submitting'} className="!py-4 text-lg shadow-xl">
-                  {formStatus === 'submitting' ? 'Invio in corso...' : (
+                  {formStatus === 'submitting' ? t('submitting') : (
                     <span className="flex items-center gap-2">
-                      Richiedi Analisi Gratuita <Send size={18} />
+                       {t('submit')} <Send size={18} />
                     </span>
                   )}
                 </Button>
                 <p className="text-center text-xs text-slate-600 mt-4">
-                  Nessun impegno. I tuoi dati sono al sicuro.
+                  {t('privacyNote')}
                 </p>
               </div>
             </form>

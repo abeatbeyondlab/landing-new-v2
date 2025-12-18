@@ -2,8 +2,12 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { servicesDataEn } from '@/data/services-en';
+import { useTranslations } from 'next-intl';
 
 export const Services: React.FC = () => {
+  const t = useTranslations('services_section');
+  const tList = useTranslations('services_list');
+
   return (
     <section id="servizi" className="py-24 bg-brand-dark text-white relative overflow-hidden">
       <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px]"></div>
@@ -11,12 +15,12 @@ export const Services: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-20">
-          <h2 className="text-sm text-cyan-400 font-bold tracking-[0.2em] uppercase mb-3">The Technological Arsenal</h2>
-          <h3 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
-            Cutting-edge tools for your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Enterprise</span>
-          </h3>
+          <h2 className="text-sm text-cyan-400 font-bold tracking-[0.2em] uppercase mb-3">{t('badge')}</h2>
+          <h3 className="text-4xl md:text-5xl font-display font-bold text-white mb-6"
+              dangerouslySetInnerHTML={{ __html: t.raw('title') }}
+          />
           <p className="mt-4 max-w-2xl text-lg text-slate-400 mx-auto">
-            Every component of our intervention is designed for one purpose: to make your company travel faster and safer than the others.
+            {t('description')}
           </p>
         </div>
 
@@ -38,9 +42,11 @@ export const Services: React.FC = () => {
                   <service.icon className="h-6 w-6 text-blue-400 group-hover:text-white" />
                 </div>
                 
-                <h3 className="text-lg font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">{service.title}</h3>
+                <h3 className="text-lg font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">
+                  {tList(`${service.slug}.title`)}
+                </h3>
                 <p className="text-slate-400 text-sm leading-relaxed group-hover:text-slate-200">
-                  {service.description}
+                  {tList(`${service.slug}.description`)}
                 </p>
               </div>
             </a>

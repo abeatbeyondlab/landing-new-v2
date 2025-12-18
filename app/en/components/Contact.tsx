@@ -35,9 +35,18 @@ export const Contact: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to submit form');
+        const errorText = await response.text();
+        let errorMessage = 'Failed to submit form';
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          errorMessage = errorText || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
 
+      // Google Ads Conversion Tracking
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'conversion', {
           'send_to': siteConfig.googleAdsConversionId,
@@ -71,23 +80,9 @@ export const Contact: React.FC = () => {
     );
   }
 
-  const benefits = [
-    t('benefits.0'),
-    t('benefits.1'),
-    t('benefits.2'),
-    t('benefits.3'),
-    t('benefits.4')
-  ];
-
-  const challengeOptions = [
-    t('challengeOptions.0'),
-    t('challengeOptions.1'),
-    t('challengeOptions.2'),
-    t('challengeOptions.3')
-  ];
-
   return (
     <section id="contact" className="py-16 md:py-24 bg-brand-dark relative overflow-hidden">
+      {/* Advanced Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-brand-dark via-blue-950 to-slate-900"></div>
       <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[100px] translate-x-1/3 translate-y-1/3"></div>
@@ -95,17 +90,21 @@ export const Contact: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="bg-white/5 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden flex flex-col lg:flex-row">
           
+          {/* Left Side: Value Prop */}
+          {/* FIX: Reduced padding on mobile from p-10 to p-6 */}
           <div className="lg:w-5/12 p-6 md:p-10 lg:p-16 bg-gradient-to-b from-blue-600/20 to-transparent flex flex-col justify-between relative">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-cyan-400"></div>
             
             <div>
-              <h3 className="text-3xl font-display font-bold text-white mb-6">
-                {t('firstStepTitle')} <span className="text-cyan-400"></span>.
-              </h3>
+              <h3 className="text-3xl font-display font-bold text-white mb-6"
+                  dangerouslySetInnerHTML={{ __html: t.raw('firstStepTitle') }} 
+              />
               
               <div className="text-blue-100 text-lg mb-8 leading-relaxed space-y-4">
                 <p className="font-semibold text-white">{t('firstStepSubtitle')}</p>
-                <p>{t('description')}</p>
+                <p>
+                  {t('description')}
+                </p>
               </div>
 
               <div className="mb-6">
@@ -118,7 +117,7 @@ export const Contact: React.FC = () => {
               </div>
               
               <ul className="space-y-3">
-                {benefits.map((item, index) => (
+                {(t.raw('benefits') as string[]).map((item, index) => (
                   <li key={index} className="flex items-start text-white group">
                     <div className="mt-1 mr-3 min-w-[20px]">
                       <CheckCircle size={18} className="text-emerald-400" />
@@ -136,6 +135,8 @@ export const Contact: React.FC = () => {
             </div>
           </div>
 
+          {/* Right Side: Form */}
+          {/* FIX: Reduced padding on mobile from p-10 to p-6 */}
           <div className="lg:w-7/12 p-6 md:p-10 lg:p-16 bg-white">
             <h2 className="text-2xl font-bold text-slate-900 mb-8">{t('formTitle')}</h2>
             
@@ -180,7 +181,7 @@ export const Contact: React.FC = () => {
               <div className="group">
                 <label htmlFor="challenge" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 group-focus-within:text-blue-600 transition-colors">{t('fields.challenge')}</label>
                 <select id="challenge" name="challenge" className="w-full px-4 py-3 bg-slate-50 border-b-2 border-slate-200 focus:border-blue-600 outline-none transition-colors font-medium text-slate-900 cursor-pointer">
-                  {challengeOptions.map((option, index) => (
+                  {(t.raw('challengeOptions') as string[]).map((option, index) => (
                     <option key={index}>{option}</option>
                   ))}
                 </select>

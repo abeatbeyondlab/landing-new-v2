@@ -25,7 +25,8 @@ export default async function LocaleLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const messages = await getMessages();
+  // Explicitly load English messages for the /en locale
+  const messages = await getMessages({locale: 'en'});
 
   return (
     <html lang="en" className={`scroll-smooth ${libreBaskerville.variable}`}>

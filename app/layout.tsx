@@ -4,6 +4,8 @@ import "./globals.css"
 import { siteConfig } from '@/config/site'
 import { ManifestLoader } from '@/components/ManifestLoader'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import {NextIntlClientProvider} from 'next-intl';
+import {getMessages} from 'next-intl/server';
 
 const libreBaskerville = Libre_Baskerville({
   subsets: ['latin'],
@@ -65,18 +67,24 @@ export const metadata: Metadata = {
   },
 }
  
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  // Explicitly load Italian messages for the root layout to avoid ambiguity
+  // or rely on defaultLocale 'it' from routing.ts
+  const messages = await getMessages(); 
+
   return (
     <html lang="it" className={`scroll-smooth ${libreBaskerville.variable}`}>
       <body className="bg-slate-50 text-slate-900">
-        <ManifestLoader />
-        <div id="root">{children}</div>
+        <NextIntlClientProvider messages={messages}>
+          <ManifestLoader />
+          <div id="root">{children}</div>
+        </NextIntlClientProvider>
+        <GoogleAnalytics gaId={siteConfig.googleAnalyticsId} />
       </body>
-      <GoogleAnalytics gaId={siteConfig.googleAnalyticsId} />
     </html>
   )
 }
