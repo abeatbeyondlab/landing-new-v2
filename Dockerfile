@@ -1,5 +1,5 @@
 # Use the official Bun image (Debian/glibc based for better stability with native modules)
-FROM oven/bun:1.3.2-slim AS base
+FROM oven/bun:latest AS base
 
 # Install dependencies only when needed
 FROM base AS deps
