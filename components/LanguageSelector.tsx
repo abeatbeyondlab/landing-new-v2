@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { Globe } from 'lucide-react';
+import  { useEffect, useState } from 'react';
+import {
+     //useRouter,
+      usePathname } from 'next/navigation';
+//import { Globe } from 'lucide-react';
 
 export const LanguageSelector = () => {
-  const router = useRouter();
+  //const router = useRouter();
   const pathname = usePathname();
   const [currentLocale, setCurrentLocale] = useState('it');
 

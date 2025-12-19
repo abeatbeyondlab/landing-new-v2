@@ -12,7 +12,7 @@ export const Funnel: React.FC = () => {
   ];
 
   return (
-    <section id="method" className="py-20 bg-white text-slate-900">
+    <section id="metodo" className="py-20 bg-white text-slate-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16">

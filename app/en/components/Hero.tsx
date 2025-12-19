@@ -52,7 +52,18 @@ export const Hero: React.FC = () => {
             {t('cta1')}
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>
-          <Button variant="outline" onClick={() => document.getElementById('metodo')?.scrollIntoView({behavior: 'smooth'})} className="w-full sm:w-auto">
+          <Button 
+            variant="outline" 
+            onClick={() => {
+              const methodSection = document.getElementById('metodo');
+              if (methodSection) {
+                methodSection.scrollIntoView({behavior: 'smooth'});
+              } else {
+                window.location.href = '/en/#metodo';
+              }
+            }} 
+            className="w-full sm:w-auto"
+          >
             {t('cta2')}
           </Button>
         </div>
