@@ -1,18 +1,16 @@
-TODO -> correggere maiuscole nei post  --> DONE
-
 TODO -> creare api nextjs to handle POST LIFECYCLE and generate posts externally 
 
 
 
 
-flusso di generazione esterno al website
-genero con flusso n8n post tutti i giorni pescando da una lista di idee che scrivo in un google sheet
-n8n cerca informazioni su grok, su perplexity, su google 
-sulla base di queste informazioni produco un post
-genero il recordo non pubblicato 
-mando il post a un bot telegram
-via telegram mando dei prompt per modificarlo
-via telegram lo pubblico 
+flusso di generazione esterno al website:
+- genero con flusso n8n post tutti i giorni pescando da una lista di idee che scrivo in un google sheet
+- n8n cerca informazioni su grok, su perplexity, su google 
+- sulla base di queste informazioni produco un post
+- genero il recordo non pubblicato 
+- mando il post a un bot telegram
+- via telegram mando dei prompt per modificarlo
+- via telegram lo pubblico 
 
 per poter realizzare ii flussi n8n c'è bisogno di creare una nextjs api 
 
