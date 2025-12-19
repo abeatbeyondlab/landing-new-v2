@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "test": "NODE_OPTIONS='--experimental-vm-modules' mocha tests/*.test.ts --timeout 10000 --require ts-node/register"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^10.0.0",
+    "@types/supertest": "^6.0.3",
+    "chai": "^4.3.0",
+    "mocha": "^10.7.5",
+    "supertest": "^7.1.4",
+    "ts-node": "^10.9.0"
+  }
+}

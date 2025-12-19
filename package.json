@@ -1,44 +1,13 @@
 {
-  "name": "a-beat-beyond---digital-transformation",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "bdev": "bun --bun next dev",
     "bbuild": "bun --bun next build",
-    "bstart": "bun --bun next start"
+    "bstart": "bun --bun next start",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' mocha tests/*.test.ts --timeout 5000 --require ts-node/register"
   },
-  "browserslist": [
-    "chrome >= 100",
-    "firefox >= 100",
-    "edge >= 100",
-    "safari >= 15",
-    "not ie 11"
-  ],
-  "dependencies": {
-    "@next/third-parties": "^16.0.10",
-    "@prisma/client": "^7.0.0",
-    "lucide-react": "^0.554.0",
-    "next": "^16.0.10",
-    "next-intl": "^4.6.1",
-    "prisma-adapter-bun-sqlite": "^0.4.3",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-icons": "^5.5.0",
-    "react-markdown": "^10.1.0",
-    "react-syntax-highlighter": "^16.1.0",
-    "rehype-raw": "^7.0.0",
-    "remark-gfm": "^4.0.1",
-    "sharp": "^0.34.5"
-  },
-  "trustedDependencies": [
-    "sharp",
-    "prisma",
-    "@prisma/client"
-  ],
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.19",
@@ -46,12 +15,17 @@
     "@types/react": "^19.2.6",
     "@types/react-dom": "^19.2.3",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^10.0.10",
+    "@types/supertest": "^6.0.3",
     "autoprefixer": "^10.4.22",
-    "baseline-browser-mapping": "^2.9.10",
-    "critters": "^0.0.23",
     "postcss": "^8.5.6",
     "prisma": "^7.0.0",
     "tailwindcss": "^4.1.17",
-    "typescript": "~5.8.2"
+    "typescript": "~5.8.2",
+    "chai": "^4.3.0",
+    "mocha": "^10.7.5",
+    "supertest": "^7.1.4",
+    "ts-node": "^10.9.0"
   }
 }
