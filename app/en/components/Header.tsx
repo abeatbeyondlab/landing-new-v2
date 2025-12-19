@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { LanguageSelector } from '@/components/LanguageSelector';
 
 export const Header: React.FC = () => {
   const t = useTranslations('nav');
@@ -90,9 +91,10 @@ export const Header: React.FC = () => {
               {item.label}
             </button>
           ))}
+             <LanguageSelector />
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex items-center">
            <Button 
             variant="glow" 
             onClick={() => scrollToSection('contact')}
@@ -100,6 +102,7 @@ export const Header: React.FC = () => {
           >
             {t('prenotaConsulenza')}
           </Button>
+       
         </div>
 
         <button 
@@ -129,9 +132,13 @@ export const Header: React.FC = () => {
               {item.label}
             </button>
           ))}
+           <div className="flex justify-left mt-4">
+            <LanguageSelector />
+          </div>
           <Button onClick={() => scrollToSection('contact')} variant="glow" fullWidth className="mt-4">
             {t('prenotaConsulenzaGratuita')}
           </Button>
+         
         </div>
       )}
     </header>

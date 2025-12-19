@@ -7,7 +7,8 @@ down:
 restart:
 	@make down
 	@make up
-
+ssh:
+	@ssh ale@achih1
 deploy:
 	@echo "Rebuilding Docker image on remote server..."
 #@bun bbuild
