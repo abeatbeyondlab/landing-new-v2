@@ -26,22 +26,12 @@ export const LanguageSelector = () => {
     // Set the cookie to persist preference
     document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
 
-    let newPath = pathname;
-
+    // Force redirect to root of the selected language for safety
     if (newLocale === 'en') {
-      // Switch to English: Add /en prefix if not present
-      if (!pathname.startsWith('/en')) {
-        newPath = `/en${pathname === '/' ? '' : pathname}`;
-      }
+      window.location.href = '/en';
     } else {
-      // Switch to Italian: Remove /en prefix
-      if (pathname.startsWith('/en')) {
-        newPath = pathname.replace(/^\/en/, '') || '/';
-      }
+      window.location.href = '/';
     }
-
-    // Force a hard navigation to ensure middleware runs and content updates
-    window.location.href = newPath;
   };
 
   return (
