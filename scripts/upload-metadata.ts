@@ -72,6 +72,7 @@ async function main() {
     author: jsonData.author,
     image_slug: jsonData.image_slug,
     state: jsonData.state,
+    locale: jsonData.locale
   };
 
   // Remove undefined keys if they weren't in JSON

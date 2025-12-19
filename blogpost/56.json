@@ -1,0 +1,41 @@
+{
+  "id": 56,
+  "slug": "quando-usare-sqlite-guida-pmi",
+  "title": "Quando Usare SQLite: La Guida Completa per le PMI",
+  "description": "Scopri quando SQLite è la scelta migliore per la tua azienda e quando invece è meglio optare per un database client/server. Una guida pratica per imprenditori e manager che vogliono ottimizzare i costi e l'efficienza IT.",
+  "date": "2025-12-19",
+  "author": "Alessandro Morandi",
+  "image_slug": "/images/blog/sqlite-when-to-use-cover.webp",
+  "state": 1,
+  "locale": "it",
+  "post_tag": [
+    {
+      "tag": {
+        "id": 2,
+        "name": "SQL",
+        "slug": "sql"
+      }
+    },
+    {
+      "tag": {
+        "id": 3,
+        "name": "Database",
+        "slug": "database"
+      }
+    },
+    {
+      "tag": {
+        "id": 14,
+        "name": "Engineering",
+        "slug": "engineering"
+      }
+    },
+    {
+      "tag": {
+        "id": 16,
+        "name": "Performance",
+        "slug": "performance"
+      }
+    }
+  ]
+}

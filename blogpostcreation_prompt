@@ -1,22 +1,20 @@
 Devi aiutarmi a scrivere e pubblicare un post sul blog.
-Leggi la guida su come farlo in @/POST_LIFECYCLE.md
+Leggi la guida su come farlo in @/POST_LIFECYCLE.md e @/Makefile 
 
-Poi leggi la guida sulle regole per le maiuscole @/blogpostcreation_when_maiuscole.txt
+Poi leggi la guida sulle regole per le maiuscole @/blogpostcreation_when_maiuscole.txt per l'italiano
 
 Poi non usare MAI la parola cruciale o crucialmente
 
-Scriveremo un articolo su n8n come abilitatore di innovazion eper le aziende
+Scriveremo un articolo su "quando usare sqlite"
 
 Scarica l'immagine nel blog pubblico.
-https://imgs.search.brave.com/1aEQFon9Cn6gLfcrwFGc-IHtFlkrU7r7lQPy9-JNNTg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzQ3LzEvbjhuLWxv/Z28tcG5nX3NlZWts/b2dvLTQ3MDgwOS5w/bmc
+https://www.sqlite.org/images/sqlite370_banner.svg
+se è svg converti in webp
 
-Leggi questo articolo per avere
+Leggi questo articolo per avere le informazioni @https://www.sqlite.org/whentouse.html 
 
+fai attenzione a   @/data/db.ts 
 
+Poi crea un articolo nella cartella dei post sul blog , in italiano e in inglese 
+Crea il file dei metadati e il file dei contenuti
 
-@https://medium.com/@missionsdone/why-n8n-is-leading-the-ai-workflow-revolution-and-why-this-trend-wont-die-down-f413ad6b38dc
-@https://medium.com/@takafumi.endo/inside-n8n-how-a-fair-code-open-source-platform-leads-ai-powered-workflow-automation-e8128890d496
-
-
-Poi crea un articolo nella cartella dei post sul blog.
-Crea il file dei metadati e il file dei contenuti.
