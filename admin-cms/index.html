@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog CMS Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .modal { transition: opacity 0.25s ease; }
+        body.modal-active { overflow-x: hidden; overflow-y: hidden !important; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div id="app" class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Blog CMS</h1>
+            <div class="flex gap-4">
+                <input type="password" id="apiKey" placeholder="API Key" class="px-4 py-2 border rounded" onchange="saveApiKey()">
+                <button onclick="loadPosts()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Refresh
+                </button>
+                <button onclick="openCreateModal()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    + New Post
+                </button>
+            </div>
+        </header>
+
+        <!-- Post List -->
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-xl font-semibold mb-4">Posts</h2>
+            <div id="postsList" class="grid grid-cols-1 gap-4">
+                <!-- Posts injected here -->
+                <p class="text-gray-500">Loading...</p>
+            </div>
+            <!-- Pagination -->
+            <div class="mt-4 flex justify-between">
+                <button onclick="prevPage()" id="prevBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded disabled:opacity-50">Previous</button>
+                <span id="pageInfo" class="self-center">Page 1</span>
+                <button onclick="nextPage()" id="nextBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded disabled:opacity-50">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit/Create Modal (Simplified) -->
+    <div id="postModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+        
+        <div class="modal-container bg-white w-11/12 md:max-w-3xl mx-auto rounded shadow-lg z-50 overflow-y-auto max-h-[90vh]">
+            <div class="modal-content py-4 text-left px-6">
+                <div class="flex justify-between items-center pb-3">
+                    <p class="text-2xl font-bold" id="modalTitle">Edit Post</p>
+                    <div class="modal-close cursor-pointer z-50" onclick="closeModal()">
+                        <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <form id="postForm" onsubmit="handleFormSubmit(event)">
+                    <input type="hidden" id="postId">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="slug">Slug</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="slug" type="text">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="content">Content</label>
+                        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="content" rows="6"></textarea>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                            Save Changes
+                        </button>
+                        <button type="button" onclick="closeModal()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Close
+                        </button>
+                    </div>
+                </form>
+                
+                <hr class="my-4">
+                
+                <div id="imageUploadSection" class="hidden">
+                    <h3 class="text-lg font-bold mb-2">Image</h3>
+                    <input type="file" id="imageInput" accept="image/*" class="mb-2">
+                    <button onclick="uploadImage()" class="bg-purple-500 text-white px-3 py-1 rounded">Upload Image</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Pair Modal -->
+    <div id="createModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50">
+            <div class="modal-content py-4 text-left px-6">
+                <h2 class="text-2xl font-bold mb-4">Create New Post Pair</h2>
+                <form onsubmit="handleCreatePair(event)">
+                    <div class="mb-2">
+                        <label class="block text-sm font-bold">Title (IT)</label>
+                        <input id="createTitleIT" class="border w-full p-2" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="block text-sm font-bold">Title (EN)</label>
+                        <input id="createTitleEN" class="border w-full p-2" required>
+                    </div>
+                    <div class="flex justify-end gap-2 mt-4">
+                        <button type="button" onclick="closeCreateModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+                        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api/v1/blog';
+        let currentPage = 1;
+        
+        function getApiKey() {
+            return document.getElementById('apiKey').value || localStorage.getItem('blog_api_key');
+        }
+
+        function saveApiKey() {
+            const key = document.getElementById('apiKey').value;
+            localStorage.setItem('blog_api_key', key);
+            loadPosts();
+        }
+
+        // Init
+        const storedKey = localStorage.getItem('blog_api_key');
+        if (!storedKey) {
+            // Default dev key for convenience
+            document.getElementById('apiKey').value = 'test-api-key';
+            // Don't save it automatically to localStorage to avoid persisting if user wants to change it
+            // But we use it for this session load
+        } else {
+            document.getElementById('apiKey').value = storedKey;
+        }
+        loadPosts();
+
+        async function apiCall(endpoint, method = 'GET', body = null, isFile = false) {
+            const headers = { 'x-api-key': getApiKey() };
+            if (!isFile) headers['Content-Type'] = 'application/json';
+            
+            const options = { method, headers };
+            if (body) options.body = isFile ? body : JSON.stringify(body);
+
+            const res = await fetch(API_BASE + endpoint, options);
+            return res.json();
+        }
+
+        async function loadPosts() {
+            const res = await apiCall(`/posts?page=${currentPage}&limit=10`);
+            const list = document.getElementById('postsList');
+            if (res.success) {
+                list.innerHTML = res.data.posts.map(post => `
+                    <div class="border p-4 rounded flex justify-between items-center bg-gray-50">
+                        <div>
+                            <span class="font-bold text-lg">${post.title}</span>
+                            <span class="ml-2 px-2 py-1 text-xs rounded ${post.locale === 'it' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}">${post.locale.toUpperCase()}</span>
+                            <span class="ml-2 px-2 py-1 text-xs rounded ${post.state === 1 ? 'bg-green-500 text-white' : 'bg-gray-300'}">${post.state === 1 ? 'Published' : 'Draft'}</span>
+                            <div class="text-sm text-gray-600">/${post.slug}</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="toggleStatus(${post.id}, ${post.state})" class="text-sm border px-2 py-1 rounded hover:bg-gray-200">
+                                ${post.state === 1 ? 'Unpublish' : 'Publish'}
+                            </button>
+                            <button onclick="editPost(${post.id})" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</button>
+                            <button onclick="deletePost(${post.id})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+                document.getElementById('pageInfo').innerText = `Page ${res.data.page}`;
+            } else {
+                list.innerHTML = `<p class="text-red-500">Error: ${res.error || 'Failed to load'}</p>`;
+            }
+        }
+
+        async function toggleStatus(id, currentState) {
+            const newState = currentState === 1 ? 0 : 1;
+            await apiCall(`/posts/${id}/status`, 'PUT', { state: newState });
+            loadPosts();
+        }
+
+        async function deletePost(id) {
+            if(!confirm('Are you sure?')) return;
+            await apiCall(`/posts/${id}`, 'DELETE');
+            loadPosts();
+        }
+
+        function nextPage() { currentPage++; loadPosts(); }
+        function prevPage() { if(currentPage > 1) { currentPage--; loadPosts(); } }
+
+        // Modal Logic
+        function openCreateModal() {
+            document.getElementById('createModal').classList.remove('opacity-0', 'pointer-events-none');
+        }
+        function closeCreateModal() {
+            document.getElementById('createModal').classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        async function handleCreatePair(e) {
+            e.preventDefault();
+            const title_it = document.getElementById('createTitleIT').value;
+            const title_en = document.getElementById('createTitleEN').value;
+            
+            const res = await apiCall('/posts/create-pair', 'POST', { title_it, title_en });
+            if(res.success) {
+                closeCreateModal();
+                loadPosts();
+            } else {
+                alert('Error creating pair');
+            }
+        }
+
+        let currentEditingId = null;
+
+        async function editPost(id) {
+            currentEditingId = id;
+            // Fetch details (metadata + content)
+            const [meta, content] = await Promise.all([
+                apiCall(`/posts/${id}/metadata`),
+                apiCall(`/posts/${id}/content`)
+            ]);
+            
+            if(meta.success && content.success) {
+                document.getElementById('postId').value = id;
+                document.getElementById('title').value = meta.data.title;
+                document.getElementById('slug').value = meta.data.slug;
+                document.getElementById('content').value = content.data.content;
+                
+                document.getElementById('imageUploadSection').classList.remove('hidden');
+                
+                document.getElementById('postModal').classList.remove('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('postModal').classList.add('opacity-0', 'pointer-events-none');
+            currentEditingId = null;
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const id = currentEditingId;
+            const title = document.getElementById('title').value;
+            const slug = document.getElementById('slug').value;
+            const content = document.getElementById('content').value;
+
+            // Update Metadata
+            await apiCall(`/posts/${id}/metadata`, 'PUT', { title, slug });
+            // Update Content
+            await apiCall(`/posts/${id}/content`, 'PUT', { content });
+            
+            closeModal();
+            loadPosts();
+        }
+
+        async function uploadImage() {
+            const fileInput = document.getElementById('imageInput');
+            if(fileInput.files.length === 0) return;
+            
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+            
+            const res = await apiCall(`/posts/${currentEditingId}/image/upload`, 'POST', formData, true);
+            if(res.success) {
+                alert('Image uploaded!');
+            } else {
+                alert('Upload failed: ' + res.error);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 'use client'
  
 
-import { AboutPage } from '../../components/AboutPage';
+import { AboutPage } from '@/components/AboutPage';
  
 export default function Page() {
   return <AboutPage />

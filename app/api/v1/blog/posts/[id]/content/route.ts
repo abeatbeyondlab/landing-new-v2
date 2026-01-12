@@ -7,13 +7,14 @@ const updateContentSchema = z.object({
   content: z.string().min(1, 'Content is required')
 });
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireApiKey(request);
     const apiKey = request.headers.get('x-api-key')!;
     checkRateLimit(apiKey);
     
-    const postId = parseInt(params.id);
+    const { id } = await params;
+    const postId = parseInt(id);
     if (isNaN(postId)) {
       throw new Error('Invalid post ID');
     }
@@ -51,13 +52,14 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireApiKey(request);
     const apiKey = request.headers.get('x-api-key')!;
     checkRateLimit(apiKey);
     
-    const postId = parseInt(params.id);
+    const { id } = await params;
+    const postId = parseInt(id);
     if (isNaN(postId)) {
       throw new Error('Invalid post ID');
     }

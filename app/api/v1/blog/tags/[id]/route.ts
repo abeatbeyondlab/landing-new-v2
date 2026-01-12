@@ -3,13 +3,15 @@ import { apiPrisma } from '@/lib/api-db';
 import { requireApiKey, checkRateLimit, handleApiError, validateRequest } from '@/lib/api-validation';
 import { updateTagSchema, Tag } from '@/types/api';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireApiKey(request);
     const apiKey = request.headers.get('x-api-key')!;
     checkRateLimit(apiKey);
+
+    const { id } = await params;
     
-    const tagId = parseInt(params.id);
+    const tagId = parseInt(id);
     if (isNaN(tagId)) {
       throw new Error('Invalid tag ID');
     }
@@ -42,13 +44,15 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireApiKey(request);
     const apiKey = request.headers.get('x-api-key')!;
     checkRateLimit(apiKey);
+
+    const { id } = await params;
     
-    const tagId = parseInt(params.id);
+    const tagId = parseInt(id);
     if (isNaN(tagId)) {
       throw new Error('Invalid tag ID');
     }
@@ -110,13 +114,15 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireApiKey(request);
     const apiKey = request.headers.get('x-api-key')!;
     checkRateLimit(apiKey);
+
+    const { id } = await params;
     
-    const tagId = parseInt(params.id);
+    const tagId = parseInt(id);
     if (isNaN(tagId)) {
       throw new Error('Invalid tag ID');
     }

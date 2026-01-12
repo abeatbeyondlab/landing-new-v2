@@ -4,13 +4,15 @@ import { requireApiKey, checkRateLimit, handleApiError } from '@/lib/api-validat
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireApiKey(request);
     const apiKey = request.headers.get('x-api-key')!;
     checkRateLimit(apiKey);
+
+    const { id } = await params;
     
-    const postId = parseInt(params.id);
+    const postId = parseInt(id);
     if (isNaN(postId)) {
       throw new Error('Invalid post ID');
     }

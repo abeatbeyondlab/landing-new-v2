@@ -3,13 +3,15 @@ import { apiPrisma } from '@/lib/api-db';
 import { requireApiKey, checkRateLimit, handleApiError, validateRequest } from '@/lib/api-validation';
 import { updateMetadataSchema, PostMetadata } from '@/types/api';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireApiKey(request);
     const apiKey = request.headers.get('x-api-key')!;
     checkRateLimit(apiKey);
+
+    const { id } = await params;
     
-    const postId = parseInt(params.id);
+    const postId = parseInt(id);
     if (isNaN(postId)) {
       throw new Error('Invalid post ID');
     }
@@ -55,13 +57,15 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireApiKey(request);
     const apiKey = request.headers.get('x-api-key')!;
     checkRateLimit(apiKey);
+
+    const { id } = await params;
     
-    const postId = parseInt(params.id);
+    const postId = parseInt(id);
     if (isNaN(postId)) {
       throw new Error('Invalid post ID');
     }

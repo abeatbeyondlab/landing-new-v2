@@ -1,8 +1,8 @@
-import { servicesData } from '../../../data/services';
-import { ServicePage } from '../../../components/ServicePage';
+import { servicesData } from '@/data/services';
+import { ServicePage } from '@/components/ServicePage';
 import type { Metadata } from 'next';
 import { siteConfig } from '@/config/site';
-import { JsonLd, serviceSchema } from '../../../components/JsonLd';
+import { JsonLd, serviceSchema } from '@/components/JsonLd';
 
 export function generateStaticParams() {
   return servicesData.map((service) => ({

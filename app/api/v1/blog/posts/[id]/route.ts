@@ -2,13 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { apiPrisma } from '@/lib/api-db';
 import { requireApiKey, checkRateLimit, handleApiError } from '@/lib/api-validation';
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireApiKey(request);
     const apiKey = request.headers.get('x-api-key')!;
     checkRateLimit(apiKey);
+
+    const { id } = await params;
     
-    const postId = parseInt(params.id);
+    const postId = parseInt(id);
     if (isNaN(postId)) {
       throw new Error('Invalid post ID');
     }

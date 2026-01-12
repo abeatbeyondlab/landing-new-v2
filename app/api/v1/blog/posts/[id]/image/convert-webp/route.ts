@@ -1,18 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { apiPrisma } from '@/lib/api-db';
 import { requireApiKey, checkRateLimit, handleApiError, validateRequest } from '@/lib/api-validation';
-import { readFile, writeFile } from 'fs/promises';
+import { readFile } from 'fs/promises';
 import sharp from 'sharp';
 import path from 'path';
 import { convertToWebpSchema } from '@/types/api';
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     requireApiKey(request);
     const apiKey = request.headers.get('x-api-key')!;
     checkRateLimit(apiKey);
+
+    const { id } = await params;
     
-    const postId = parseInt(params.id);
+    const postId = parseInt(id);
     if (isNaN(postId)) {
       throw new Error('Invalid post ID');
     }
