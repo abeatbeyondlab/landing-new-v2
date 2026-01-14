@@ -11,8 +11,18 @@ RUN bun install --frozen-lockfile
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
+ARG FNOX_AGE_KEY
+ENV FNOX_AGE_KEY=$FNOX_AGE_KEY
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Install fnox in builder to use it for prisma generate if needed (though bunx prisma might not need it yet)
+RUN apt-get update && apt-get install -y curl ca-certificates && \
+    curl -L https://github.com/jdx/fnox/releases/download/v1.7.0/fnox-x86_64-unknown-linux-gnu.tar.gz -o /tmp/fnox.tar.gz && \
+    tar -xzf /tmp/fnox.tar.gz -C /tmp && \
+    mv /tmp/fnox /usr/local/bin/fnox && \
+    chmod +x /usr/local/bin/fnox && \
+    rm /tmp/fnox.tar.gz
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
@@ -20,7 +30,8 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN bunx prisma generate
-RUN bun run build
+# Use explicit path or bunx to ensure next is found
+RUN fnox exec -- bun run bbuild
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -33,8 +44,15 @@ ENV NODE_ENV production
 # Install Tini (init system) to handle signals/zombies correctly
 # Update apt and install dependencies (oven/bun:slim is Debian based)
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends tini && \
+    apt-get install -y --no-install-recommends tini curl ca-certificates && \
     rm -rf /var/lib/apt/lists/*
+
+# Install fnox
+RUN curl -L https://github.com/jdx/fnox/releases/download/v1.7.0/fnox-x86_64-unknown-linux-gnu.tar.gz -o /tmp/fnox.tar.gz && \
+    tar -xzf /tmp/fnox.tar.gz -C /tmp && \
+    mv /tmp/fnox /usr/local/bin/fnox && \
+    chmod +x /usr/local/bin/fnox && \
+    rm /tmp/fnox.tar.gz
 
 # Create user with correct permissions
 RUN groupadd -g 1001 -r nodejs && \
@@ -45,6 +63,9 @@ COPY --from=builder /app/public ./public
 # Copy prisma schema and data directories
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/data ./data
+
+# Copy fnox.toml for secrets
+COPY --from=builder --chown=nextjs:nodejs /app/fnox.toml ./fnox.toml
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
@@ -69,4 +90,4 @@ ENV HOSTNAME "0.0.0.0"
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 # server.js is created by next build from the standalone output
-CMD ["bun", "server.js"]
+CMD ["sh", "-c", "fnox exec -- bun server.js"]

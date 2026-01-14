@@ -1,5 +1,5 @@
 up:
-	@docker compose up --build --force-recreate -d
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose up --build --force-recreate -d
 
 down:
 	@docker compose down
@@ -7,6 +7,22 @@ down:
 restart:
 	@make down
 	@make up
+
+# fnox commands
+fnox-dev:
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox exec -- bun --bun next dev
+
+fnox-build:
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox exec -- bun --bun next build
+
+fnox-start:
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox exec -- bun --bun next start
+
+fnox-list:
+	@fnox list
+
+fnox-set:
+	@read -p "Enter secret name: " name; read -s -p "Enter secret value: " value; echo; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox set $$name "$$value" --provider age
 ssh:
 	@ssh ale@achih1
 deploy:

@@ -3,14 +3,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - FNOX_AGE_KEY=${FNOX_AGE_KEY}
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - WEBHOOK_CONTACT_FORM=ciaociao
       - TURBO_TELEMETRY_DISABLED=1
       - DO_NOT_TRACK=1
+      - FNOX_AGE_KEY=${FNOX_AGE_KEY}
     restart: unless-stopped
     # Mount the data directory to persist the SQLite database
     volumes:
       - ./data:/app/data
+    # Use fnox to run the application with secrets
