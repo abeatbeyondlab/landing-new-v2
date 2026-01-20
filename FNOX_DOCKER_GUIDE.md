@@ -10,10 +10,12 @@ Questa guida spiega come integrare [fnox](https://github.com/jdx/fnox) come secr
 4. [Configurazione Dockerfile](#configurazione-dockerfile)
 5. [Configurazione docker-compose.yml](#configurazione-docker-composeyml)
 6. [Configurazione Makefile](#configurazione-makefile)
-7. [Deploy Sicuro su Server Remoto](#deploy-sicuro-su-server-remoto)
-8. [Best Practices di Sicurezza](#best-practices-di-sicurezza)
-9. [Troubleshooting](#troubleshooting)
-10. [Esempi Pratici](#esempi-pratici)
+7. [Script Interattivo per Aggiornamento Segreti](#script-interattivo-per-aggiornamento-segreti)
+8. [Profili di Produzione](#profili-di-produzione)
+9. [Deploy Sicuro su Server Remoto](#deploy-sicuro-su-server-remoto)
+10. [Best Practices di Sicurezza](#best-practices-di-sicurezza)
+11. [Troubleshooting](#troubleshooting)
+12. [Esempi Pratici](#esempi-pratici)
 
 ---
 
@@ -29,12 +31,12 @@ Questa guida spiega come integrare [fnox](https://github.com/jdx/fnox) come secr
          │
          ├──> Docker Build (FNOX_AGE_KEY come ARG/ENV)
          │
-         └──> Deploy Remoto (file .env temporaneo)
+         └──> Deploy Remoto (chiave passata direttamente)
                  │
                  ▼
          ┌─────────────────┐
          │  Docker Container│
-         │  (fnox exec)    │
+         │  (fnox.exec)    │
          └─────────────────┘
                  │
                  ▼
@@ -49,7 +51,7 @@ Questa guida spiega come integrare [fnox](https://github.com/jdx/fnox) come secr
 1. **Sviluppo Locale**: fnox decrittografa i segreti dal file `fnox.toml` e li passa come variabili d'ambiente
 2. **Build Docker**: La chiave di decrittazione viene passata come ARG/ENV durante il build
 3. **Runtime Docker**: fnox viene eseguito nel container per caricare i segreti prima di avviare l'applicazione
-4. **Deploy Remoto**: La chiave viene passata temporaneamente tramite un file `.env` che viene rimosso subito dopo
+4. **Deploy Remoto**: La chiave viene passata direttamente via terminale senza mai essere salvata su disco
 
 ---
 
@@ -344,6 +346,11 @@ fnox-set:
 	echo; \
 	FNOX_AGE_KEY=$(FNOX_AGE_KEY) fnox set $$name "$$value" --provider age
 
+# Verifica segreti locali
+check-secrets:
+	@echo "Checking secrets in local environment..."
+	@FNOX_AGE_KEY=$(FNOX_AGE_KEY) sh -c 'echo "DATABASE_URL: $$(fnox get DATABASE_URL)" && echo "API_KEY: $$(fnox get API_KEY)" && echo "WEBHOOK_CONTACT_FORM: $$(fnox get WEBHOOK_CONTACT_FORM)" && echo "NODE_ENV: $$(fnox get NODE_ENV 2>/dev/null || echo development)"'
+
 # Docker + fnox commands
 docker-logs:
 	@docker compose logs -f app
@@ -360,45 +367,362 @@ docker-fnox-check:
 docker-fnox-test:
 	@FNOX_AGE_KEY=$(FNOX_AGE_KEY) docker compose exec -e FNOX_AGE_KEY app fnox provider test age
 
+# Verifica segreti nel container Docker
 docker-check-secrets:
 	@echo "Checking secrets in Docker container..."
-	@FNOX_AGE_KEY=$(FNOX_AGE_KEY) docker compose exec -e FNOX_AGE_KEY app sh -c 'fnox exec -- sh -c "echo \"DATABASE_URL: $$DATABASE_URL\" && echo \"API_KEY: $$API_KEY\""'
+	@FNOX_AGE_KEY=$(FNOX_AGE_KEY) docker compose exec -e FNOX_AGE_KEY app sh -c 'echo "DATABASE_URL: $$(fnox get DATABASE_URL)" && echo "API_KEY: $$(fnox get API_KEY)" && echo "WEBHOOK_CONTACT_FORM: $$(fnox get WEBHOOK_CONTACT_FORM)" && echo "NODE_ENV: $$(fnox get NODE_ENV 2>/dev/null || echo production)"'
 
 docker-build-only:
 	@FNOX_AGE_KEY=$(FNOX_AGE_KEY) docker compose build --no-cache
 ```
 
-### Deploy su Server Remoto
+### Deploy su Server Remoto (Senza File Temporaneo)
 
 ```makefile
-# Deploy sicuro con file .env temporaneo
+# Deploy sicuro senza file temporaneo
 deploy:
 	@echo "Rebuilding Docker image on remote server..."
 	@echo "Pulling code and building..."
 	@ssh user@server 'cd /path/to/project && git pull && docker compose build && docker compose down'
-	@echo "Creating temporary .env.fnox file on server..."
-	@cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY" | ssh user@server 'cat > /path/to/project/.env.fnox && chmod 600 /path/to/project/.env.fnox'
-	@echo "Starting containers with secrets..."
-	@ssh user@server 'cd /path/to/project && docker compose --env-file .env.fnox up -d'
-	@echo "Removing temporary .env.fnox file..."
-	@ssh user@server 'rm /path/to/project/.env.fnox'
+	@echo "Starting containers with secrets (FNOX_AGE_KEY passed directly)..."
+	@FNOX_AGE_KEY=$(FNOX_AGE_KEY) ssh user@server 'cd /path/to/project && docker compose up -d'
 	@echo "Deploy completed successfully!"
+```
+
+**Vantaggi di questo approccio:**
+- ✅ La chiave non viene mai salvata su disco
+- ✅ Più sicuro e semplice
+- ✅ Niente file temporanei da gestire
+- ✅ Meno comandi da eseguire
+
+---
+
+## Script Interattivo per Aggiornamento Segreti
+
+Per facilitare l'aggiornamento dei segreti, puoi creare uno script interattivo con mascheramento password.
+
+### Creazione dello Script
+
+Crea il file `scripts/update-fnox-secret.sh`:
+
+```bash
+#!/bin/bash
+
+# Script interattivo per aggiornare segreti fnox con mascheramento password
+
+# Funzione per mascherare password
+mask_password() {
+    local password="$1"
+    local length=${#password}
+    if [ $length -le 4 ]; then
+        echo "***"
+    else
+        echo "${password:0:2}***${password: -2}"
+    fi
+}
+
+# Funzione per generare password casuale
+generate_password() {
+    local length=${1:-32}
+    openssl rand -base64 $length | tr -d "=+/" | cut -c1-${length}
+}
+
+# Funzione per mostrare password completa
+show_full_password() {
+    local password="$1"
+    local label="$2"
+    echo ""
+    echo "🔓 $label (completa):"
+    echo "   $password"
+    echo ""
+}
+
+# Carica chiave age
+FNOX_AGE_KEY=$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY")
+
+# Seleziona file di configurazione
+echo "Seleziona il file di configurazione:"
+echo "1) fnox.toml (sviluppo locale)"
+echo "2) fnox.production.toml (produzione Docker)"
+read -p "Scelta [1-2]: " config_choice
+
+case $config_choice in
+    1)
+        CONFIG_FILE="fnox.toml"
+        ;;
+    2)
+        CONFIG_FILE="fnox.production.toml"
+        ;;
+    *)
+        echo "Scelta non valida. Uso fnox.toml"
+        CONFIG_FILE="fnox.toml"
+        ;;
+esac
+
+echo ""
+echo "📋 Segreti disponibili in $CONFIG_FILE:"
+echo ""
+
+# Lista segreti
+secrets=$(FNOX_AGE_KEY="$FNOX_AGE_KEY" fnox list -c "$CONFIG_FILE" | tail -n +2 | awk '{print $1}')
+
+if [ -z "$secrets" ]; then
+    echo "Nessun segreto trovato in $CONFIG_FILE"
+    exit 1
+fi
+
+# Mostra segreti con numeri
+i=1
+for secret in $secrets; do
+    echo "$i) $secret"
+    i=$((i+1))
+done
+
+echo ""
+read -p "Seleziona il numero del segreto da aggiornare: " secret_number
+
+# Ottieni il nome del segreto
+secret_name=$(echo "$secrets" | sed -n "${secret_number}p")
+
+if [ -z "$secret_name" ]; then
+    echo "❌ Segreto non valido"
+    exit 1
+fi
+
+echo ""
+echo "🔐 Segreto selezionato: $secret_name"
+echo ""
+
+# Mostra valore attuale
+current_value=$(FNOX_AGE_KEY="$FNOX_AGE_KEY" fnox get -c "$CONFIG_FILE" "$secret_name" 2>/dev/null)
+if [ -n "$current_value" ]; then
+    masked_value=$(mask_password "$current_value")
+    echo "Valore attuale: $masked_value"
+    read -p "Vuoi vedere il valore completo? (s/N): " show_current
+    if [[ $show_current =~ ^[SsYy]$ ]]; then
+        show_full_password "$current_value" "Valore attuale"
+    fi
+else
+    echo "Valore attuale: (non disponibile)"
+fi
+
+echo ""
+echo "Opzioni:"
+echo "1) Inserire nuovo valore manualmente"
+echo "2) Generare password casuale"
+read -p "Scelta [1-2]: " value_choice
+
+case $value_choice in
+    1)
+        # Input manuale con readline
+        read -e -p "Nuovo valore: " new_value
+        ;;
+    2)
+        # Generazione password casuale
+        read -p "Lunghezza password [32]: " password_length
+        password_length=${password_length:-32}
+        new_value=$(generate_password $password_length)
+        masked_new=$(mask_password "$new_value")
+        echo ""
+        echo "Password generata: $masked_new"
+        read -p "Vuoi vedere la password completa? (s/N): " show_generated
+        if [[ $show_generated =~ ^[SsYy]$ ]]; then
+            show_full_password "$new_value" "Password generata"
+        fi
+        ;;
+    *)
+        echo "❌ Scelta non valida"
+        exit 1
+        ;;
+esac
+
+echo ""
+echo "Nuovo valore: $(mask_password "$new_value")"
+read -p "Vuoi modificare il valore? (s/N): " modify_choice
+
+if [[ $modify_choice =~ ^[SsYy]$ ]]; then
+    read -e -p "Modifica valore: " new_value
+    echo ""
+    echo "Valore modificato: $(mask_password "$new_value")"
+fi
+
+# Conferma
+echo ""
+read -p "Confermi l'aggiornamento? (s/N): " confirm
+
+if [[ $confirm =~ ^[SsYy]$ ]]; then
+    # Aggiorna segreto
+    FNOX_AGE_KEY="$FNOX_AGE_KEY" fnox set -c "$CONFIG_FILE" "$secret_name" "$new_value" --provider age
+    
+    echo ""
+    echo "✅ Segreto '$secret_name' aggiornato con successo in $CONFIG_FILE"
+    echo ""
+    echo "Verifica:"
+    FNOX_AGE_KEY="$FNOX_AGE_KEY" fnox get -c "$CONFIG_FILE" "$secret_name"
+else
+    echo ""
+    echo "❌ Aggiornamento annullato"
+    exit 1
+fi
+```
+
+### Utilizzo dello Script
+
+```bash
+# Rendi lo script eseguibile
+chmod +x scripts/update-fnox-secret.sh
+
+# Esegui lo script
+make fnox-update-secret
+
+# Oppure direttamente
+FNOX_AGE_KEY=$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") bash scripts/update-fnox-secret.sh
+```
+
+### Funzionalità dello Script
+
+✅ **Mascheramento password**: Mostra solo i primi e ultimi 2 caratteri
+✅ **Generazione password casuale**: Crea password sicure automaticamente
+✅ **Opzione per mostrare password completa**: Su richiesta dell'utente
+✅ **Supporto profili**: Funziona con `fnox.toml` e `fnox.production.toml`
+✅ **Modifica prima della conferma**: Permette di correggere il valore
+✅ **Verifica finale**: Mostra il valore aggiornato per conferma
+
+---
+
+## Profili di Produzione
+
+Per gestire segreti diversi tra sviluppo e produzione, usa file di configurazione separati.
+
+### Struttura dei File
+
+```
+project/
+├── fnox.toml              # Sviluppo locale
+├── fnox.production.toml   # Produzione Docker
+└── Dockerfile
+```
+
+### Configurazione fnox.toml (Sviluppo)
+
+```toml
+# fnox.toml - Sviluppo locale
+
+[providers.age]
+type = "age"
+# Chiave pubblica dello sviluppatore
+recipients = ["age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p"]
+
+[secrets]
+DATABASE_URL = { provider = "age", value = "encrypted_dev_value" }
+API_KEY = { provider = "age", value = "encrypted_dev_value" }
+WEBHOOK_CONTACT_FORM = { provider = "age", value = "encrypted_dev_value" }
+NODE_ENV = { default = "development" }
+```
+
+### Configurazione fnox.production.toml (Produzione)
+
+```toml
+# fnox.production.toml - Produzione Docker
+
+[providers.age]
+type = "age"
+# Chiave pubblica del server di produzione
+recipients = ["age1yq4n7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p"]
+
+[secrets]
+DATABASE_URL = { provider = "age", value = "encrypted_prod_value" }
+API_KEY = { provider = "age", value = "encrypted_prod_value" }
+WEBHOOK_CONTACT_FORM = { provider = "age", value = "encrypted_prod_value" }
+NODE_ENV = { default = "production" }
+```
+
+### Configurazione Dockerfile per Produzione
+
+```dockerfile
+# Runner stage - fnox per decrittare a runtime
+FROM base AS runner
+WORKDIR /app
+
+# Importa FNOX_AGE_KEY come ARG e ENV
+ARG FNOX_AGE_KEY
+ENV FNOX_AGE_KEY=$FNOX_AGE_KEY
+ENV NODE_ENV=production
+
+# Installa fnox e dipendenze runtime
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends tini curl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN curl -L https://github.com/jdx/fnox/releases/download/v1.7.0/fnox-x86_64-unknown-linux-gnu.tar.gz -o /tmp/fnox.tar.gz && \
+    tar -xzf /tmp/fnox.tar.gz -C /tmp && \
+    mv /tmp/fnox /usr/local/bin/fnox && \
+    chmod +x /usr/local/bin/fnox && \
+    rm /tmp/fnox.tar.gz
+
+# Crea utente non-root
+RUN groupadd -g 1001 -r nodejs && \
+    useradd -u 1001 -r -g nodejs -d /home/nodejs -m -s /bin/bash nodejs
+
+# Copia file necessari
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nodejs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nodejs:nodejs /app/.next/static ./.next/static
+
+# Copia fnox.production.toml invece di fnox.toml
+COPY --from=builder --chown=nodejs:nodejs /app/fnox.production.toml ./fnox.toml
+
+# Copia altri file necessari (data, config, etc.)
+COPY --from=builder --chown=nodejs:nodejs /app/data ./data
+
+USER nodejs
+
+EXPOSE 3000
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Usa Tini come init system
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+# Avvia applicazione con fnox
+CMD ["sh", "-c", "fnox exec -- node server.js"]
+```
+
+**Punto chiave**: Copia `fnox.production.toml` come `fnox.toml` nel container, così fnox lo userà automaticamente.
+
+### Comandi Makefile per Profili
+
+```makefile
+# Verifica segreti locali (sviluppo)
+check-secrets:
+	@echo "Checking secrets in local environment..."
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") sh -c 'echo "DATABASE_URL: $$(fnox get DATABASE_URL)" && echo "API_KEY: $$(fnox get API_KEY)" && echo "WEBHOOK_CONTACT_FORM: $$(fnox get WEBHOOK_CONTACT_FORM)" && echo "NODE_ENV: $$(fnox get NODE_ENV 2>/dev/null || echo development)"'
+
+# Verifica segreti nel container Docker (produzione)
+docker-check-secrets:
+	@echo "Checking secrets in Docker container..."
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose exec -e FNOX_AGE_KEY app sh -c 'echo "DATABASE_URL: $$(fnox get DATABASE_URL)" && echo "API_KEY: $$(fnox get API_KEY)" && echo "WEBHOOK_CONTACT_FORM: $$(fnox get WEBHOOK_CONTACT_FORM)" && echo "NODE_ENV: $$(fnox get NODE_ENV 2>/dev/null || echo production)"'
+
+# Aggiorna segreti locali
+fnox-update-secret:
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") bash scripts/update-fnox-secret.sh
 ```
 
 ---
 
 ## Deploy Sicuro su Server Remoto
 
-### Strategia con File .env Temporaneo
+### Strategia Senza File Temporaneo (Raccomandata)
 
 Questa strategia garantisce che la chiave di decrittazione non rimanga mai sul server.
 
 #### Flusso di Deploy
 
 1. **Pull e Build**: Aggiorna il codice e ricostruisce l'immagine
-2. **Creazione File Temporaneo**: Copia la chiave in un file `.env.fnox` con permessi 600
-3. **Avvio Container**: Avvia i container usando il file temporaneo
-4. **Rimozione File**: Rimuove immediatamente il file temporaneo
+2. **Passaggio Chiave**: La chiave viene passata direttamente come variabile d'ambiente
+3. **Avvio Container**: Avvia i container con la chiave
+4. **Chiave in Memoria**: La chiave esiste solo in memoria, mai su disco
 
 #### Implementazione
 
@@ -407,21 +731,17 @@ deploy:
 	@echo "Rebuilding Docker image on remote server..."
 	@echo "Pulling code and building..."
 	@ssh user@server 'cd /path/to/project && git pull && docker compose build && docker compose down'
-	@echo "Creating temporary .env.fnox file on server..."
-	@cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY" | ssh user@server 'cat > /path/to/project/.env.fnox && chmod 600 /path/to/project/.env.fnox'
-	@echo "Starting containers with secrets..."
-	@ssh user@server 'cd /path/to/project && docker compose --env-file .env.fnox up -d'
-	@echo "Removing temporary .env.fnox file..."
-	@ssh user@server 'rm /path/to/project/.env.fnox'
+	@echo "Starting containers with secrets (FNOX_AGE_KEY passed directly)..."
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") ssh user@server 'cd /path/to/project && docker compose up -d'
 	@echo "Deploy completed successfully!"
 ```
 
-#### Aggiorna .dockerignore
+#### Vantaggi
 
-```dockerignore
-# Aggiungi alla lista
-.env.fnox
-```
+✅ **Più sicuro**: La chiave non viene mai salvata su disco
+✅ **Più semplice**: Meno comandi da eseguire
+✅ **Più veloce**: Niente creazione/cancellazione di file
+✅ **Niente rischio di file rimasti**: Niente file temporanei da pulire
 
 ### Alternative per Produzione
 
@@ -474,7 +794,6 @@ API_KEY = { provider = "aws", value = "api-key" }
 .env
 .env.local
 .env.*.local
-.env.fnox
 ~/.config/fnox/age.txt
 ```
 
@@ -535,7 +854,28 @@ age-keygen -o ~/.config/fnox/age-new.txt
 mv ~/.config/fnox/age-new.txt ~/.config/fnox/age.txt
 ```
 
-### 6. Monitoraggio e Logging
+### 6. Usa Script Interattivo per Aggiornamento
+
+```bash
+# Usa lo script interattivo invece di comandi diretti
+make fnox-update-secret
+
+# Questo fornisce:
+# - Mascheramento password
+# - Generazione password casuale
+# - Conferma prima dell'aggiornamento
+```
+
+### 7. Deploy Senza File Temporanei
+
+```bash
+# Usa sempre il deploy senza file temporanei
+make deploy
+
+# Non creare file .env.fnox sul server
+```
+
+### 8. Monitoraggio e Logging
 
 ```bash
 # Verifica accesso ai segreti
@@ -626,6 +966,23 @@ docker compose exec app fnox check
 docker compose exec app sh -c 'echo $FNOX_AGE_KEY'
 ```
 
+### Problema: Segreti non decrittati nel container
+
+**Sintomo**: `docker-check-secrets` mostra valori vuoti
+
+**Soluzione**:
+```bash
+# Verifica che il container sia stato avviato con FNOX_AGE_KEY
+docker compose exec app sh -c 'echo $FNOX_AGE_KEY'
+
+# Se vuoto, riavvia il container con la chiave
+make down
+make up
+
+# Verifica che fnox.toml sia nel container
+docker compose exec app ls -la fnox.toml
+```
+
 ---
 
 ## Esempi Pratici
@@ -690,14 +1047,34 @@ fnox list --values
 # Sviluppo locale
 fnox exec -- bun run dev
 
-# Staging
-FNOX_PROFILE=staging fnox exec -- bun run build
+# Verifica segreti locali
+make check-secrets
 
-# Produzione
-FNOX_PROFILE=production fnox exec -- bun run build
+# Produzione Docker
+make up
+
+# Verifica segreti nel container
+make docker-check-secrets
+
+# Deploy su server
+make deploy
 ```
 
-### Esempio 4: Integrazione con CI/CD
+### Esempio 4: Aggiornamento Segreti con Script Interattivo
+
+```bash
+# Aggiorna segreto locale
+make fnox-update-secret
+
+# Seleziona il segreto da aggiornare
+# Scegli se inserire valore o generare password
+# Conferma l'aggiornamento
+
+# Verifica l'aggiornamento
+make check-secrets
+```
+
+### Esempio 5: Integrazione con CI/CD
 
 ```yaml
 # .github/workflows/deploy.yml
@@ -753,5 +1130,6 @@ Questa guida fornisce una base solida per integrare fnox come secret manager in 
 ✅ **Flessibile**: Supporta ambienti diversi e provider multipli
 ✅ **Riutilizzabile**: Può essere applicata a qualsiasi progetto
 ✅ **Scalabile**: Funziona bene in team e in produzione
+✅ **Semplice**: Script interattivi e comandi Makefile facilitano l'uso
 
 Per domande o problemi, consulta la documentazione ufficiale di fnox o apri un issue nel repository del progetto.
