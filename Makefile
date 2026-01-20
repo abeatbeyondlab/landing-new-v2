@@ -53,6 +53,11 @@ docker-check-secrets:
 	@echo "Checking secrets in Docker container..."
 	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose exec -e FNOX_AGE_KEY app sh -c 'echo "DATABASE_URL: $$(fnox get DATABASE_URL)" && echo "API_KEY: $$(fnox get API_KEY)" && echo "WEBHOOK_CONTACT_FORM: $$(fnox get WEBHOOK_CONTACT_FORM)" && echo "NODE_ENV: $$(fnox get NODE_ENV 2>/dev/null || echo production)"'
 
+# Verifica che i segreti siano accessibili nel container remoto
+docker-check-remote-secrets:
+	@echo "Checking secrets in remote Docker container..."
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") ssh ale@achih1 "cd /home/ale/landing-new-v2 && FNOX_AGE_KEY='$$FNOX_AGE_KEY' docker compose exec -e FNOX_AGE_KEY app sh -c 'echo \"DATABASE_URL: \$$(fnox get DATABASE_URL)\" && echo \"API_KEY: \$$(fnox get API_KEY)\" && echo \"WEBHOOK_CONTACT_FORM: \$$(fnox get WEBHOOK_CONTACT_FORM)\" && echo \"NODE_ENV: \$$(fnox get NODE_ENV 2>/dev/null || echo production)\"'"
+
 # Build senza avviare (utile per debug)
 docker-build-only:
 	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose build --no-cache
@@ -63,7 +68,7 @@ deploy:
 	@echo "Pulling code and building..."
 	@ssh ale@achih1 'cd /home/ale/landing-new-v2 && git pull && docker compose build && docker compose down'
 	@echo "Starting containers with secrets (FNOX_AGE_KEY passed directly)..."
-	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") ssh ale@achih1 'cd /home/ale/landing-new-v2 && docker compose up -d'
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") ssh ale@achih1 "cd /home/ale/landing-new-v2 && FNOX_AGE_KEY='$$FNOX_AGE_KEY' docker compose up -d"
 	@echo "Deploy completed successfully!"
 
 # Prisma Commands
@@ -123,3 +128,7 @@ post-delete:
 tags-upload:
 	@echo "Uploading tags from blogpost/tags.json..."
 	@bun scripts/upload-tags.ts
+
+.PHONY: admin-cms
+admin-cms:
+	@bun --bun admin-cms/server.ts

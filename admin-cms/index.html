@@ -16,6 +16,7 @@
         <header class="flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold text-gray-800">Blog CMS</h1>
             <div class="flex gap-4">
+                <input type="text" id="domainOrigin" placeholder="Domain Origin" class="px-4 py-2 border rounded" onchange="saveDomainOrigin()">
                 <input type="password" id="apiKey" placeholder="API Key" class="px-4 py-2 border rounded" onchange="saveApiKey()">
                 <button onclick="loadPosts()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Refresh
@@ -118,11 +119,18 @@
     </div>
 
     <script>
-        const API_BASE = 'http://localhost:3000/api/v1/blog';
         let currentPage = 1;
         
         function getApiKey() {
             return document.getElementById('apiKey').value || localStorage.getItem('blog_api_key');
+        }
+
+        function getDomainOrigin() {
+            return document.getElementById('domainOrigin').value || localStorage.getItem('blog_domain_origin') || 'http://localhost:3000';
+        }
+
+        function getApiBase() {
+            return getDomainOrigin() + '/api/v1/blog';
         }
 
         function saveApiKey() {
@@ -131,8 +139,23 @@
             loadPosts();
         }
 
+        function saveDomainOrigin() {
+            const domain = document.getElementById('domainOrigin').value;
+            localStorage.setItem('blog_domain_origin', domain);
+            loadPosts();
+        }
+
         // Init
         const storedKey = localStorage.getItem('blog_api_key');
+        const storedDomain = localStorage.getItem('blog_domain_origin');
+        
+        if (!storedDomain) {
+            // Default to localhost
+            document.getElementById('domainOrigin').value = 'http://localhost:3000';
+        } else {
+            document.getElementById('domainOrigin').value = storedDomain;
+        }
+        
         if (!storedKey) {
             // Default dev key for convenience
             document.getElementById('apiKey').value = 'test-api-key';
@@ -150,7 +173,7 @@
             const options = { method, headers };
             if (body) options.body = isFile ? body : JSON.stringify(body);
 
-            const res = await fetch(API_BASE + endpoint, options);
+            const res = await fetch(getApiBase() + endpoint, options);
             return res.json();
         }
 
