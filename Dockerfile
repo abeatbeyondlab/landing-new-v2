@@ -66,8 +66,8 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/data ./data
 
-# Copy fnox.toml for secrets
-COPY --from=builder --chown=nextjs:nodejs /app/fnox.toml ./fnox.toml
+# Copy fnox.production.toml for production secrets
+COPY --from=builder --chown=nextjs:nodejs /app/fnox.production.toml ./fnox.toml
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
