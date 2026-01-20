@@ -1,6 +1,14 @@
+# fnox.toml - Segreti per ambiente di sviluppo locale
+# Multiple recipients supporta la rotazione delle chiavi senza downtime
 [providers.age]
 type = "age"
-recipients = ["age17vaq8s9wks3te6qvdvg7zvctv43nq9z9ywqpw5nffgxkkflr05nqlsm64u"]
+# Aggiungi qui tutte le chiavi pubbliche che devono poter decrittare i segreti
+# Per rotazione: aggiungi nuova chiave, re-encrypt, rimuovi vecchia chiave
+recipients = [
+  "age17vaq8s9wks3te6qvdvg7zvctv43nq9z9ywqpw5nffgxkkflr05nqlsm64u",
+  # Aggiungi altre chiavi qui per supportare multiple ambienti o utenti
+  # "age1...altra-chiave",
+]
 
 [secrets]
 API_KEY= { provider = "age", value = "YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3NkFBdjFYZGJaclJGS1RIcHNScDdRcW05akJ3UFdWRC9qSmsrQ0xKWUJvClQ1MlBtcEIrVU5EZTRoWTRzaFg3RFo5bXJlQjRHY0ZNb0haR1R2TmIzaVUKLT4gXD0tZ3JlYXNlIGQrTiApOkF7RyBRPVIgeSRoZSR4PEwKOGttTVE3eFIxRHVPNldkbkdIZEFJT1o3V1hHS3NlZXdRV0trajFKZm9JVzJ4N1dpVFRqektVR2xkMi9qck9xKwpsRHhlK0RUN1pmbGluNUtqQnVFYnZvRXQ0N2FvUlEKLS0tIGV1UUJPd1RRYWxhdXFXcHRzTFNyalBLWHZ6TVRtOGpMWWZqUEpXMnlueEEKALIMcndIWi8EsRiCOxqwNz5zGos1wb5cNnlDTPwdc0bxIfDPn+OHZVAaeko=" }

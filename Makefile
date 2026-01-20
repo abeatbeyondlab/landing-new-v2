@@ -24,6 +24,9 @@ fnox-list:
 fnox-set:
 	@read -p "Enter secret name: " name; read -s -p "Enter secret value: " value; echo; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox set $$name "$$value" --provider age
 
+fnox-update-secret:
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") bash scripts/update-fnox-secret.sh
+
 # Docker + fnox commands
 docker-logs:
 	@docker compose logs -f app
