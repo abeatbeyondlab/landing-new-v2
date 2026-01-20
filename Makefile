@@ -21,6 +21,11 @@ fnox-start:
 fnox-list:
 	@fnox list
 
+# Verifica che i segreti siano accessibili localmente
+check-secrets:
+	@echo "Checking secrets in local environment..."
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") sh -c 'echo "DATABASE_URL: $$(fnox get DATABASE_URL)" && echo "API_KEY: $$(fnox get API_KEY)" && echo "WEBHOOK_CONTACT_FORM: $$(fnox get WEBHOOK_CONTACT_FORM)" && echo "NODE_ENV: $$(fnox get NODE_ENV 2>/dev/null || echo development)"'
+
 fnox-set:
 	@read -p "Enter secret name: " name; read -s -p "Enter secret value: " value; echo; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox set $$name "$$value" --provider age
 
@@ -46,7 +51,7 @@ docker-fnox-test:
 # Verifica che i segreti siano accessibili nel container
 docker-check-secrets:
 	@echo "Checking secrets in Docker container..."
-	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose exec -e FNOX_AGE_KEY app sh -c 'fnox exec -- sh -c "echo \"DATABASE_URL: $$DATABASE_URL\" && echo \"API_KEY: $$API_KEY\" && echo \"NODE_ENV: $$NODE_ENV\""'
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose exec -e FNOX_AGE_KEY app sh -c 'echo "DATABASE_URL: $$(fnox get DATABASE_URL)" && echo "API_KEY: $$(fnox get API_KEY)" && echo "WEBHOOK_CONTACT_FORM: $$(fnox get WEBHOOK_CONTACT_FORM)" && echo "NODE_ENV: $$(fnox get NODE_ENV 2>/dev/null || echo production)"'
 
 # Build senza avviare (utile per debug)
 docker-build-only:

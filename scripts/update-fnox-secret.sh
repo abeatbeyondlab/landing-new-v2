@@ -33,6 +33,22 @@ warning() {
     echo -e "${YELLOW}⚠ $1${NC}"
 }
 
+# Funzione per mascherare la password (mostra primi 3 e ultimi 3 caratteri)
+mask_password() {
+    local password="$1"
+    local len=${#password}
+    
+    if [ $len -le 6 ]; then
+        # Se la password è troppo corta, mostra solo i primi 3
+        echo "${password:0:3}..."
+    else
+        # Mostra primi 3, ultimi 3, con ... in mezzo
+        local first="${password:0:3}"
+        local last="${password: -3}"
+        echo "${first}...${last}"
+    fi
+}
+
 # Verifica che FNOX_AGE_KEY sia impostata
 if [ -z "$FNOX_AGE_KEY" ]; then
     error "FNOX_AGE_KEY non è impostata. Esegui con: FNOX_AGE_KEY=\$(cat ~/.config/fnox/age.txt | grep \"AGE-SECRET-KEY\") $0"
@@ -114,6 +130,27 @@ secret_name="${secrets[$((secret_choice-1))]}"
 echo ""
 info "Segreto selezionato: $secret_name"
 
+# Mostra il valore attuale del segreto
+echo ""
+info "Valore attuale:"
+if [ "$config_file" = "fnox.production.toml" ]; then
+    current_value=$(fnox get "$secret_name" -c "$config_file" 2>/dev/null || echo "<non disponibile>")
+else
+    current_value=$(fnox get "$secret_name" 2>/dev/null || echo "<non disponibile>")
+fi
+if [ "$current_value" != "<non disponibile>" ]; then
+    echo "  $(mask_password "$current_value")"
+    echo ""
+    read -p "Vuoi mostrare la password completa in chiaro? [s/N]: " show_full
+    if [[ "$show_full" =~ ^[sS]$ ]]; then
+        echo ""
+        warning "Password completa: $current_value"
+    fi
+else
+    echo "  $current_value"
+fi
+echo ""
+
 # 5. Chiedi se generare password casuale o inserire manualmente
 echo ""
 read -p "Vuoi generare una password casuale? [s/N]: " generate_random
@@ -134,7 +171,13 @@ if [[ "$generate_random" =~ ^[sS]$ ]]; then
     new_value=$(head /dev/urandom | tr -dc "$chars" | head -c "$password_length")
     
     echo ""
-    success "Password generata: $new_value"
+    success "Password generata: $(mask_password "$new_value")"
+    echo ""
+    read -p "Vuoi mostrare la password completa in chiaro? [s/N]: " show_full_generated
+    if [[ "$show_full_generated" =~ ^[sS]$ ]]; then
+        echo ""
+        warning "Password completa: $new_value"
+    fi
     echo ""
     read -p "Vuoi modificare questa password? [s/N]: " modify_password
     
@@ -142,7 +185,13 @@ if [[ "$generate_random" =~ ^[sS]$ ]]; then
         echo ""
         read -e -p "Modifica la password generata: " new_value
         echo ""
-        success "Password modificata: $new_value"
+        success "Password modificata: $(mask_password "$new_value")"
+        echo ""
+        read -p "Vuoi mostrare la password completa in chiaro? [s/N]: " show_full_modified
+        if [[ "$show_full_modified" =~ ^[sS]$ ]]; then
+            echo ""
+            warning "Password completa: $new_value"
+        fi
     fi
     
     echo ""
@@ -222,8 +271,8 @@ if [ "$decrypted_value" = "$new_value" ]; then
     success "Verifica completata: il valore è stato aggiornato correttamente!"
 else
     warning "Verifica fallita: il valore decrittato non corrisponde."
-    warning "Valore atteso: $new_value"
-    warning "Valore decrittato: $decrypted_value"
+    warning "Valore atteso: $(mask_password "$new_value")"
+    warning "Valore decrittato: $(mask_password "$decrypted_value")"
 fi
 
 echo ""
