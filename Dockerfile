@@ -37,6 +37,8 @@ RUN fnox exec -- bun run bbuild
 FROM base AS runner
 WORKDIR /app
 
+ARG FNOX_AGE_KEY
+ENV FNOX_AGE_KEY=$FNOX_AGE_KEY
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1

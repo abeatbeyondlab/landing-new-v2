@@ -50,7 +50,7 @@ export function requireApiKey(request: NextRequest) {
 }
 
 // Rate limiting (simplified for serverless compatibility)
-export function checkRateLimit(apiKey: string, limit: number = 100, windowMs: number = 60000) {
+export function checkRateLimit(_apiKey: string, _limit: number = 100, _windowMs: number = 60000) {
   // For now, we'll skip rate limiting in the middleware context
   // In production, you might want to use Redis or a database-backed rate limiter
   // TODO: Implement proper rate limiting using the parameters:
@@ -59,7 +59,7 @@ export function checkRateLimit(apiKey: string, limit: number = 100, windowMs: nu
   // - windowMs: Time window in milliseconds
   
   // Log rate limiting attempt for debugging
-  //console.log(`Rate limiting check for API key: ${apiKey.substring(0, 8)}..., limit: ${limit}, window: ${windowMs}ms`);
+  //console.log(`Rate limiting check for API key: ${_apiKey.substring(0, 8)}..., limit: ${_limit}, window: ${_windowMs}ms`);
   
   // For development, we'll allow all requests but log the attempt
   if (process.env.NODE_ENV === 'development') {

@@ -23,12 +23,44 @@ fnox-list:
 
 fnox-set:
 	@read -p "Enter secret name: " name; read -s -p "Enter secret value: " value; echo; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox set $$name "$$value" --provider age
+
+# Docker + fnox commands
+docker-logs:
+	@docker compose logs -f app
+
+docker-shell:
+	@docker compose exec app sh
+
+docker-fnox-list:
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose exec -e FNOX_AGE_KEY app fnox list
+
+docker-fnox-check:
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose exec -e FNOX_AGE_KEY app fnox check
+
+docker-fnox-test:
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose exec -e FNOX_AGE_KEY app fnox provider test age
+
+# Verifica che i segreti siano accessibili nel container
+docker-check-secrets:
+	@echo "Checking secrets in Docker container..."
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose exec -e FNOX_AGE_KEY app sh -c 'fnox exec -- sh -c "echo \"DATABASE_URL: $$DATABASE_URL\" && echo \"API_KEY: $$API_KEY\" && echo \"NODE_ENV: $$NODE_ENV\""'
+
+# Build senza avviare (utile per debug)
+docker-build-only:
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") docker compose build --no-cache
 ssh:
 	@ssh ale@achih1
 deploy:
 	@echo "Rebuilding Docker image on remote server..."
-#@bun bbuild
-	@ssh ale@achih1 'cd /home/ale/landing-new-v2 && git pull && docker compose build && docker compose down && docker compose up -d'
+	@echo "Pulling code and building..."
+	@ssh ale@achih1 'cd /home/ale/landing-new-v2 && git pull && docker compose build && docker compose down'
+	@echo "Creating temporary .env.fnox file on server..."
+	@cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY" | ssh ale@achih1 'cat > /home/ale/landing-new-v2/.env.fnox && chmod 600 /home/ale/landing-new-v2/.env.fnox'
+	@echo "Starting containers with secrets..."
+	@ssh ale@achih1 'cd /home/ale/landing-new-v2 && docker compose --env-file .env.fnox up -d'
+	@echo "Removing temporary .env.fnox file..."
+	@ssh ale@achih1 'rm /home/ale/landing-new-v2/.env.fnox'
+	@echo "Deploy completed successfully!"
 
 # Prisma Commands
 prisma-pull:
