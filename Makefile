@@ -62,12 +62,8 @@ deploy:
 	@echo "Rebuilding Docker image on remote server..."
 	@echo "Pulling code and building..."
 	@ssh ale@achih1 'cd /home/ale/landing-new-v2 && git pull && docker compose build && docker compose down'
-	@echo "Creating temporary .env.fnox file on server..."
-	@cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY" | ssh ale@achih1 'cat > /home/ale/landing-new-v2/.env.fnox && chmod 600 /home/ale/landing-new-v2/.env.fnox'
-	@echo "Starting containers with secrets..."
-	@ssh ale@achih1 'cd /home/ale/landing-new-v2 && docker compose --env-file .env.fnox up -d'
-	@echo "Removing temporary .env.fnox file..."
-	@ssh ale@achih1 'rm /home/ale/landing-new-v2/.env.fnox'
+	@echo "Starting containers with secrets (FNOX_AGE_KEY passed directly)..."
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") ssh ale@achih1 'cd /home/ale/landing-new-v2 && docker compose up -d'
 	@echo "Deploy completed successfully!"
 
 # Prisma Commands
