@@ -91,7 +91,13 @@ ssh:
 	@ssh ale@achih1
 deploy:
 	@echo "Rebuilding Docker image on remote server..."
-	@AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") ssh ale@achih1 "cd /home/ale/landing-new-v2 && FNOX_AGE_KEY='$$AGE_KEY' git pull && FNOX_AGE_KEY='$$AGE_KEY' docker compose build && FNOX_AGE_KEY='$$AGE_KEY' docker compose down && FNOX_AGE_KEY='$$AGE_KEY' docker compose up -d"
+	@echo "Creating .env.fnox with FNOX_AGE_KEY..."
+	@echo "FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY")" > .env.fnox
+	@echo "Copying .env.fnox to remote server..."
+	@scp .env.fnox ale@achih1:/home/ale/landing-new-v2/.env.fnox
+	@rm .env.fnox
+	@echo "Deploying with git pull, build, down and up..."
+	@ssh ale@achih1 "cd /home/ale/landing-new-v2 && git pull && docker compose build && docker compose down && docker compose up -d"
 	@echo "Deploy completed successfully!"
 
 # Prisma Commands

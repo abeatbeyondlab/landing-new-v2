@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
       args:
         - FNOX_AGE_KEY=${FNOX_AGE_KEY}
+    env_file:
+      - .env.fnox
     ports:
       - "3000:3000"
     environment:
