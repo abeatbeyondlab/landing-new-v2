@@ -376,24 +376,32 @@ docker-build-only:
 	@FNOX_AGE_KEY=$(FNOX_AGE_KEY) docker compose build --no-cache
 ```
 
-### Deploy su Server Remoto (Senza File Temporaneo)
+### Deploy su Server Remoto (con File .env.fnox Temporaneo)
 
 ```makefile
-# Deploy sicuro senza file temporaneo
+# Deploy sicuro con file temporaneo (eliminato automaticamente)
 deploy:
 	@echo "Rebuilding Docker image on remote server..."
-	@echo "Pulling code and building..."
-	@ssh user@server 'cd /path/to/project && git pull && docker compose build && docker compose down'
-	@echo "Starting containers with secrets (FNOX_AGE_KEY passed directly)..."
-	@FNOX_AGE_KEY=$(FNOX_AGE_KEY) ssh user@server 'cd /path/to/project && docker compose up -d'
+	@echo "Creating .env.fnox with FNOX_AGE_KEY..."
+	@echo "FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY")" > .env.fnox
+	@echo "Copying .env.fnox to remote server..."
+	@scp .env.fnox user@server:/path/to/project/.env.fnox
+	@rm .env.fnox
+	@echo "Deploying with git pull, build, down and up..."
+	@ssh user@server "cd /path/to/project && git pull && set -a && source .env.fnox && set +a && docker compose build && docker compose down && docker compose up -d && rm .env.fnox"
 	@echo "Deploy completed successfully!"
 ```
 
-**Vantaggi di questo approccio:**
-- ✅ La chiave non viene mai salvata su disco
-- ✅ Più sicuro e semplice
-- ✅ Niente file temporanei da gestire
-- ✅ Meno comandi da eseguire
+**Perché questo approccio funziona:**
+
+Il file `.env.fnox` è necessario perché docker-compose.yml usa l'interpolazione shell `${FNOX_AGE_KEY}`.
+Senza fare `source .env.fnox`, la variabile risulterebbe vuota durante `docker compose build/up`.
+
+**Vantaggi:**
+- ✅ La variabile è disponibile per l'interpolazione in docker-compose.yml
+- ✅ Il file viene eliminato automaticamente dopo il deploy
+- ✅ La chiave non rimane mai sul server
+- ✅ Processo atomico in un singolo comando SSH
 
 ---
 
@@ -713,35 +721,85 @@ fnox-update-secret:
 
 ## Deploy Sicuro su Server Remoto
 
-### Strategia Senza File Temporaneo (Raccomandata)
+### Strategia con File .env.fnox Temporaneo (Raccomandata)
 
-Questa strategia garantisce che la chiave di decrittazione non rimanga mai sul server.
+Questa strategia utilizza un file temporaneo `.env.fnox` per passare la chiave age al server remoto. Il file viene eliminato automaticamente dopo il deploy.
 
 #### Flusso di Deploy
 
-1. **Pull e Build**: Aggiorna il codice e ricostruisce l'immagine
-2. **Passaggio Chiave**: La chiave viene passata direttamente come variabile d'ambiente
-3. **Avvio Container**: Avvia i container con la chiave
-4. **Chiave in Memoria**: La chiave esiste solo in memoria, mai su disco
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  MACCHINA LOCALE                                                     │
+│  1. Crea .env.fnox con FNOX_AGE_KEY                                 │
+│  2. Copia via SCP sul server remoto                                 │
+│  3. Elimina .env.fnox locale                                        │
+└──────────────────────────────┬──────────────────────────────────────┘
+                               │ SCP
+                               ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│  SERVER REMOTO (via SSH)                                            │
+│  4. git pull                                                        │
+│  5. source .env.fnox (carica FNOX_AGE_KEY nell'ambiente)           │
+│  6. docker compose build                                            │
+│  7. docker compose down                                             │
+│  8. docker compose up -d                                            │
+│  9. rm .env.fnox (elimina file per sicurezza)                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
 
-#### Implementazione
+#### Perché Usare un File Temporaneo?
+
+Il problema principale è che `docker-compose.yml` utilizza l'interpolazione delle variabili shell:
+
+```yaml
+services:
+  app:
+    build:
+      args:
+        - FNOX_AGE_KEY=${FNOX_AGE_KEY}  # <-- Espansa dalla shell!
+    environment:
+      - FNOX_AGE_KEY=${FNOX_AGE_KEY}    # <-- Espansa dalla shell!
+```
+
+**Senza il file .env.fnox**: La variabile `${FNOX_AGE_KEY}` viene espansa dalla shell SSH *prima* di eseguire docker compose, risultando vuota.
+
+**Con il file .env.fnox**: `source .env.fnox` carica la variabile nell'ambiente della shell SSH, rendendola disponibile per l'interpolazione.
+
+#### Implementazione nel Makefile
 
 ```makefile
 deploy:
 	@echo "Rebuilding Docker image on remote server..."
-	@echo "Pulling code and building..."
-	@ssh user@server 'cd /path/to/project && git pull && docker compose build && docker compose down'
-	@echo "Starting containers with secrets (FNOX_AGE_KEY passed directly)..."
-	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") ssh user@server 'cd /path/to/project && docker compose up -d'
+	@echo "Creating .env.fnox with FNOX_AGE_KEY..."
+	@echo "FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY")" > .env.fnox
+	@echo "Copying .env.fnox to remote server..."
+	@scp .env.fnox user@server:/path/to/project/.env.fnox
+	@rm .env.fnox
+	@echo "Deploying with git pull, build, down and up..."
+	@ssh user@server "cd /path/to/project && git pull && set -a && source .env.fnox && set +a && docker compose build && docker compose down && docker compose up -d && rm .env.fnox"
 	@echo "Deploy completed successfully!"
 ```
 
+#### Spiegazione dei Comandi
+
+| Comando | Descrizione |
+|---------|-------------|
+| `echo "FNOX_AGE_KEY=..." > .env.fnox` | Crea file locale con la chiave |
+| `scp .env.fnox user@server:path` | Copia il file sul server remoto |
+| `rm .env.fnox` | Elimina il file locale (non serve più) |
+| `set -a` | Abilita export automatico delle variabili |
+| `source .env.fnox` | Carica la variabile nell'ambiente shell |
+| `set +a` | Disabilita export automatico |
+| `docker compose build` | Build con FNOX_AGE_KEY disponibile |
+| `docker compose up -d` | Avvia container con FNOX_AGE_KEY |
+| `rm .env.fnox` | **IMPORTANTE**: Elimina il file dal server |
+
 #### Vantaggi
 
-✅ **Più sicuro**: La chiave non viene mai salvata su disco
-✅ **Più semplice**: Meno comandi da eseguire
-✅ **Più veloce**: Niente creazione/cancellazione di file
-✅ **Niente rischio di file rimasti**: Niente file temporanei da pulire
+✅ **Funziona con interpolazione shell**: La variabile è disponibile per docker-compose.yml
+✅ **File eliminato automaticamente**: Nessun rischio che la chiave rimanga sul server
+✅ **Chiave mai in log**: La chiave non viene mostrata nei log del terminale
+✅ **Processo atomico**: Tutto in un singolo comando SSH
 
 ### Alternative per Produzione
 
