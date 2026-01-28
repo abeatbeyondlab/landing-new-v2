@@ -21,7 +21,22 @@ const ALLOWED_ORIGINS = [
 
 function isAllowedOrigin(origin: string | null): boolean {
   if (!origin) return false;
-  return ALLOWED_ORIGINS.some(allowed => origin.startsWith(allowed));
+  return ALLOWED_ORIGINS.some(allowed => {
+    // Exact match for origins
+    if (origin === allowed) return true;
+    
+    // Also match if it's a same-origin request (same hostname)
+    try {
+      const originUrl = new URL(origin);
+      const allowedUrl = new URL(allowed);
+      // Compare hostnames (handles www vs non-www)
+      const originHostname = originUrl.hostname.replace(/^www\./, '');
+      const allowedHostname = allowedUrl.hostname.replace(/^www\./, '');
+      return originHostname === allowedHostname && originUrl.protocol === allowedUrl.protocol;
+    } catch {
+      return false;
+    }
+  });
 }
 
 function isAllowedIp(ip: string | null): boolean {
