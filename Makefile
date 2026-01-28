@@ -68,7 +68,7 @@ deploy:
 	@echo "Pulling code and building..."
 	@ssh ale@achih1 "cd /home/ale/landing-new-v2 && git pull && docker compose build && docker compose down"
 	@echo "Starting containers with secrets (FNOX_AGE_KEY passed directly)..."
-	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") ssh -o SendEnv=FNOX_AGE_KEY ale@achih1 "cd /home/ale/landing-new-v2 && FNOX_AGE_KEY=$$FNOX_AGE_KEY docker compose up -d"
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") ssh ale@achih1 "cd /home/ale/landing-new-v2 && FNOX_AGE_KEY='$$FNOX_AGE_KEY' docker compose up -d"
 	@echo "Deploy completed successfully!"
 
 # Prisma Commands
