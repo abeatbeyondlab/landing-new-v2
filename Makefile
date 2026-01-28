@@ -26,8 +26,34 @@ check-secrets:
 	@echo "Checking secrets in local environment..."
 	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") sh -c 'echo "DATABASE_URL: $$(fnox get DATABASE_URL)" && echo "API_KEY: $$(fnox get API_KEY)" && echo "WEBHOOK_CONTACT_FORM: $$(fnox get WEBHOOK_CONTACT_FORM)" && echo "NODE_ENV: $$(fnox get NODE_ENV 2>/dev/null || echo development)"'
 
+# Set secret with environment selection (local or production)
 fnox-set:
-	@read -p "Enter secret name: " name; read -s -p "Enter secret value: " value; echo; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox set $$name "$$value" --provider age
+	@bash -c 'echo "Select environment:"; echo "  1) Local (fnox.toml)"; echo "  2) Production (fnox.production.toml)"; read -p "Choice [1-2]: " env; if [ "$$env" = "2" ]; then config="fnox.production.toml"; else config="fnox.toml"; fi; echo ""; echo "Available secrets in $$config:"; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox list -c $$config 2>/dev/null | tail -n +2 | awk '"'"'{print $$1}'"'"' | grep -v "^$$" || echo "  (no secrets configured)"; echo ""; read -p "Enter secret name: " name; read -s -p "Enter secret value: " value; echo; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox set $$name "$$value" --provider age -c $$config && echo "✓ Secret set in $$config"'
+
+# Set secret for local environment only
+fnox-set-local:
+	@bash -c 'echo "Available secrets in fnox.toml:"; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox list 2>/dev/null | tail -n +2 | awk '"'"'{print $$1}'"'"' | grep -v "^$$" || echo "  (no secrets configured)"; echo ""; read -p "Enter secret name: " name; read -s -p "Enter secret value: " value; echo; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox set $$name "$$value" --provider age && echo "✓ Secret set in fnox.toml (local)"'
+
+# Set secret for production environment only
+fnox-set-production:
+	@bash -c 'echo "Available secrets in fnox.production.toml:"; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox list -c fnox.production.toml 2>/dev/null | tail -n +2 | awk '"'"'{print $$1}'"'"' | grep -v "^$$" || echo "  (no secrets configured)"; echo ""; read -p "Enter secret name: " name; read -s -p "Enter secret value: " value; echo; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox set $$name "$$value" --provider age -c fnox.production.toml && echo "✓ Secret set in fnox.production.toml (production)"'
+
+# List secrets from production file
+fnox-list-production:
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox list -c fnox.production.toml
+
+# Get secret from production
+fnox-get-production:
+	@bash -c 'read -p "Enter secret name: "; name; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox get $$name -c fnox.production.toml'
+
+# Get secret with environment selection
+fnox-get:
+	@bash -c 'echo "Select environment:"; echo "  1) Local (fnox.toml)"; echo "  2) Production (fnox.production.toml)"; read -p "Choice [1-2]: " env; if [ "$$env" = "2" ]; then config="fnox.production.toml"; else config="fnox.toml"; fi; read -p "Enter secret name: " name; FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") fnox get $$name -c $$config'
+
+# Check secrets in production file
+check-secrets-production:
+	@echo "Checking secrets in production file..."
+	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") sh -c 'echo "DATABASE_URL: $$(fnox get DATABASE_URL -c fnox.production.toml)" && echo "API_KEY: $$(fnox get API_KEY -c fnox.production.toml)" && echo "WEBHOOK_CONTACT_FORM: $$(fnox get WEBHOOK_CONTACT_FORM -c fnox.production.toml)" && echo "NODE_ENV: $$(fnox get NODE_ENV -c fnox.production.toml 2>/dev/null || echo production)"'
 
 fnox-update-secret:
 	@FNOX_AGE_KEY=$$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY") bash scripts/update-fnox-secret.sh
