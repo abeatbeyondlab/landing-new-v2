@@ -92,4 +92,4 @@ ENV HOSTNAME "0.0.0.0"
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 # server.js is created by next build from the standalone output
-CMD ["sh", "-c", "fnox exec -- bun server.js"]
+CMD ["sh", "-c", "fnox exec -e FNOX_AGE_KEY=$FNOX_AGE_KEY -- bun server.js"]
