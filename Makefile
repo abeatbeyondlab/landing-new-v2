@@ -97,7 +97,7 @@ deploy:
 	@scp .env.fnox ale@achih1:/home/ale/landing-new-v2/.env.fnox
 	@rm .env.fnox
 	@echo "Deploying with git pull, build, down and up..."
-	@ssh ale@achih1 "cd /home/ale/landing-new-v2 && git pull && docker compose build && docker compose down && docker compose up -d"
+	@ssh ale@achih1 "cd /home/ale/landing-new-v2 && git pull && set -a && source .env.fnox && set +a && docker compose build && docker compose down && docker compose up -d"
 	@echo "Deploy completed successfully!"
 
 # Prisma Commands
