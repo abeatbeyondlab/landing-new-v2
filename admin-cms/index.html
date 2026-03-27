@@ -13,41 +13,65 @@
 <body class="bg-gray-100 min-h-screen">
     <div id="app" class="container mx-auto px-4 py-8">
         <!-- Header -->
-        <header class="flex justify-between items-center mb-8">
+        <header class="flex justify-between items-center mb-4">
             <h1 class="text-3xl font-bold text-gray-800">Blog CMS</h1>
             <div class="flex gap-4">
                 <input type="text" id="domainOrigin" placeholder="Domain Origin" class="px-4 py-2 border rounded" onchange="saveDomainOrigin()">
                 <input type="password" id="apiKey" placeholder="API Key" class="px-4 py-2 border rounded" onchange="saveApiKey()">
-                <button onclick="loadPosts()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button onclick="refreshCurrentPanel()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Refresh
-                </button>
-                <button onclick="openCreateModal()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    + New Post
                 </button>
             </div>
         </header>
 
-        <!-- Post List -->
-        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h2 class="text-xl font-semibold mb-4">Posts</h2>
-            <div id="postsList" class="grid grid-cols-1 gap-4">
-                <!-- Posts injected here -->
-                <p class="text-gray-500">Loading...</p>
+        <!-- Navigation Tabs -->
+        <div class="flex gap-2 mb-6">
+            <button id="tabPosts" onclick="switchPanel('posts')" class="bg-blue-500 text-white font-bold py-2 px-6 rounded">Posts</button>
+            <button id="tabTags" onclick="switchPanel('tags')" class="bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded hover:bg-gray-400">Tags</button>
+        </div>
+
+        <!-- Posts Panel -->
+        <div id="postsPanel">
+            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Posts</h2>
+                    <button onclick="openCreateModal()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        + New Post
+                    </button>
+                </div>
+                <div id="postsList" class="grid grid-cols-1 gap-4">
+                    <p class="text-gray-500">Loading...</p>
+                </div>
+                <!-- Pagination -->
+                <div class="mt-4 flex justify-between">
+                    <button onclick="prevPage()" id="prevBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded disabled:opacity-50">Previous</button>
+                    <span id="pageInfo" class="self-center">Page 1</span>
+                    <button onclick="nextPage()" id="nextBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded disabled:opacity-50">Next</button>
+                </div>
             </div>
-            <!-- Pagination -->
-            <div class="mt-4 flex justify-between">
-                <button onclick="prevPage()" id="prevBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded disabled:opacity-50">Previous</button>
-                <span id="pageInfo" class="self-center">Page 1</span>
-                <button onclick="nextPage()" id="nextBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded disabled:opacity-50">Next</button>
+        </div>
+
+        <!-- Tags Panel -->
+        <div id="tagsPanel" class="hidden">
+            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Tags</h2>
+                    <button onclick="openCreateTagModal()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        + New Tag
+                    </button>
+                </div>
+                <div id="tagsList" class="grid grid-cols-1 gap-3">
+                    <p class="text-gray-500">Switch to Tags tab to load...</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Edit/Create Modal (Simplified) -->
+    <!-- Edit Post Modal -->
     <div id="postModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
-        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-        
-        <div class="modal-container bg-white w-11/12 md:max-w-3xl mx-auto rounded shadow-lg z-50 overflow-y-auto max-h-[90vh]">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50" onclick="closeModal()"></div>
+
+        <div class="modal-container bg-white w-11/12 md:max-w-4xl mx-auto rounded shadow-lg z-50 overflow-y-auto max-h-[90vh]">
             <div class="modal-content py-4 text-left px-6">
                 <div class="flex justify-between items-center pb-3">
                     <p class="text-2xl font-bold" id="modalTitle">Edit Post</p>
@@ -60,19 +84,47 @@
 
                 <form id="postForm" onsubmit="handleFormSubmit(event)">
                     <input type="hidden" id="postId">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text">
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="editTitle">Title</label>
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="editTitle" type="text">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="editSlug">Slug</label>
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="editSlug" type="text">
+                        </div>
                     </div>
+
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="slug">Slug</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="slug" type="text">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="editDescription">Description</label>
+                        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="editDescription" rows="2" placeholder="Short description for SEO and previews"></textarea>
                     </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="editAuthor">Author</label>
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="editAuthor" type="text" placeholder="Author name">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="editDate">Date</label>
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="editDate" type="date">
+                        </div>
+                    </div>
+
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="content">Content</label>
-                        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="content" rows="6"></textarea>
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="editContent">Content (Markdown)</label>
+                        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-mono text-sm" id="editContent" rows="10"></textarea>
                     </div>
-                    
+
+                    <!-- Tags Assignment -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Tags</label>
+                        <div id="editTagCheckboxes" class="flex flex-wrap gap-2 min-h-[32px]">
+                            <span class="text-gray-400 text-sm">Loading tags...</span>
+                        </div>
+                    </div>
+
                     <div class="flex items-center justify-between">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                             Save Changes
@@ -82,32 +134,52 @@
                         </button>
                     </div>
                 </form>
-                
+
                 <hr class="my-4">
-                
+
                 <div id="imageUploadSection" class="hidden">
                     <h3 class="text-lg font-bold mb-2">Image</h3>
-                    <input type="file" id="imageInput" accept="image/*" class="mb-2">
-                    <button onclick="uploadImage()" class="bg-purple-500 text-white px-3 py-1 rounded">Upload Image</button>
+                    <p id="editCurrentImage" class="text-sm text-gray-500 mb-2"></p>
+                    <div class="flex items-center gap-3">
+                        <input type="file" id="imageInput" accept="image/*">
+                        <button onclick="uploadImage()" class="bg-purple-500 hover:bg-purple-700 text-white px-3 py-1 rounded">Upload Image</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Create Pair Modal -->
+    <!-- Create Post Pair Modal -->
     <div id="createModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
-        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50" onclick="closeCreateModal()"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-lg mx-auto rounded shadow-lg z-50 overflow-y-auto max-h-[90vh]">
             <div class="modal-content py-4 text-left px-6">
                 <h2 class="text-2xl font-bold mb-4">Create New Post Pair</h2>
                 <form onsubmit="handleCreatePair(event)">
-                    <div class="mb-2">
-                        <label class="block text-sm font-bold">Title (IT)</label>
-                        <input id="createTitleIT" class="border w-full p-2" required>
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold mb-1">Title (IT) *</label>
+                        <input id="createTitleIT" class="border w-full p-2 rounded" required>
                     </div>
-                    <div class="mb-2">
-                        <label class="block text-sm font-bold">Title (EN)</label>
-                        <input id="createTitleEN" class="border w-full p-2" required>
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold mb-1">Slug (IT) <span class="font-normal text-gray-500">- auto-generated if empty</span></label>
+                        <input id="createSlugIT" class="border w-full p-2 rounded" placeholder="auto-generated-from-title">
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold mb-1">Description (IT)</label>
+                        <textarea id="createDescIT" class="border w-full p-2 rounded" rows="2" placeholder="Optional description"></textarea>
+                    </div>
+                    <hr class="my-3">
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold mb-1">Title (EN) *</label>
+                        <input id="createTitleEN" class="border w-full p-2 rounded" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold mb-1">Slug (EN) <span class="font-normal text-gray-500">- auto-generated if empty</span></label>
+                        <input id="createSlugEN" class="border w-full p-2 rounded" placeholder="auto-generated-from-title">
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold mb-1">Description (EN)</label>
+                        <textarea id="createDescEN" class="border w-full p-2 rounded" rows="2" placeholder="Optional description"></textarea>
                     </div>
                     <div class="flex justify-end gap-2 mt-4">
                         <button type="button" onclick="closeCreateModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
@@ -118,9 +190,78 @@
         </div>
     </div>
 
+    <!-- Create Tag Modal -->
+    <div id="createTagModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50" onclick="closeCreateTagModal()"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50">
+            <div class="modal-content py-4 text-left px-6">
+                <h2 class="text-2xl font-bold mb-4">Create New Tag</h2>
+                <form onsubmit="handleCreateTag(event)">
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold mb-1">Name *</label>
+                        <input id="createTagName" class="border w-full p-2 rounded" required
+                               oninput="document.getElementById('createTagSlug').value = slugify(this.value)">
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold mb-1">Slug *</label>
+                        <input id="createTagSlug" class="border w-full p-2 rounded" required>
+                    </div>
+                    <div class="flex justify-end gap-2 mt-4">
+                        <button type="button" onclick="closeCreateTagModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+                        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Tag Modal -->
+    <div id="editTagModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50" onclick="closeEditTagModal()"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50">
+            <div class="modal-content py-4 text-left px-6">
+                <h2 class="text-2xl font-bold mb-4">Edit Tag</h2>
+                <form onsubmit="handleEditTag(event)">
+                    <input type="hidden" id="editTagId">
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold mb-1">Name</label>
+                        <input id="editTagName" class="border w-full p-2 rounded" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold mb-1">Slug</label>
+                        <input id="editTagSlug" class="border w-full p-2 rounded" required>
+                    </div>
+                    <div class="flex justify-end gap-2 mt-4">
+                        <button type="button" onclick="closeEditTagModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // =====================
+        // Utility
+        // =====================
+        function slugify(text) {
+            return text.toLowerCase()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/[\s_]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // =====================
+        // Config & API
+        // =====================
         let currentPage = 1;
-        
+        let activePanel = 'posts';
+
         function getApiKey() {
             return document.getElementById('apiKey').value || localStorage.getItem('blog_api_key');
         }
@@ -136,31 +277,27 @@
         function saveApiKey() {
             const key = document.getElementById('apiKey').value;
             localStorage.setItem('blog_api_key', key);
-            loadPosts();
+            refreshCurrentPanel();
         }
 
         function saveDomainOrigin() {
             const domain = document.getElementById('domainOrigin').value;
             localStorage.setItem('blog_domain_origin', domain);
-            loadPosts();
+            refreshCurrentPanel();
         }
 
         // Init
         const storedKey = localStorage.getItem('blog_api_key');
         const storedDomain = localStorage.getItem('blog_domain_origin');
-        
+
         if (!storedDomain) {
-            // Default to localhost
             document.getElementById('domainOrigin').value = 'http://localhost:3000';
         } else {
             document.getElementById('domainOrigin').value = storedDomain;
         }
-        
+
         if (!storedKey) {
-            // Default dev key for convenience
             document.getElementById('apiKey').value = 'test-api-key';
-            // Don't save it automatically to localStorage to avoid persisting if user wants to change it
-            // But we use it for this session load
         } else {
             document.getElementById('apiKey').value = storedKey;
         }
@@ -169,7 +306,7 @@
         async function apiCall(endpoint, method = 'GET', body = null, isFile = false) {
             const headers = { 'x-api-key': getApiKey() };
             if (!isFile) headers['Content-Type'] = 'application/json';
-            
+
             const options = { method, headers };
             if (body) options.body = isFile ? body : JSON.stringify(body);
 
@@ -177,28 +314,65 @@
             return res.json();
         }
 
+        // =====================
+        // Panel Navigation
+        // =====================
+        function switchPanel(panel) {
+            activePanel = panel;
+            document.getElementById('postsPanel').classList.toggle('hidden', panel !== 'posts');
+            document.getElementById('tagsPanel').classList.toggle('hidden', panel !== 'tags');
+            document.getElementById('tabPosts').className = panel === 'posts'
+                ? 'bg-blue-500 text-white font-bold py-2 px-6 rounded'
+                : 'bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded hover:bg-gray-400';
+            document.getElementById('tabTags').className = panel === 'tags'
+                ? 'bg-blue-500 text-white font-bold py-2 px-6 rounded'
+                : 'bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded hover:bg-gray-400';
+            if (panel === 'tags') loadTags();
+            if (panel === 'posts') loadPosts();
+        }
+
+        function refreshCurrentPanel() {
+            if (activePanel === 'posts') loadPosts();
+            else loadTags();
+        }
+
+        // =====================
+        // Posts
+        // =====================
         async function loadPosts() {
             const res = await apiCall(`/posts?page=${currentPage}&limit=10`);
             const list = document.getElementById('postsList');
             if (res.success) {
+                if (res.data.posts.length === 0) {
+                    list.innerHTML = '<p class="text-gray-500">No posts yet. Create one!</p>';
+                    return;
+                }
                 list.innerHTML = res.data.posts.map(post => `
-                    <div class="border p-4 rounded flex justify-between items-center bg-gray-50">
-                        <div>
-                            <span class="font-bold text-lg">${post.title}</span>
-                            <span class="ml-2 px-2 py-1 text-xs rounded ${post.locale === 'it' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}">${post.locale.toUpperCase()}</span>
-                            <span class="ml-2 px-2 py-1 text-xs rounded ${post.state === 1 ? 'bg-green-500 text-white' : 'bg-gray-300'}">${post.state === 1 ? 'Published' : 'Draft'}</span>
-                            <div class="text-sm text-gray-600">/${post.slug}</div>
+                    <div class="border p-4 rounded flex justify-between items-start bg-gray-50">
+                        <div class="min-w-0 flex-1 mr-4">
+                            <div class="flex items-center flex-wrap gap-2 mb-1">
+                                <span class="font-bold text-lg">${escapeHtml(post.title)}</span>
+                                <span class="px-2 py-0.5 text-xs rounded ${post.locale === 'it' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}">${post.locale.toUpperCase()}</span>
+                                <span class="px-2 py-0.5 text-xs rounded ${post.state === 1 ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'}">${post.state === 1 ? 'Published' : 'Draft'}</span>
+                            </div>
+                            <div class="text-sm text-gray-600">/${escapeHtml(post.slug)}</div>
+                            ${post.description ? `<div class="text-sm text-gray-500 mt-1 truncate">${escapeHtml(post.description)}</div>` : ''}
+                            <div class="flex gap-3 mt-1 text-xs text-gray-400">
+                                ${post.author ? `<span>by ${escapeHtml(post.author)}</span>` : ''}
+                                ${post.date ? `<span>${post.date}</span>` : ''}
+                                ${post.image_slug ? '<span>has image</span>' : ''}
+                            </div>
                         </div>
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 shrink-0">
                             <button onclick="toggleStatus(${post.id}, ${post.state})" class="text-sm border px-2 py-1 rounded hover:bg-gray-200">
                                 ${post.state === 1 ? 'Unpublish' : 'Publish'}
                             </button>
-                            <button onclick="editPost(${post.id})" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</button>
-                            <button onclick="deletePost(${post.id})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+                            <button onclick="editPost(${post.id})" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">Edit</button>
+                            <button onclick="deletePost(${post.id})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">Delete</button>
                         </div>
                     </div>
                 `).join('');
-                document.getElementById('pageInfo').innerText = `Page ${res.data.page}`;
+                document.getElementById('pageInfo').innerText = `Page ${res.data.page} (${res.data.total} total)`;
             } else {
                 list.innerHTML = `<p class="text-red-500">Error: ${res.error || 'Failed to load'}</p>`;
             }
@@ -211,7 +385,7 @@
         }
 
         async function deletePost(id) {
-            if(!confirm('Are you sure?')) return;
+            if(!confirm('Are you sure you want to delete this post?')) return;
             await apiCall(`/posts/${id}`, 'DELETE');
             loadPosts();
         }
@@ -219,8 +393,16 @@
         function nextPage() { currentPage++; loadPosts(); }
         function prevPage() { if(currentPage > 1) { currentPage--; loadPosts(); } }
 
-        // Modal Logic
+        // =====================
+        // Create Post Pair
+        // =====================
         function openCreateModal() {
+            document.getElementById('createTitleIT').value = '';
+            document.getElementById('createSlugIT').value = '';
+            document.getElementById('createDescIT').value = '';
+            document.getElementById('createTitleEN').value = '';
+            document.getElementById('createSlugEN').value = '';
+            document.getElementById('createDescEN').value = '';
             document.getElementById('createModal').classList.remove('opacity-0', 'pointer-events-none');
         }
         function closeCreateModal() {
@@ -229,36 +411,75 @@
 
         async function handleCreatePair(e) {
             e.preventDefault();
-            const title_it = document.getElementById('createTitleIT').value;
-            const title_en = document.getElementById('createTitleEN').value;
-            
-            const res = await apiCall('/posts/create-pair', 'POST', { title_it, title_en });
+            const body = {
+                title_it: document.getElementById('createTitleIT').value,
+                title_en: document.getElementById('createTitleEN').value,
+            };
+            const slug_it = document.getElementById('createSlugIT').value;
+            const slug_en = document.getElementById('createSlugEN').value;
+            const desc_it = document.getElementById('createDescIT').value;
+            const desc_en = document.getElementById('createDescEN').value;
+            if (slug_it) body.slug_it = slug_it;
+            if (slug_en) body.slug_en = slug_en;
+            if (desc_it) body.description_it = desc_it;
+            if (desc_en) body.description_en = desc_en;
+
+            const res = await apiCall('/posts/create-pair', 'POST', body);
             if(res.success) {
                 closeCreateModal();
                 loadPosts();
             } else {
-                alert('Error creating pair');
+                alert('Error creating pair: ' + (res.error || 'Unknown error'));
             }
         }
 
+        // =====================
+        // Edit Post
+        // =====================
         let currentEditingId = null;
 
         async function editPost(id) {
             currentEditingId = id;
-            // Fetch details (metadata + content)
-            const [meta, content] = await Promise.all([
+            const [meta, content, postTags, allTags] = await Promise.all([
                 apiCall(`/posts/${id}/metadata`),
-                apiCall(`/posts/${id}/content`)
+                apiCall(`/posts/${id}/content`),
+                apiCall(`/posts/${id}/tags`),
+                apiCall(`/tags?limit=200`)
             ]);
-            
+
             if(meta.success && content.success) {
                 document.getElementById('postId').value = id;
-                document.getElementById('title').value = meta.data.title;
-                document.getElementById('slug').value = meta.data.slug;
-                document.getElementById('content').value = content.data.content;
-                
+                document.getElementById('editTitle').value = meta.data.title || '';
+                document.getElementById('editSlug').value = meta.data.slug || '';
+                document.getElementById('editDescription').value = meta.data.description || '';
+                document.getElementById('editAuthor').value = meta.data.author || '';
+                document.getElementById('editDate').value = meta.data.date || '';
+                document.getElementById('editContent').value = content.data.content || '';
+
+                // Current image display
+                const imgEl = document.getElementById('editCurrentImage');
+                imgEl.textContent = meta.data.image_slug
+                    ? 'Current image: ' + meta.data.image_slug
+                    : 'No image set';
+
+                // Tag checkboxes
+                const postTagIds = postTags.success && Array.isArray(postTags.data)
+                    ? postTags.data.map(t => t.id)
+                    : [];
+                const tagsContainer = document.getElementById('editTagCheckboxes');
+                if (allTags.success && allTags.data.tags.length > 0) {
+                    tagsContainer.innerHTML = allTags.data.tags.map(tag => `
+                        <label class="inline-flex items-center gap-1 px-3 py-1 border rounded cursor-pointer hover:bg-blue-50 transition-colors ${postTagIds.includes(tag.id) ? 'bg-blue-100 border-blue-400' : 'bg-white'}">
+                            <input type="checkbox" class="tag-checkbox" value="${tag.id}"
+                                ${postTagIds.includes(tag.id) ? 'checked' : ''}>
+                            <span class="text-sm">${escapeHtml(tag.name)}</span>
+                        </label>
+                    `).join('');
+                } else {
+                    tagsContainer.innerHTML = '<span class="text-gray-400 text-sm">No tags available. Create tags in the Tags panel first.</span>';
+                }
+
                 document.getElementById('imageUploadSection').classList.remove('hidden');
-                
                 document.getElementById('postModal').classList.remove('opacity-0', 'pointer-events-none');
             }
         }
@@ -271,15 +492,28 @@
         async function handleFormSubmit(e) {
             e.preventDefault();
             const id = currentEditingId;
-            const title = document.getElementById('title').value;
-            const slug = document.getElementById('slug').value;
-            const content = document.getElementById('content').value;
+            const title = document.getElementById('editTitle').value;
+            const slug = document.getElementById('editSlug').value;
+            const description = document.getElementById('editDescription').value;
+            const author = document.getElementById('editAuthor').value;
+            const date = document.getElementById('editDate').value;
+            const content = document.getElementById('editContent').value;
 
-            // Update Metadata
-            await apiCall(`/posts/${id}/metadata`, 'PUT', { title, slug });
-            // Update Content
-            await apiCall(`/posts/${id}/content`, 'PUT', { content });
-            
+            // Collect selected tag IDs
+            const tagCheckboxes = document.querySelectorAll('.tag-checkbox:checked');
+            const tag_ids = Array.from(tagCheckboxes).map(cb => parseInt(cb.value));
+
+            const metadataBody = { title, slug };
+            if (description) metadataBody.description = description;
+            if (author) metadataBody.author = author;
+            if (date) metadataBody.date = date;
+
+            await Promise.all([
+                apiCall(`/posts/${id}/metadata`, 'PUT', metadataBody),
+                apiCall(`/posts/${id}/content`, 'PUT', { content }),
+                apiCall(`/posts/${id}/tags`, 'PUT', { tag_ids })
+            ]);
+
             closeModal();
             loadPosts();
         }
@@ -287,15 +521,106 @@
         async function uploadImage() {
             const fileInput = document.getElementById('imageInput');
             if(fileInput.files.length === 0) return;
-            
+
             const formData = new FormData();
             formData.append('image', fileInput.files[0]);
-            
+
             const res = await apiCall(`/posts/${currentEditingId}/image/upload`, 'POST', formData, true);
             if(res.success) {
+                document.getElementById('editCurrentImage').textContent = 'Current image: ' + (res.data.filename || 'uploaded');
                 alert('Image uploaded!');
             } else {
-                alert('Upload failed: ' + res.error);
+                alert('Upload failed: ' + (res.error || 'Unknown error'));
+            }
+        }
+
+        // =====================
+        // Tags CRUD
+        // =====================
+        async function loadTags() {
+            const res = await apiCall('/tags?limit=200');
+            const list = document.getElementById('tagsList');
+            if (res.success && res.data.tags.length > 0) {
+                list.innerHTML = res.data.tags.map(tag => `
+                    <div class="border p-3 rounded flex justify-between items-center bg-gray-50">
+                        <div>
+                            <span class="font-bold">${escapeHtml(tag.name)}</span>
+                            <span class="ml-2 text-sm text-gray-500">/${escapeHtml(tag.slug)}</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="editTag(${tag.id})" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">Edit</button>
+                            <button onclick="deleteTag(${tag.id})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } else if (res.success) {
+                list.innerHTML = '<p class="text-gray-500">No tags yet. Create one!</p>';
+            } else {
+                list.innerHTML = `<p class="text-red-500">Error: ${res.error || 'Failed to load'}</p>`;
+            }
+        }
+
+        // Create Tag
+        function openCreateTagModal() {
+            document.getElementById('createTagName').value = '';
+            document.getElementById('createTagSlug').value = '';
+            document.getElementById('createTagModal').classList.remove('opacity-0', 'pointer-events-none');
+        }
+        function closeCreateTagModal() {
+            document.getElementById('createTagModal').classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        async function handleCreateTag(e) {
+            e.preventDefault();
+            const name = document.getElementById('createTagName').value;
+            const slug = document.getElementById('createTagSlug').value;
+            const res = await apiCall('/tags', 'POST', { name, slug });
+            if (res.success) {
+                closeCreateTagModal();
+                loadTags();
+            } else {
+                alert('Error: ' + (res.error || 'Failed to create tag'));
+            }
+        }
+
+        // Edit Tag
+        async function editTag(id) {
+            const res = await apiCall(`/tags/${id}`);
+            if (res.success) {
+                document.getElementById('editTagId').value = id;
+                document.getElementById('editTagName').value = res.data.name;
+                document.getElementById('editTagSlug').value = res.data.slug;
+                document.getElementById('editTagModal').classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                alert('Error loading tag: ' + (res.error || 'Unknown error'));
+            }
+        }
+        function closeEditTagModal() {
+            document.getElementById('editTagModal').classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        async function handleEditTag(e) {
+            e.preventDefault();
+            const id = document.getElementById('editTagId').value;
+            const name = document.getElementById('editTagName').value;
+            const slug = document.getElementById('editTagSlug').value;
+            const res = await apiCall(`/tags/${id}`, 'PUT', { name, slug });
+            if (res.success) {
+                closeEditTagModal();
+                loadTags();
+            } else {
+                alert('Error: ' + (res.error || 'Failed to update tag'));
+            }
+        }
+
+        // Delete Tag
+        async function deleteTag(id) {
+            if (!confirm('Delete this tag? It will be removed from all posts.')) return;
+            const res = await apiCall(`/tags/${id}`, 'DELETE');
+            if (res.success) {
+                loadTags();
+            } else {
+                alert('Error: ' + (res.error || 'Failed to delete tag'));
             }
         }
     </script>

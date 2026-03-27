@@ -109,3 +109,80 @@ The blog supports an external content creation workflow via n8n automation:
 ## External Content Workflow
 
 Posts are generated externally via n8n and synced to the site via API. The Makefile commands in `POST_LIFECYCLE.md` document the local development workflow for editing posts.
+
+## API Reference
+
+The blog system exposes a REST API at `/api/v1/blog` for external automation (e.g., n8n, makefile scripts). All requests must include the `x-api-key` header with a valid API key.
+
+### Posts
+
+- **Create Post Pair**
+  - `POST /posts/create-pair`
+  - Body: `{ title_it, title_en, slug_it, slug_en, description_it, description_en }`
+  - Creates linked Italian and English post placeholders.
+
+- **List Posts**
+  - `GET /posts`
+  - Query: `page` (default 1), `limit` (default 10)
+
+- **Post Metadata**
+  - `GET /posts/:id/metadata` - Get post metadata (excluding content)
+  - `PUT /posts/:id/metadata` - Update metadata
+  - Body (PUT): `{ title, description }`
+
+- **Post Content**
+  - `GET /posts/:id/content` - Get post content
+  - `PUT /posts/:id/content` - Update content
+  - Body (PUT): `{ content }` (Markdown string)
+
+- **Post Status**
+  - `PUT /posts/:id/status`
+  - Body: `{ state: 0 | 1 }` (0=Draft, 1=Published)
+
+- **Post Tags**
+  - `GET /posts/:id/tags` - Get assigned tags
+  - `PUT /posts/:id/tags` - Update assigned tags
+  - Body (PUT): `{ tag_ids: number[] }` (Replaces all existing tags)
+
+- **Delete Post**
+  - `DELETE /posts/:id`
+
+### Tags
+
+- **List Tags**
+  - `GET /tags`
+  - Query: `page`, `limit`
+
+- **Create Tag**
+  - `POST /tags`
+  - Body: `{ name, slug }`
+
+- **Update Tag**
+  - `PUT /tags/:id`
+  - Body: `{ name }`
+
+- **Delete Tag**
+  - `DELETE /tags/:id`
+
+## User-Invocable Skills
+
+These skills can be invoked using slash commands.
+
+- `/create-post`
+  - **Description**: Creates a new blog post via the interactive script.
+  - **Implementation**:
+    1. Ask the user for the **Post Title** and **Post Slug**.
+    2. Construct a command to pipe these inputs: `(echo "TITLE"; echo "SLUG") | bun scripts/create-post.ts`
+    3. Execute the command.
+
+- `/deploy`
+  - **Description**: Deploys the site to the remote server.
+  - **Implementation**: Run `make deploy` (confirm with user first).
+
+- `/publish <id>`
+  - **Description**: Publishes a post by ID.
+  - **Implementation**: Run `make post-status ID=<id> STATE=1`.
+
+- `/unpublish <id>`
+  - **Description**: Reverts a post to draft by ID.
+  - **Implementation**: Run `make post-status ID=<id> STATE=0`.
