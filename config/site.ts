@@ -43,7 +43,9 @@ export const siteConfig = {
 
   // Analytics
   googleAnalyticsId: "G-1BFH8582JM",
-  googleAdsConversionId: "AW-17763341638/Ch8YCLu44McbEMaqnJZC"
+  googleAdsConversionId: "AW-17763341638/Ch8YCLu44McbEMaqnJZC",
+  umamiScriptUrl: "https://umami.abeatbeyond.com/script.js",
+  umamiWebsiteId: "7d0acd16-6f0d-4320-964d-55448d286f79"
 }
 
 export type SiteConfig = typeof siteConfig

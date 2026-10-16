@@ -84,6 +84,12 @@ export default async function RootLayout({
           <div id="root">{children}</div>
         </NextIntlClientProvider>
         <GoogleAnalytics gaId={siteConfig.googleAnalyticsId} />
+        <script
+          defer
+          src={siteConfig.umamiScriptUrl}
+          data-website-id={siteConfig.umamiWebsiteId}
+          data-domains="www.abeatbeyond.com,abeatbeyond.com"
+        />
       </body>
     </html>
   )
