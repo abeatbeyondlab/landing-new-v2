@@ -74,7 +74,8 @@
     "noPosts": "Nessun articolo trovato.",
     "by": "Di",
     "readRead": "Leggi",
-    "pageOf": "Pagina {current} di {total}"
+    "pageOf": "Pagina {current} di {total}",
+    "clearFilter": "Rimuovi filtro"
   },
   "blogDetail": {
     "home": "Home",

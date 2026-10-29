@@ -31,7 +31,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     const { posts: p, total } = await getPosts({ page, limit, search, locale: 'en' });
     posts = p;
     totalPages = Math.ceil(total / limit);
-    tags = await getAllTags();
+    tags = await getAllTags('en');
   } catch (error) {
     console.error("Error in BlogPage:", error);
   }

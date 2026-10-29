@@ -1,5 +1,5 @@
 import { Blog } from '@/components/blog';
-import { getPosts, getTagBySlug, getTagsForStaticParams, Post } from '@/data/db';
+import { getAllTags, getPosts, getTagBySlug, getTagsForStaticParams, Post, Tag } from '@/data/db';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 
@@ -47,12 +47,14 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
   const limit = 6;
 
   let posts: Post[] = [];
+  let tags: Tag[] = [];
   let totalPages = 1;
 
   try {
     const { posts: p, total } = await getPosts({ page, limit, search, tagSlug: slug });
     posts = p;
     totalPages = Math.ceil(total / limit);
+    tags = await getAllTags();
   } catch (error) {
     console.error(`Error fetching posts for tag ${slug}:`, error);
   }
@@ -65,6 +67,8 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
       posts={posts} 
       title={title} 
       subtitle={subtitle} 
+      tags={tags}
+      activeTag={slug}
       showBackLink={true}
       currentPage={page}
       totalPages={totalPages}

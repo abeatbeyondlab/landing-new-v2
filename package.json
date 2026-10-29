@@ -6,7 +6,7 @@
     "bdev": "bun --bun next dev",
     "bbuild": "bun --bun next build",
     "bstart": "bun --bun next start",
-    "test": "NODE_OPTIONS='--experimental-vm-modules' mocha tests/*.test.ts --timeout 5000 --require ts-node/register"
+    "test": "bun test tests/*.test.ts"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",

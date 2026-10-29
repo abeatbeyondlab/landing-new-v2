@@ -27,16 +27,18 @@ interface BlogProps {
   title?: string;
   subtitle?: string;
   tags?: Tag[];
+  activeTag?: string;
   showBackLink?: boolean;
   totalPages: number;
   currentPage: number;
 }
 
-export const Blog = ({ 
-  posts, 
-  title = "Blog", 
-  subtitle = "Leggi gli ultimi post!!", 
-  tags, 
+export const Blog = ({
+  posts,
+  title = "Blog",
+  subtitle = "Leggi gli ultimi post!!",
+  tags,
+  activeTag,
   showBackLink = false,
   totalPages,
   currentPage 
@@ -133,15 +135,22 @@ export const Blog = ({
         {/* Tag Filter List */}
         {tags && tags.length > 0 && (
           <div className="flex flex-wrap gap-2 justify-center max-w-2xl mb-8">
-            {tags.map((tag) => (
-              <NextLink
-                key={tag.slug}
-                href={`/blog/tag/${tag.slug}`}
-                className="px-3 py-1 text-sm text-slate-300 bg-white/5 border border-white/10 rounded-full hover:bg-blue-500/20 hover:text-blue-200 hover:border-blue-500/30 transition-all"
-              >
-                #{tag.name}
-              </NextLink>
-            ))}
+            {tags.map((tag) => {
+              const isActive = tag.slug === activeTag;
+              return (
+                <NextLink
+                  key={tag.slug}
+                  href={isActive ? '/blog' : `/blog/tag/${tag.slug}`}
+                  aria-current={isActive ? 'page' : undefined}
+                  title={isActive ? 'Rimuovi filtro' : undefined}
+                  className={`px-3 py-1 text-sm border rounded-full transition-all ${isActive
+                    ? 'bg-blue-500/30 text-white border-blue-400'
+                    : 'text-slate-300 bg-white/5 border-white/10 hover:bg-blue-500/20 hover:text-blue-200 hover:border-blue-500/30'}`}
+                >
+                  #{tag.name}{isActive && ' ×'}
+                </NextLink>
+              );
+            })}
           </div>
         )}
       
@@ -193,7 +202,7 @@ export const Blog = ({
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
-                    })} - 5 minuti
+                    })} - {Math.max(1, Math.round(post.content.split(/\s+/).length / 200))} min di lettura
                   </p>
 
                   {/* Descrizione */}

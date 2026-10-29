@@ -112,6 +112,8 @@ Posts are generated externally via n8n and synced to the site via API. The Makef
 
 ## API Reference
 
+> **DISABLED (2026-10):** the blog API is no longer exposed. Route code was moved to the private folder `app/api/v1/_blog/` (excluded from routing) pending removal. Manage posts with the `make post-*` / `tags-*` scripts (they use Prisma directly). The reference below is historical.
+
 The blog system exposes a REST API at `/api/v1/blog` for external automation (e.g., n8n, makefile scripts). All requests must include the `x-api-key` header with a valid API key.
 
 ### Posts

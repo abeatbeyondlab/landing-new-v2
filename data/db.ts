@@ -187,9 +187,13 @@ export async function getPostsByTag(tagSlug: string, locale: string = 'it'): Pro
   }
 }
 
-export async function getAllTags(): Promise<Tag[]> {
+// Solo tag con almeno un post pubblicato nella lingua richiesta
+export async function getAllTags(locale: string = 'it'): Promise<Tag[]> {
   try {
     const tags = await prisma.tag.findMany({
+      where: {
+        post_tag: { some: { post: { state: 1, locale } } }
+      },
       orderBy: {
         name: 'asc'
       }

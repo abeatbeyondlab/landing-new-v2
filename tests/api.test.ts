@@ -32,9 +32,10 @@ declare global {
 
 const API_BASE = '/api/v1/blog';
 const API_KEY = process.env.API_KEY || 'test-api-key';
-const TEST_URL = 'http://localhost:3000';
+const TEST_URL = process.env.TEST_URL || 'http://localhost:3000';
 
-describe('Blog API Endpoints', () => {
+// API blog disattivata: route spostate in app/api/v1/_blog (non esposte)
+describe.skip('Blog API Endpoints', () => {
   let testPostId: number;
   let testTagId: number;
 
